@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Policyreducer
+Bundle-SymbolicName: policyreducer;singleton:=true
+Bundle-Version: 1.0.0
+Automatic-Module-Name: policyreducer
+Bundle-RequiredExecutionEnvironment: JavaSE-13
+Require-Bundle: data;bundle-version="1.0.0",
+ org.palladiosimulator.pcm;bundle-version="4.3.0",
+ org.palladiosimulator.pcm.dataprocessing;bundle-version="0.1.0",
+ org.palladiosimulator.pcm.dataprocessing.dynamicextension;bundle-version="0.1.0"
+Export-Package: policyreducer

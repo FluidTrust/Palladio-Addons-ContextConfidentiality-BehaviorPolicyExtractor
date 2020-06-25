@@ -8,6 +8,7 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
+import data.Settings;
 import policyderiver.ContextHandler;
 import policyreducer.RulesHandler;
 import preferences.PreferenceHandler;
@@ -25,7 +26,7 @@ public class MainHandler {
     public void execute(String dataPath) {
         Objects.requireNonNull(dataPath);
 
-        data.Settings settings = PreferenceHandler.getSettingsFromPreferences();
+        Settings settings = PreferenceHandler.getSettingsFromPreferences();
 
         ModelHandler modelloader = new ModelHandler(new ModelAbstraction(dataPath));
         DataSpecification dataSpec = modelloader.loadDataSpecification();

@@ -26,17 +26,20 @@ public class ButtonHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         Objects.requireNonNull(event);
 
-        Logger.infoDetailed("ButtonHandler-Start");
-        Logger.disable();
+        Logger.info("ButtonHandler-Start");
 
+        // Logger settings
+        Logger.setActive(true);
+        Logger.setDetailed(false);
+
+        // Needed here to ensure default values are set if PreferencesPage has never been opened
         PreferenceHandler.setDefault();
 
         String path = PreferenceHandler.getProjectPath();
-        Logger.info2(path);
+        Logger.info(path);
         new MainHandler().execute(path);
 
-        Logger.enable();
-        Logger.infoDetailed("ButtonHandler-End");
+        Logger.info("ButtonHandler-End");
 
         return null;
     }

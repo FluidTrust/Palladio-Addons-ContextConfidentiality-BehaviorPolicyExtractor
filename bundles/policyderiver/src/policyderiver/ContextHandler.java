@@ -1,13 +1,18 @@
 package policyderiver;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.core.composition.AssemblyConnector;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
+import org.palladiosimulator.pcm.core.composition.ComposedStructure;
 import org.palladiosimulator.pcm.core.composition.ProvidedDelegationConnector;
+import org.palladiosimulator.pcm.core.composition.RequiredDelegationConnector;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.characteristics.CharacteristicContainer;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.processing.DataProcessingContainer;
 import org.palladiosimulator.pcm.dataprocessing.dynamicextension.context.ContextCharacteristic;
 import org.palladiosimulator.pcm.repository.BasicComponent;
+import org.palladiosimulator.pcm.repository.CompositeComponent;
 import org.palladiosimulator.pcm.repository.OperationProvidedRole;
 import org.palladiosimulator.pcm.repository.OperationRequiredRole;
 import org.palladiosimulator.pcm.repository.OperationSignature;
@@ -18,8 +23,10 @@ import org.palladiosimulator.pcm.seff.ExternalCallAction;
 import org.palladiosimulator.pcm.seff.InternalAction;
 import org.palladiosimulator.pcm.seff.ResourceDemandingSEFF;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
+import org.palladiosimulator.pcm.subsystem.SubSystem;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
+import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import data.AssemblyAbstraction;
@@ -27,6 +34,7 @@ import data.DataSpecificationAbstraction;
 import data.MdsdAbstraction;
 import data.Settings;
 import data.UsageModelAbstraction;
+import util.DataProcessingPrinter;
 import util.Logger;
 
 /**
@@ -41,7 +49,7 @@ public class ContextHandler {
     private final Settings settings;
     private final DataSpecificationAbstraction dataSpecAbs;
     private final UsageModelAbstraction usageModelAbs;
-    private final Repository repo;
+    private final Repository repo; // currently not used
     private final AssemblyAbstraction assemblyAbs;
 
     /**
@@ -66,19 +74,24 @@ public class ContextHandler {
      * Entrypoint for mainhandler
      */
     public void execute() {
-        applyContextToAllSystemCalls();
+        for (ScenarioBehaviour scenarioBehaviour : usageModelAbs.getListofScenarioBehaviour()) {
+            applyContextToAllSystemCalls(scenarioBehaviour);
+        }
     }
 
     /**
      * Iterate all SystemCalls, call applyContextToSystemCall for each one with matching
      * characteristicContainer according to settings
+     * 
+     * @param scenarioBehaviour
      */
-    private void applyContextToAllSystemCalls() {
+    private void applyContextToAllSystemCalls(ScenarioBehaviour scenarioBehaviour) {
         Logger.infoDetailed("\nAppling Context to all methods");
 
-        CharacteristicContainer containerCharacterizable = usageModelAbs.getAppliedCharacterizableContainer();
+        CharacteristicContainer containerCharacterizable = usageModelAbs
+                .getAppliedCharacterizableContainer(scenarioBehaviour);
 
-        for (EntryLevelSystemCall systemCall : usageModelAbs.getListOfEntryLevelSystemCalls()) {
+        for (EntryLevelSystemCall systemCall : usageModelAbs.getListOfEntryLevelSystemCalls(scenarioBehaviour)) {
             CharacteristicContainer containerDataProcessing = usageModelAbs.getAppliedContainer(systemCall);
 
             // Depending on ContextMaster a different characteristicContainer is used to be applied
@@ -86,8 +99,6 @@ public class ContextHandler {
             case Characterizable:
                 if (containerCharacterizable != null) {
                     applyContextToSystemCall(systemCall, containerCharacterizable);
-                } else {
-                    Logger.error("Stereotype Characterizable not applied");
                 }
                 break;
             case DataProcessing:
@@ -111,7 +122,7 @@ public class ContextHandler {
     }
 
     /**
-     * Applies context from containerToApply to BasicComponent called by entryLevelSystemCall
+     * Calls applyContextsToComposedStructure with parameters from systemcall
      * 
      * @param entryLevelSystemCall
      * @param containerToApply
@@ -125,17 +136,49 @@ public class ContextHandler {
         OperationSignature op = entryLevelSystemCall.getOperationSignature__EntryLevelSystemCall();
         Logger.infoDetailed(op.getEntityName());
 
-        // Find Component by iterating connectors, check outer role with system call
-        // Still pass operation signature to know which function is called
-        for (ProvidedDelegationConnector connector : assemblyAbs.getListOfProvidedDelegationConnector()) {
-            OperationProvidedRole opr2 = connector.getOuterProvidedRole_ProvidedDelegationConnector();
+        EList<AssemblyContext> hierarchy = new BasicEList<AssemblyContext>();
+        applyContextsToComposedStructure(assemblyAbs.getSystem(), hierarchy, opr, op, containerToApply);
+    }
 
-            if (assemblyAbs.isOperationProvidedRoleMatch(opr, opr2)) {
+    /**
+     * Search in provided delegation connectors of this composed structure for a match with
+     * operationProvidedRole If found, and matching component to hierarchy and call
+     * applyContextToRepositoryComponent
+     * 
+     * @param composedStructure
+     * @param hierarchy
+     * @param operationProvidedRole
+     * @param operationSignature
+     * @param containerToApply
+     */
+    private void applyContextsToComposedStructure(ComposedStructure composedStructure, EList<AssemblyContext> hierarchy,
+            OperationProvidedRole operationProvidedRole, OperationSignature operationSignature,
+            CharacteristicContainer containerToApply) {
+
+        // Find Component by iterating connectors,
+        // Check outer role with passed operationProvidedRole
+        // If match, pass inner role
+        for (ProvidedDelegationConnector connector : assemblyAbs
+                .getListOfProvidedDelegationConnector(composedStructure)) {
+            OperationProvidedRole outerRole = connector.getOuterProvidedRole_ProvidedDelegationConnector();
+            OperationProvidedRole innerRole = connector.getInnerProvidedRole_ProvidedDelegationConnector();
+
+            if (assemblyAbs.isOperationProvidedRoleMatch(operationProvidedRole, outerRole)) {
                 Logger.infoDetailed(connector.getAssemblyContext_ProvidedDelegationConnector().getEntityName());
                 AssemblyContext ac = connector.getAssemblyContext_ProvidedDelegationConnector();
                 RepositoryComponent rc = ac.getEncapsulatedComponent__AssemblyContext();
                 Logger.infoDetailed(rc.getEntityName());
-                applyContextToRepositoryComponent(rc, ac, op, containerToApply);
+
+                // If child component is same as parent or already contained in hierarchy--> endless
+                // loop
+                if (!rc.getId().equalsIgnoreCase(composedStructure.getId()) && !hierarchy.contains(ac)) {
+                    EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
+                    copy.addAll(hierarchy);
+                    copy.add(ac);
+                    applyContextToRepositoryComponent(rc, copy, innerRole, operationSignature, containerToApply);
+                } else {
+                    Logger.info("Error in component(" + composedStructure.getId() + "): Recursion without end");
+                }
             }
         }
     }
@@ -146,19 +189,27 @@ public class ContextHandler {
      * Parameters only needed for calls to different sub-functions
      * 
      * @param repositoryComponent
-     * @param assemblyContext
+     * @param hierarchy
+     * @param operationProvidedRole
      * @param operationSignature
      * @param containerToApply
      */
     private void applyContextToRepositoryComponent(RepositoryComponent repositoryComponent,
-            AssemblyContext assemblyContext, OperationSignature operationSignature,
-            CharacteristicContainer containerToApply) {
+            EList<AssemblyContext> hierarchy, OperationProvidedRole operationProvidedRole,
+            OperationSignature operationSignature, CharacteristicContainer containerToApply) {
+
         if (repositoryComponent instanceof BasicComponent) {
-            applyContextsToBasicComponent(assemblyContext, (BasicComponent) repositoryComponent, operationSignature,
+            applyContextsToBasicComponent((BasicComponent) repositoryComponent, hierarchy, operationSignature,
                     containerToApply);
+        } else if (repositoryComponent instanceof CompositeComponent) {
+            applyContextsToComposedStructure((CompositeComponent) repositoryComponent, hierarchy, operationProvidedRole,
+                    operationSignature, containerToApply);
+        } else if (repositoryComponent instanceof SubSystem) {
+            applyContextsToComposedStructure((SubSystem) repositoryComponent, hierarchy, operationProvidedRole,
+                    operationSignature, containerToApply);
         } else {
-            // TODO other cases
-            Logger.error("TODO!!!");
+            Logger.error(
+                    "Currently no handling implemented for RepositoryComponent(" + repositoryComponent.getId() + ")");
         }
 
     }
@@ -170,31 +221,33 @@ public class ContextHandler {
      * 
      * External Actions need assemblyContext to find correct called other components
      * 
-     * @param assemblyContext
      * @param basicComponent
+     * @param hierarchy
      * @param operationSignature
      * @param containerToApply
      */
-    private void applyContextsToBasicComponent(AssemblyContext assemblyContext, BasicComponent basicComponent,
+    private void applyContextsToBasicComponent(BasicComponent basicComponent, EList<AssemblyContext> hierarchy,
             OperationSignature operationSignature, CharacteristicContainer containerToApply) {
         for (ServiceEffectSpecification seff : basicComponent.getServiceEffectSpecifications__BasicComponent()) {
             Logger.infoDetailed(seff.getDescribedService__SEFF().getEntityName());
             if (seff.getDescribedService__SEFF() == operationSignature) {
-                Logger.infoDetailed("MATCH");
+                Logger.infoDetailed("SEFF matched");
 
-                // TODO instance of. other cases allowed?
-                ResourceDemandingSEFF rdSeff = (ResourceDemandingSEFF) seff;
+                if (seff instanceof ResourceDemandingSEFF) {
+                    ResourceDemandingSEFF rdSeff = (ResourceDemandingSEFF) seff;
 
-                // Get all internal actions, and check applied data processing
-                for (AbstractAction action : rdSeff.getSteps_Behaviour()) {
-                    if (action instanceof InternalAction) {
-                        // Name for eventually newly created containers
-                        String name = basicComponent.getEntityName() + "_" + operationSignature.getEntityName();
+                    // Get all internal actions, and check applied data processing
+                    for (AbstractAction action : rdSeff.getSteps_Behaviour()) {
+                        if (action instanceof InternalAction) {
+                            // Name for eventually newly created containers
+                            String name = basicComponent.getEntityName() + "_" + operationSignature.getEntityName();
 
-                        applyContextsToInternalCall((InternalAction) action, containerToApply, name);
-                    } else if (action instanceof ExternalCallAction) {
-                        applyContextsToExternalCall((ExternalCallAction) action, assemblyContext, containerToApply);
+                            applyContextsToInternalCall((InternalAction) action, containerToApply, name);
+                        } else if (action instanceof ExternalCallAction) {
+                            applyContextsToExternalCall((ExternalCallAction) action, hierarchy, containerToApply);
+                        }
                     }
+                } else {
                 }
             }
         }
@@ -203,34 +256,81 @@ public class ContextHandler {
     /**
      * Applies context to externalAction
      * 
-     * External actions calls another (basic) component. Find match with assemblyContext, and then
-     * call applyContextsToBasicComponent for that component
+     * External actions calls another component. Call searchForMatchingExternalComponent
      * 
      * @param externalAction
-     * @param assemblyContext
+     * @param hierarchy
      * @param containerToApply
      */
-    private void applyContextsToExternalCall(ExternalCallAction externalAction, AssemblyContext assemblyContext,
+    private void applyContextsToExternalCall(ExternalCallAction externalAction, EList<AssemblyContext> hierarchy,
             CharacteristicContainer containerToApply) {
         Logger.infoDetailed(externalAction.getEntityName());
         Logger.infoDetailed(externalAction.getCalledService_ExternalService().getEntityName());
-        OperationSignature op2 = externalAction.getCalledService_ExternalService();
-        OperationRequiredRole orr = externalAction.getRole_ExternalService();
-        Logger.infoDetailed(orr.getEntityName());
-        Logger.infoDetailed(orr.getRequiredInterface__OperationRequiredRole().getEntityName());
+        OperationSignature externalSignature = externalAction.getCalledService_ExternalService();
+        OperationRequiredRole requiredRole = externalAction.getRole_ExternalService();
+        Logger.infoDetailed(requiredRole.getEntityName());
+        Logger.infoDetailed(requiredRole.getRequiredInterface__OperationRequiredRole().getEntityName());
 
-        for (AssemblyConnector connector : assemblyAbs.getListOfAssemblyConnectors()) {
+        searchForMatchingExternalComponent(hierarchy, requiredRole, externalSignature, containerToApply);
+    }
+
+    /**
+     * Search in current composed structure (parent of current assembly context) for a matching
+     * outgoing connecter.
+     * 
+     * If the matching connector is of type requiring delegation (means outgoing of this composed
+     * structure), recursive call with adapted parameters (search in composed structure one assembly
+     * level higher for match)
+     * 
+     * @param hierarchy
+     * @param requiredRole
+     * @param externalSignature
+     * @param containerToApply
+     */
+    private void searchForMatchingExternalComponent(EList<AssemblyContext> hierarchy,
+            OperationRequiredRole requiredRole, OperationSignature externalSignature,
+            CharacteristicContainer containerToApply) {
+
+        AssemblyContext currentContext = hierarchy.get(hierarchy.size() - 1);
+        ComposedStructure cs = currentContext.getParentStructure__AssemblyContext();
+
+        // Search in parent structure for all outgoing connectors from this component and find
+        // matching signature
+        for (AssemblyConnector connector : assemblyAbs.getListOfAssemblyConnectors(cs)) {
             Logger.infoDetailed(connector.getEntityName());
-            AssemblyConnector ac = (AssemblyConnector) connector;
-            AssemblyContext acProvide = ac.getProvidingAssemblyContext_AssemblyConnector();
-            AssemblyContext acRequire = ac.getRequiringAssemblyContext_AssemblyConnector();
-            if (acRequire.equals(assemblyContext)) {
-                OperationRequiredRole orr2 = ac.getRequiredRole_AssemblyConnector();
-                if (orr2.equals(orr)) {
-                    RepositoryComponent rc = acProvide.getEncapsulatedComponent__AssemblyContext();
+            AssemblyContext targetComponent = connector.getProvidingAssemblyContext_AssemblyConnector();
+            AssemblyContext sourceComponent = connector.getRequiringAssemblyContext_AssemblyConnector();
+            if (sourceComponent.equals(currentContext)) {
+                OperationRequiredRole orr = connector.getRequiredRole_AssemblyConnector();
+                OperationProvidedRole opr = connector.getProvidedRole_AssemblyConnector();
+                if (orr.equals(requiredRole)) {
+                    RepositoryComponent rc = targetComponent.getEncapsulatedComponent__AssemblyContext();
                     Logger.infoDetailed(rc.getEntityName());
-                    if (rc instanceof BasicComponent) {
-                        applyContextsToBasicComponent(acProvide, (BasicComponent) rc, op2, containerToApply);
+                    EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
+                    copy.addAll(hierarchy);
+                    applyContextToRepositoryComponent(rc, copy, opr, externalSignature, containerToApply);
+                }
+            }
+        }
+
+        // if no matching assembly connector found, check if maybe call outside of structure
+        for (RequiredDelegationConnector connector : assemblyAbs.getListOfRequiredDelegationConnector(cs)) {
+            Logger.infoDetailed(connector.getEntityName());
+            AssemblyContext sourceComponent = connector.getAssemblyContext_RequiredDelegationConnector();
+            if (sourceComponent.equals(currentContext)) {
+                Logger.infoDetailed(sourceComponent.getEntityName());
+
+                OperationRequiredRole innerRole = connector.getInnerRequiredRole_RequiredDelegationConnector();
+                OperationRequiredRole outerRole = connector.getOuterRequiredRole_RequiredDelegationConnector();
+                if (assemblyAbs.isOperationRequiredRoleMatch(innerRole, requiredRole)) {
+                    // Go 1 level higher
+                    EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
+                    copy.addAll(hierarchy);
+                    copy.remove(currentContext);
+
+                    // If top level is already reached, stop
+                    if (copy.size() > 0) {
+                        searchForMatchingExternalComponent(copy, outerRole, externalSignature, containerToApply);
                     }
                 }
             }
@@ -266,7 +366,7 @@ public class ContextHandler {
         } else {
             // Check setting if stereotype should be applied and containers be created
             if (settings.isApplyStereotype()) {
-                Logger.info2("APPLY STEREOTYPE TO " + internalAction.getEntityName());
+                Logger.info("APPLY STEREOTYPE TO " + internalAction.getEntityName());
 
                 DataProcessingContainer newDPC = dataSpecAbs
                         .createNewCharacteristicPairForInternalAction(nameForNewContainers);
@@ -287,6 +387,7 @@ public class ContextHandler {
      */
     private void applyContexts(CharacteristicContainer applyTo, CharacteristicContainer applyFrom) {
         Logger.infoDetailed("\nApply Context");
+        new DataProcessingPrinter(dataSpecAbs.getDataSpec()).printDataProcessing();
 
         // Iterate all context, apply each to dpc
         for (ContextCharacteristic c : dataSpecAbs.getContextCharacteristic(applyFrom)) {
@@ -294,7 +395,7 @@ public class ContextHandler {
             for (ContextCharacteristic c2 : dataSpecAbs.getContextCharacteristic(applyTo)) {
                 // if (c.getCharacteristicType() == c2.getCharacteristicType()) {
                 if (c.getCharacteristicType().getId().equalsIgnoreCase(c2.getCharacteristicType().getId())) {
-                    Logger.info2("Apply:" + applyFrom.getEntityName() + " to " + applyTo.getEntityName());
+                    Logger.info("Apply:" + applyFrom.getEntityName() + " to " + applyTo.getEntityName());
                     dataSpecAbs.applyContext(c2, c);
                     contextApplied = true;
                 }
@@ -303,10 +404,11 @@ public class ContextHandler {
             // Context wasn't applied because no matching contexttype found -> create context type
             if (!contextApplied) {
                 if (settings.isCreateContextCharacteristic()) {
-                    Logger.info2("CREATE NEW CONTEXTCONTAINER");
+                    Logger.info("CREATE NEW CONTEXTCONTAINER");
                     dataSpecAbs.createContextCharacteristic(applyTo, c);
                 }
             }
         }
+        new DataProcessingPrinter(dataSpecAbs.getDataSpec()).printDataProcessing();
     }
 }

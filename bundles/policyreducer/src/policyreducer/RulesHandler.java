@@ -21,7 +21,6 @@ public class RulesHandler {
     }
 
     public void execute() {
-        Logger.enable();
         Logger.infoDetailed("Rules-Start");
 
         // new DynamicSpecificationPrinter(dynamicSpecAbs.getDynamicSpec()).print();
@@ -50,7 +49,6 @@ public class RulesHandler {
         // new DataProcessingPrinter(dataSpecAbs.getDataSpec()).printDataProcessing();
 
         Logger.infoDetailed("Rules-End");
-        Logger.disable();
     }
 
     private void handleRules(ContextCharacteristic c1, ContextCharacteristic c2) {

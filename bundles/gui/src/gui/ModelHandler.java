@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.modelversioning.emfprofile.registry.IProfileRegistry;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataprocessingPackage;
+import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicSpecification;
 import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicextensionPackage;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryPackage;
@@ -104,6 +105,12 @@ public class ModelHandler {
         Resource resourceData = loadResource(this.resourceSet, model.getAssemblyPath());
 
         return (System) resourceData.getContents().get(0);
+    }
+
+    public DynamicSpecification loadDynamicSpecification() {
+        Resource resourceData = loadResource(this.resourceSet, model.getDynamicPath());
+
+        return (DynamicSpecification) resourceData.getContents().get(0);
     }
 
     private Resource loadResource(final ResourceSet resourceSet, final String path) {

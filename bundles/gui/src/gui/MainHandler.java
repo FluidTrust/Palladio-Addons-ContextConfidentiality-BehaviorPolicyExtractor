@@ -39,7 +39,7 @@ public class MainHandler {
         }
 
         final ContextHandler ch = new ContextHandler(settings, dataSpec, usageModel, repo, system);
-        ch.execute();
+        // ch.execute();
 
         DynamicSpecification dynamicSpec = modelloader.loadDynamicSpecification();
 

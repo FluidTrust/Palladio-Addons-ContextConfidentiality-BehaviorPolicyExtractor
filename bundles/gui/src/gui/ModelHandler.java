@@ -14,6 +14,7 @@ import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataprocessingPackage;
 import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicSpecification;
 import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicextensionPackage;
+import org.palladiosimulator.pcm.dataprocessing.dynamicextension.context.ContextPackage;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryPackage;
 import org.palladiosimulator.pcm.system.System;
@@ -47,6 +48,8 @@ public class ModelHandler {
         RepositoryPackage.eINSTANCE.eClass();
         UsagemodelPackage.eINSTANCE.eClass();
         SystemPackage.eINSTANCE.eClass();
+
+        ContextPackage.eINSTANCE.eClass();
 
         Registry resourceRegistry = Resource.Factory.Registry.INSTANCE;
 

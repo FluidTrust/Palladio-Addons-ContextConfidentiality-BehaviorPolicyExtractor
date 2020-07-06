@@ -17,12 +17,6 @@ public class ModelAbstraction {
         this.projectPath = path;
     }
 
-    public String getDataprocessingPath() {
-        String name = PreferenceHandler.getPathdataprocessing();
-        String path = projectPath + "/" + name;
-        return path;
-    }
-
     public String getUsageModelPath() {
         String name = PreferenceHandler.getPathusagemodel();
         String path = projectPath + "/" + name;
@@ -41,8 +35,8 @@ public class ModelAbstraction {
         return path;
     }
 
-    public String getDynamicPath() {
-        String name = PreferenceHandler.getPathDynamic();
+    public String getContextModelPath() {
+        String name = PreferenceHandler.getPathContextModel();
         String path = projectPath + "/" + name;
         return path;
     }

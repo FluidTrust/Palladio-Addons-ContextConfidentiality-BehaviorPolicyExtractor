@@ -9,8 +9,6 @@ Require-Bundle: org.eclipse.core.commands,
  org.eclipse.core.runtime;bundle-version="3.18.0",
  org.eclipse.ui;bundle-version="3.117.0",
  data,
- org.palladiosimulator.pcm.dataprocessing,
- org.palladiosimulator.pcm.dataprocessing.dynamicextension,
- org.palladiosimulator.mdsdprofiles.api;bundle-version="4.3.0",
  policyderiver,
- policyreducer;bundle-version="1.0.0"
+ policyreducer;bundle-version="1.0.0",
+ org.palladiosimulator.pcm.confidentiality.context;bundle-version="0.1.0"

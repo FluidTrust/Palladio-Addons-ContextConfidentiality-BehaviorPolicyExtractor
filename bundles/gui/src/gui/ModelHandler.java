@@ -9,12 +9,8 @@ import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.modelversioning.emfprofile.registry.IProfileRegistry;
-import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification;
-import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataprocessingPackage;
-import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicSpecification;
-import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicextensionPackage;
-import org.palladiosimulator.pcm.dataprocessing.dynamicextension.context.ContextPackage;
+import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.ContextPackage;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryPackage;
 import org.palladiosimulator.pcm.system.System;
@@ -32,8 +28,7 @@ import org.palladiosimulator.pcm.usagemodel.UsagemodelPackage;
  */
 public class ModelHandler {
     private ResourceSet resourceSet;
-    private Resource resourceDataProcessing;
-    private Resource resourceRepository;
+    private Resource resourceContextModel;
     private ModelAbstraction model;
 
     public ModelHandler(final ModelAbstraction model) {
@@ -41,14 +36,9 @@ public class ModelHandler {
         this.resourceSet = new ResourceSetImpl();
 
         // Needed to load MDSD profiles from beginning
-        IProfileRegistry.eINSTANCE.getClass();
-
-        DataprocessingPackage.eINSTANCE.eClass();
-        DynamicextensionPackage.eINSTANCE.eClass();
         RepositoryPackage.eINSTANCE.eClass();
         UsagemodelPackage.eINSTANCE.eClass();
         SystemPackage.eINSTANCE.eClass();
-
         ContextPackage.eINSTANCE.eClass();
 
         Registry resourceRegistry = Resource.Factory.Registry.INSTANCE;
@@ -62,24 +52,7 @@ public class ModelHandler {
      * Enables tracking of modifications for classes which need to be saved if setting is turned on
      */
     public void trackModifications() {
-        resourceDataProcessing.setTrackingModification(true);
-        resourceRepository.setTrackingModification(true);
-    }
-
-    public DataSpecification loadDataSpecification() {
-        resourceDataProcessing = loadResource(this.resourceSet, model.getDataprocessingPath());
-
-        return (DataSpecification) resourceDataProcessing.getContents().get(0);
-    }
-
-    public void saveDataSpecification() {
-        if (resourceDataProcessing.isModified()) {
-            try {
-                resourceDataProcessing.save(null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        resourceContextModel.setTrackingModification(true);
     }
 
     public UsageModel loadUsageModel() {
@@ -89,19 +62,9 @@ public class ModelHandler {
     }
 
     public Repository loadRepositoryModel() {
-        resourceRepository = loadResource(this.resourceSet, model.getRepositoryModelPath());
+        Resource resourceData = loadResource(this.resourceSet, model.getRepositoryModelPath());
 
-        return (Repository) resourceRepository.getContents().get(0);
-    }
-
-    public void saveRepositoryModel() {
-        if (resourceRepository.isModified()) {
-            try {
-                resourceRepository.save(null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        return (Repository) resourceData.getContents().get(0);
     }
 
     public System loadAssemblyModel() {
@@ -110,10 +73,20 @@ public class ModelHandler {
         return (System) resourceData.getContents().get(0);
     }
 
-    public DynamicSpecification loadDynamicSpecification() {
-        Resource resourceData = loadResource(this.resourceSet, model.getDynamicPath());
+    public ConfidentialAccessSpecification loadContextModel() {
+        resourceContextModel = loadResource(this.resourceSet, model.getContextModelPath());
 
-        return (DynamicSpecification) resourceData.getContents().get(0);
+        return (ConfidentialAccessSpecification) resourceContextModel.getContents().get(0);
+    }
+
+    public void saveContextModel() {
+        if (resourceContextModel.isModified()) {
+            try {
+                resourceContextModel.save(null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private Resource loadResource(final ResourceSet resourceSet, final String path) {

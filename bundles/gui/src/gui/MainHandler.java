@@ -2,15 +2,13 @@ package gui;
 
 import java.util.Objects;
 
-import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification;
-import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import data.Settings;
 import policyderiver.ContextHandler;
-import policyreducer.RulesHandler;
 import preferences.PreferenceHandler;
 
 /**
@@ -29,7 +27,7 @@ public class MainHandler {
         Settings settings = PreferenceHandler.getSettingsFromPreferences();
 
         ModelHandler modelloader = new ModelHandler(new ModelAbstraction(dataPath));
-        DataSpecification dataSpec = modelloader.loadDataSpecification();
+        ConfidentialAccessSpecification contextModel = modelloader.loadContextModel();
         UsageModel usageModel = modelloader.loadUsageModel();
         Repository repo = modelloader.loadRepositoryModel();
         System system = modelloader.loadAssemblyModel();
@@ -38,15 +36,10 @@ public class MainHandler {
             modelloader.trackModifications();
         }
 
-        final ContextHandler ch = new ContextHandler(settings, dataSpec, usageModel, repo, system);
-        // ch.execute();
+        final ContextHandler ch = new ContextHandler(settings, contextModel, usageModel, repo, system);
+        ch.execute();
 
-        DynamicSpecification dynamicSpec = modelloader.loadDynamicSpecification();
-
-        final RulesHandler rh = new RulesHandler(dataSpec, dynamicSpec);
-        rh.execute();
-
-        modelloader.saveDataSpecification();
-        modelloader.saveRepositoryModel();
+        // final RulesHandler rh = new RulesHandler();
+        // rh.execute();
     }
 }

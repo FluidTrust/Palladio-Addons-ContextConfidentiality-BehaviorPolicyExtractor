@@ -2,15 +2,11 @@ package data;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.palladiosimulator.pcm.dataprocessing.dataprocessing.characteristics.CharacteristicContainer;
-import org.palladiosimulator.pcm.dataprocessing.dataprocessing.processing.DataProcessingContainer;
 import org.palladiosimulator.pcm.usagemodel.AbstractUserAction;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 import org.palladiosimulator.pcm.usagemodel.UsageScenario;
-
-import util.Logger;
 
 /**
  * Abstraction for handling related to UsageModel
@@ -20,11 +16,9 @@ import util.Logger;
  */
 public class UsageModelAbstraction {
     private final UsageModel usageModel;
-    private final DataSpecificationAbstraction dataSpecAbs;
 
-    public UsageModelAbstraction(final UsageModel usageModel, DataSpecificationAbstraction dataSpecAbs) {
+    public UsageModelAbstraction(final UsageModel usageModel) {
         this.usageModel = usageModel;
-        this.dataSpecAbs = dataSpecAbs;
     }
 
     public EList<ScenarioBehaviour> getListofScenarioBehaviour() {
@@ -36,15 +30,6 @@ public class UsageModelAbstraction {
         return list;
     }
 
-    public CharacteristicContainer getAppliedCharacterizableContainer(ScenarioBehaviour scenarioBehaviour) {
-        Logger.infoDetailed(scenarioBehaviour.getEntityName());
-
-        CharacteristicContainer containerCharacterizable = MdsdAbstraction
-                .getCharacteristicContainerFromStereotype(scenarioBehaviour);
-
-        return containerCharacterizable;
-    }
-
     public EList<EntryLevelSystemCall> getListOfEntryLevelSystemCalls(ScenarioBehaviour scenarioBehaviour) {
         EList<EntryLevelSystemCall> list = new BasicEList<>();
         for (AbstractUserAction abstractUserAction : scenarioBehaviour.getActions_ScenarioBehaviour()) {
@@ -53,22 +38,5 @@ public class UsageModelAbstraction {
             }
         }
         return list;
-    }
-
-    public CharacteristicContainer getAppliedContainer(EntryLevelSystemCall systemCall) {
-        CharacteristicContainer chracteristicContainer = null;
-
-        if (MdsdAbstraction.isDataProcessingStereotypeApplied(systemCall)) {
-            DataProcessingContainer dpc = MdsdAbstraction.getDataProcessingFromStereotype(systemCall);
-
-            chracteristicContainer = dataSpecAbs.getCharacteristicContainerForDataProcessingContainer(dpc);
-
-            if (chracteristicContainer == null) {
-                Logger.error("DataProcessingContainer(" + dpc.getEntityName()
-                        + ") couldn't be matched to CharacteristicContainer");
-            }
-        }
-
-        return chracteristicContainer;
     }
 }

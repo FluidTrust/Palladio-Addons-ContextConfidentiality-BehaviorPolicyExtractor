@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0
 Automatic-Module-Name: policyderiver
 Bundle-RequiredExecutionEnvironment: JavaSE-13
 Require-Bundle: org.palladiosimulator.pcm;bundle-version="4.3.0",
- org.palladiosimulator.pcm.dataprocessing;bundle-version="0.1.0",
- org.palladiosimulator.pcm.dataprocessing.dynamicextension;bundle-version="0.1.0",
- data;bundle-version="1.0.0"
+ data;bundle-version="1.0.0",
+ org.palladiosimulator.pcm.confidentiality.context
 Export-Package: policyderiver

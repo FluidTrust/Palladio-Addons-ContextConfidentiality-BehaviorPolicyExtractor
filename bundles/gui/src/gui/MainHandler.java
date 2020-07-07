@@ -9,6 +9,7 @@ import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import data.Settings;
 import policyderiver.ContextHandler;
+import policyreducer.RulesHandler;
 import preferences.PreferenceHandler;
 
 /**
@@ -37,9 +38,9 @@ public class MainHandler {
         }
 
         final ContextHandler ch = new ContextHandler(settings, contextModel, usageModel, repo, system);
-        ch.execute();
+        // ch.execute();
 
-        // final RulesHandler rh = new RulesHandler();
-        // rh.execute();
+        final RulesHandler rh = new RulesHandler(contextModel);
+        rh.execute();
     }
 }

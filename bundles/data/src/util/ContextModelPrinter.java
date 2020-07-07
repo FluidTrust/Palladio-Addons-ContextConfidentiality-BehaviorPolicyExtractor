@@ -8,6 +8,8 @@ import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSp
 import org.palladiosimulator.pcm.confidentiality.context.specification.PCMSpecificationContainer;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 
+import data.ContextModelAbstraction;
+
 public class ContextModelPrinter {
 
     public ContextModelPrinter() {
@@ -17,6 +19,7 @@ public class ContextModelPrinter {
     public void print(ConfidentialAccessSpecification model, boolean detailed) {
         Logger.setDetailed(true);
         Logger.infoDetailed("\nContextModel");
+        ContextModelAbstraction abs = new ContextModelAbstraction(model);
 
         if (detailed) {
             ContextSetContainer contextSetContainer = model.getSetContainer();
@@ -39,7 +42,8 @@ public class ContextModelPrinter {
         PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
-            Logger.infoDetailed(specification.getEntityName() + "," + specification.getId());
+            Logger.infoDetailed("Policy: " + specification.getEntityName() + "," + specification.getId() + " , "
+                    + abs.getContextSet(specification.getResourcedemandingbehaviour()).size());
         }
         Logger.infoDetailed("\n");
         Logger.setDetailed(false);

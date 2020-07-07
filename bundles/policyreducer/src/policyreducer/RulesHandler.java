@@ -1,39 +1,48 @@
 package policyreducer;
 
-import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification;
-import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
+import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
+import data.ContextModelAbstraction;
+import rules.ParentChild;
 import rules.RulesFlag;
+import rules.RulesType;
+import rules.SimplerPolicy;
+import util.ContextModelPrinter;
 import util.Logger;
 
 public class RulesHandler {
+    private final ContextModelAbstraction contextModelAbs;
     private final RulesFlag rules;
 
-    public RulesHandler(DataSpecification dataSpec, DynamicSpecification dynamicSpec) {
+    public RulesHandler(ConfidentialAccessSpecification contextModel) {
+        this.contextModelAbs = new ContextModelAbstraction(contextModel);
         this.rules = new RulesFlag();
     }
 
     public void execute() {
         Logger.infoDetailed("Rules-Start");
 
-        // new DynamicSpecificationPrinter(dynamicSpecAbs.getDynamicSpec()).print();
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);
 
         // Loop data elements
-        /*
-         * for (CharacteristicContainer cc : dataSpecAbs.getDataSpec().getCharacteristicContainer())
-         * { Logger.infoDetailed("CC:" + cc.getEntityName() + "," + cc.getId());
-         * 
-         * if (rules.isRuleEnabled(RulesType.SimplerPolicy)) { new SimplerPolicy(dataSpecAbs,
-         * dynamicSpecAbs).applyRule(cc); }
-         * 
-         * if (rules.isRuleEnabled(RulesType.SubstituteParent)) { new SubstituteParent(dataSpecAbs,
-         * dynamicSpecAbs).applyRule(cc); }
-         * 
-         * if (rules.isRuleEnabled(RulesType.ParentChild)) { new ParentChild(dataSpecAbs,
-         * dynamicSpecAbs).applyRule(cc); } }
-         */
 
-        // new DataProcessingPrinter(dataSpecAbs.getDataSpec()).printDataProcessing();
+        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
+            Logger.infoDetailed("SEFF:" + seff.getId());
+
+            if (rules.isRuleEnabled(RulesType.SimplerPolicy)) {
+                new SimplerPolicy(contextModelAbs).applyRule(seff);
+            }
+
+            if (rules.isRuleEnabled(RulesType.SubstituteParent)) {
+            }
+
+            if (rules.isRuleEnabled(RulesType.ParentChild)) {
+                new ParentChild(contextModelAbs).applyRule(seff);
+            }
+        }
+
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);
 
         Logger.infoDetailed("Rules-End");
     }

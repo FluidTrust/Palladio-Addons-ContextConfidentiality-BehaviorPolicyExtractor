@@ -124,6 +124,16 @@ public class ContextModelAbstraction {
         return contextModel.getPcmspecificationcontainer().getContextspecification();
     }
 
+    public EList<HierarchicalContext> getHierarchicalContexts() {
+        EList<HierarchicalContext> list = new BasicEList<>();
+        for (ContextAttribute context : contextModel.getContextContainer().get(0).getContext()) {
+            if (context instanceof HierarchicalContext) {
+                list.add((HierarchicalContext) context);
+            }
+        }
+        return list;
+    }
+
     public boolean isParentChild(HierarchicalContext parent, HierarchicalContext child) {
         boolean b = false;
 
@@ -161,7 +171,6 @@ public class ContextModelAbstraction {
         for (ContextAttribute context : set1.getContexts()) {
             if (set2.getContexts().contains(context)) {
             } else if (context instanceof HierarchicalContext) {
-                Logger.info("Hierarchical:" + context.getEntityName());
                 if (containsHierarchicalChild(set2, (HierarchicalContext) context)) {
 
                 } else {
@@ -173,5 +182,19 @@ public class ContextModelAbstraction {
             }
         }
         return b;
+    }
+
+    public HierarchicalContext getParent(HierarchicalContext context) {
+        HierarchicalContext parent = null;
+
+        for (HierarchicalContext hcontext : getHierarchicalContexts()) {
+            if (hcontext.getIncluding().contains(context)) {
+                // TODO multiple parents ?
+                parent = hcontext;
+                break;
+            }
+        }
+
+        return parent;
     }
 }

@@ -9,9 +9,9 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import data.ContextModelAbstraction;
 import util.Logger;
 
-public class SubstituteParent extends AbstractRule {
+public class NegativeRule extends AbstractRule {
 
-    public SubstituteParent(ContextModelAbstraction contextModelAbs) {
+    public NegativeRule(ContextModelAbstraction contextModelAbs) {
         super(contextModelAbs);
     }
 

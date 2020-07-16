@@ -8,6 +8,7 @@ import rules.ParentChild;
 import rules.RulesFlag;
 import rules.RulesType;
 import rules.SimplerPolicy;
+import rules.SubstituteParent;
 import util.ContextModelPrinter;
 import util.Logger;
 
@@ -34,12 +35,14 @@ public class RulesHandler {
                 new SimplerPolicy(contextModelAbs).applyRule(seff);
             }
 
-            if (rules.isRuleEnabled(RulesType.SubstituteParent)) {
-            }
-
             if (rules.isRuleEnabled(RulesType.ParentChild)) {
                 new ParentChild(contextModelAbs).applyRule(seff);
             }
+
+            if (rules.isRuleEnabled(RulesType.SubstituteParent)) {
+                new SubstituteParent(contextModelAbs).applyRule(seff);
+            }
+
         }
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);

@@ -22,11 +22,11 @@ public class ContextModelPrinter {
         ContextModelAbstraction abs = new ContextModelAbstraction(model);
 
         if (detailed) {
-            ContextSetContainer contextSetContainer = model.getSetContainer();
+            ContextSetContainer contextSetContainer = model.getSetContainer().get(0);
             Logger.infoDetailed(
                     "SetContainer: " + contextSetContainer.getEntityName() + "," + contextSetContainer.getId());
 
-            ContextContainer contextContainer = model.getContextContainer();
+            ContextContainer contextContainer = model.getContextContainer().get(0);
             Logger.infoDetailed("Container: " + contextContainer.getEntityName() + "," + contextContainer.getId());
 
             TypeContainer typeContainer = model.getTypeContainer();

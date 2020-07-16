@@ -106,7 +106,7 @@ public class ContextHandler {
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
             policy.setEntityName("test");
             policy.setResourcedemandingbehaviour(seff);
-
+            policy.getPolicy().add(contextSet);
             contextModelAbs.getPolicySpecifications().add(policy);
         }
 

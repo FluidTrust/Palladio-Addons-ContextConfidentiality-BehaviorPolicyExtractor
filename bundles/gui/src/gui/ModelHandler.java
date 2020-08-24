@@ -29,9 +29,9 @@ import org.palladiosimulator.pcm.usagemodel.UsagemodelPackage;
 public class ModelHandler {
     private ResourceSet resourceSet;
     private Resource resourceContextModel;
-    private ModelAbstraction model;
+    private IModelAbstraction model;
 
-    public ModelHandler(final ModelAbstraction model) {
+    public ModelHandler(final IModelAbstraction model) {
         this.model = model;
         this.resourceSet = new ResourceSetImpl();
 

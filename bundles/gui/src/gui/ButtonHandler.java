@@ -35,6 +35,7 @@ public class ButtonHandler extends AbstractHandler {
         // Needed here to ensure default values are set if PreferencesPage has never been opened
         PreferenceHandler.setDefault();
 
+        // TODO move in mainhandler
         String path = PreferenceHandler.getProjectPath();
         Logger.info(path);
         new MainHandler().execute(path);

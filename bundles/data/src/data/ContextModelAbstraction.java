@@ -112,7 +112,7 @@ public class ContextModelAbstraction {
 
     public void removeContextSet(ResourceDemandingBehaviour seff, EList<ContextSet> removeList) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
-            // policySpecification.setPolicy(policySpecification.getPolicy().removeAll(removeList));
+            policySpecification.getPolicy().removeAll(removeList);
         }
     }
 

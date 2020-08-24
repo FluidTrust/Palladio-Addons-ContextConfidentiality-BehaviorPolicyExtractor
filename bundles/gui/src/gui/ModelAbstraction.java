@@ -10,7 +10,7 @@ import preferences.PreferenceHandler;
  * @author Thomas Lieb
  *
  */
-public class ModelAbstraction {
+public class ModelAbstraction implements IModelAbstraction {
     private String projectPath;
 
     public ModelAbstraction(String path) {

@@ -8,4 +8,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: data;bundle-version="1.0.0",
  org.palladiosimulator.pcm;bundle-version="4.3.0",
  org.palladiosimulator.pcm.confidentiality.context;bundle-version="0.1.0"
-Export-Package: policyreducer
+Export-Package: policyreducer,
+ rules

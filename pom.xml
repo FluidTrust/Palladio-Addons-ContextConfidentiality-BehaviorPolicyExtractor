@@ -19,6 +19,7 @@
 	
 	<modules>
 		<module>bundles</module>
+		<module>tests</module>
 	</modules>
 	
 </project>

@@ -7,5 +7,4 @@ Automatic-Module-Name: org.palladiosimulator.pcm.confidentiality.context.policye
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.junit,
  org.junit.jupiter.api,
- policyderiver;bundle-version="1.0.0",
- tools.mdsd.library.standalone.initialization;bundle-version="0.1.0"
+ policyderiver;bundle-version="1.0.0"

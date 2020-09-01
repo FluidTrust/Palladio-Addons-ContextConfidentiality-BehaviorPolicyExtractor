@@ -1,4 +1,4 @@
-package org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules;
+package rules;
 
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;

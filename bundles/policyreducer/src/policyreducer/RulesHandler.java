@@ -16,9 +16,9 @@ public class RulesHandler {
     private final ContextModelAbstraction contextModelAbs;
     private final RulesFlag rules;
 
-    public RulesHandler(ConfidentialAccessSpecification contextModel) {
+    public RulesHandler(ConfidentialAccessSpecification contextModel, RulesFlag rules) {
         this.contextModelAbs = new ContextModelAbstraction(contextModel);
-        this.rules = new RulesFlag();
+        this.rules = rules;
     }
 
     public void execute() {

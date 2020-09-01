@@ -12,3 +12,4 @@ Require-Bundle: org.eclipse.core.commands,
  policyderiver,
  policyreducer;bundle-version="1.0.0",
  org.palladiosimulator.pcm.confidentiality.context;bundle-version="0.1.0"
+Export-Package: gui

@@ -11,6 +11,7 @@ import data.Settings;
 import policyderiver.ContextHandler;
 import policyreducer.RulesHandler;
 import preferences.PreferenceHandler;
+import rules.RulesFlag;
 
 /**
  * Handles to basic logic of plugin
@@ -37,10 +38,12 @@ public class MainHandler {
             modelloader.trackModifications();
         }
 
+        // TODO rename to PolicyDeriver and Reducer
         final ContextHandler ch = new ContextHandler(settings, contextModel, usageModel, repo, system);
         // ch.execute();
 
-        final RulesHandler rh = new RulesHandler(contextModel);
+        RulesFlag rules = new RulesFlag();
+        final RulesHandler rh = new RulesHandler(contextModel, rules);
         rh.execute();
     }
 }

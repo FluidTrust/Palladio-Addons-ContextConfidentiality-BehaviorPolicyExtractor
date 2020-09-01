@@ -1,14 +1,14 @@
-package policyreducer;
+package org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer;
 
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules.ParentChild;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules.RulesFlag;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules.RulesType;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules.SimplerPolicy;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules.SubstituteParent;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
-import rules.ParentChild;
-import rules.RulesFlag;
-import rules.RulesType;
-import rules.SimplerPolicy;
-import rules.SubstituteParent;
 import util.ContextModelPrinter;
 import util.Logger;
 

@@ -1,4 +1,4 @@
-package rules;
+package org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules;
 
 import java.util.HashMap;
 

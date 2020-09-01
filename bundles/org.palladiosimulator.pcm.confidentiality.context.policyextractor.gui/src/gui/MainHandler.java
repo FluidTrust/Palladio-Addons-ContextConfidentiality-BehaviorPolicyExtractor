@@ -3,6 +3,8 @@ package gui;
 import java.util.Objects;
 
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.RulesHandler;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.rules.RulesFlag;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
@@ -10,9 +12,7 @@ import org.palladiosimulator.pcm.usagemodel.UsageModel;
 import data.Settings;
 import model.ModelHandler;
 import policyderiver.ContextHandler;
-import policyreducer.RulesHandler;
 import preferences.PreferenceHandler;
-import rules.RulesFlag;
 
 /**
  * Handles to basic logic of plugin

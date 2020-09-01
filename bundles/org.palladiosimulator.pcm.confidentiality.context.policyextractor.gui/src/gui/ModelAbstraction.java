@@ -1,5 +1,6 @@
 package gui;
 
+import model.IModelAbstraction;
 import preferences.PreferenceHandler;
 
 /**

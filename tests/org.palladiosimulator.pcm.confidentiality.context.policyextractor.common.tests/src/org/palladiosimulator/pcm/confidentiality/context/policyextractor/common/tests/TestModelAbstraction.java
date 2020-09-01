@@ -1,6 +1,6 @@
 package org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests;
 
-import gui.IModelAbstraction;
+import model.IModelAbstraction;
 
 public class TestModelAbstraction implements IModelAbstraction {
     private String projectPath;

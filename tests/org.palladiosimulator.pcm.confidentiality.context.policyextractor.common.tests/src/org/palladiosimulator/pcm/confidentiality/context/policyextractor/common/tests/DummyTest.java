@@ -11,7 +11,7 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
-import gui.ModelHandler;
+import model.ModelHandler;
 import util.Logger;
 
 class DummyTest {

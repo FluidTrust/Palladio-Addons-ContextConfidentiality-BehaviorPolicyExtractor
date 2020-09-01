@@ -1,4 +1,4 @@
-package gui;
+package model;
 
 import java.io.IOException;
 import java.util.Map;

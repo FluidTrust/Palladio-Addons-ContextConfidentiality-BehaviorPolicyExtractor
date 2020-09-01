@@ -21,7 +21,7 @@ class DummyTest {
      */
     @Test
     void test1() throws IOException {
-        String canonicalPath = getTestDataPath();
+        String canonicalPath = TestUtil.getTestDataPath() + "\\usecase1";
         Logger.info(canonicalPath);
 
         ModelHandler modelloader = new ModelHandler(new TestModelAbstraction(canonicalPath));
@@ -37,14 +37,4 @@ class DummyTest {
 
     }
 
-    static String getTestDataPath() throws IOException {
-        String canonicalPath = getCurrentDir();
-        String[] parts = canonicalPath.split("Palladio");
-        return parts[0] + "Examples\\";
-    }
-
-    static String getCurrentDir() throws IOException {
-        String canonicalPath = new File(".").getCanonicalPath();
-        return canonicalPath;
-    }
 }

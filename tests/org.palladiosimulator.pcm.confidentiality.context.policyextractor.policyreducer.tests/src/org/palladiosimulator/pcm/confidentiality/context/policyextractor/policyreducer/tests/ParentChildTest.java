@@ -1,11 +1,11 @@
 package org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.tests;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests.TestModelAbstraction;
+import org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests.TestUtil;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
@@ -21,7 +21,7 @@ class ParentChildTest {
      */
     @Test
     void test1() throws IOException {
-        String canonicalPath = getTestDataPath();
+        String canonicalPath = TestUtil.getTestDataPath() + "usecase1";
         Logger.info(canonicalPath);
 
         ModelHandler modelloader = new ModelHandler(new TestModelAbstraction(canonicalPath));
@@ -36,16 +36,5 @@ class ParentChildTest {
             new ContextModelPrinter().printSEFF(contextModel, seff, false);
         }
 
-    }
-
-    static String getTestDataPath() throws IOException {
-        String canonicalPath = getCurrentDir();
-        String[] parts = canonicalPath.split("Palladio");
-        return parts[0] + "Examples\\";
-    }
-
-    static String getCurrentDir() throws IOException {
-        String canonicalPath = new File(".").getCanonicalPath();
-        return canonicalPath;
     }
 }

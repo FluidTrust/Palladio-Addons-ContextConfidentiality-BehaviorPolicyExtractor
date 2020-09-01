@@ -7,9 +7,9 @@ Automatic-Module-Name: org.palladiosimulator.pcm.confidentiality.context.policye
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.junit,
  org.junit.jupiter.api,
- data;bundle-version="1.0.0",
  gui;bundle-version="1.0.0",
  org.eclipse.core.resources;bundle-version="3.13.700",
  org.eclipse.equinox.registry,
- org.palladiosimulator.pcm.confidentiality.context
+ org.palladiosimulator.pcm.confidentiality.context,
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor.common;bundle-version="1.0.0"
 Export-Package: org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests

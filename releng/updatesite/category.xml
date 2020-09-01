@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature id="org.palladiosimulator.pcm.confidentiality.context.model.feature">
-      <category name="org.palladiosimulator.pcm.confidentiality.context.category"/>
+   <feature id="org.palladiosimulator.pcm.confidentiality.context.policyextractor.feature">
+      <category name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.category"/>
    </feature>
-   <feature id="org.palladiosimulator.pcm.confidentiality.context.model.feature.source">
-      <category name="org.palladiosimulator.pcm.confidentiality.context.source.category"/>
+   <feature id="org.palladiosimulator.pcm.confidentiality.context.policyextractor.feature.source">
+      <category name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.source.category"/>
    </feature>
-   <feature id="org.palladiosimulator.pcm.confidentiality.context.editor.feature">
-      <category name="org.palladiosimulator.pcm.confidentiality.context.category"/>
-   </feature>
-   <feature id="org.palladiosimulator.pcm.confidentiality.context.editor.feature.source">
-      <category name="org.palladiosimulator.pcm.confidentiality.context.source.category"/>
-   </feature>
-   <category-def name="org.palladiosimulator.pcm.confidentiality.context.category" label="Confidentiality Context">
+   <category-def name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.category" label="PolicyExtractor">
    </category-def>
-   <category-def name="org.palladiosimulator.pcm.confidentiality.contextsource.category" label="Confidentiality Context Developer Resources">
+   <category-def name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.source.category" label="PolicyExtractor Developer Resources">
    </category-def>
 </site>
 

@@ -21,7 +21,7 @@ class DummyTest {
      */
     @Test
     void test1() throws IOException {
-        String canonicalPath = TestUtil.getTestDataPath() + "\\usecase1";
+        String canonicalPath = TestUtil.getTestDataPath() + File.separator + "usecase1";
         Logger.info(canonicalPath);
 
         ModelHandler modelloader = new ModelHandler(new TestModelAbstraction(canonicalPath));

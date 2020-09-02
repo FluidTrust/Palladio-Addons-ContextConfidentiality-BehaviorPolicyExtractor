@@ -6,6 +6,7 @@ import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpeci
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
@@ -112,21 +113,47 @@ public class ContextModelAbstraction {
 
     public void removeContextSet(ResourceDemandingBehaviour seff, ContextSet set) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
-            policySpecification.getPolicy().remove(set);
+            policySpecification.getPolicy()
+                .remove(set);
         }
     }
 
+    public void addContextSet(ResourceDemandingBehaviour seff, ContextSet newSet) {
+        for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
+            policySpecification.getPolicy()
+                .add(newSet);
+            // TODO Correct like this? If one seff has multiple policies containers, only needed in
+            // one(?)
+            break;
+        }
+    }
+
+    public ContextSetContainer getContextSetContainer(ContextSet set) {
+        ContextSetContainer setContainer = null;
+        for (ContextSetContainer container : contextModel.getSetContainer()) {
+            if (container.getPolicies()
+                .contains(set)) {
+                setContainer = container;
+            }
+        }
+        return setContainer;
+    }
+
     public EList<PolicySpecification> getPolicySpecifications() {
-        return contextModel.getPcmspecificationcontainer().getPolicyspecification();
+        return contextModel.getPcmspecificationcontainer()
+            .getPolicyspecification();
     }
 
     public EList<ContextSpecification> getContextSpecifications() {
-        return contextModel.getPcmspecificationcontainer().getContextspecification();
+        return contextModel.getPcmspecificationcontainer()
+            .getContextspecification();
     }
 
     public EList<HierarchicalContext> getHierarchicalContexts() {
         EList<HierarchicalContext> list = new BasicEList<>();
-        for (ContextAttribute context : contextModel.getContextContainer().get(0).getContext()) {
+        for (ContextAttribute context : contextModel.getContextContainer()
+            .get(0)
+            .getContext()) {
             if (context instanceof HierarchicalContext) {
                 list.add((HierarchicalContext) context);
             }
@@ -137,7 +164,8 @@ public class ContextModelAbstraction {
     public boolean isParentChild(HierarchicalContext parent, HierarchicalContext child) {
         boolean b = false;
 
-        if (parent.getIncluding().contains(child)) {
+        if (parent.getIncluding()
+            .contains(child)) {
             return true;
         } else {
             for (ContextAttribute including : parent.getIncluding()) {
@@ -169,7 +197,8 @@ public class ContextModelAbstraction {
     public boolean containsAllHierarchical(ContextSet set2, ContextSet set1) {
         boolean b = true;
         for (ContextAttribute context : set1.getContexts()) {
-            if (set2.getContexts().contains(context)) {
+            if (set2.getContexts()
+                .contains(context)) {
             } else if (context instanceof HierarchicalContext) {
                 if (containsHierarchicalChild(set2, (HierarchicalContext) context)) {
 
@@ -183,16 +212,18 @@ public class ContextModelAbstraction {
         }
         return b;
     }
-    
+
     public boolean containsAllSimple(ContextSet set2, ContextSet set1) {
-    	return set2.getContexts().containsAll(set1.getContexts());
+        return set2.getContexts()
+            .containsAll(set1.getContexts());
     }
 
     public HierarchicalContext getParent(HierarchicalContext context) {
         HierarchicalContext parent = null;
 
         for (HierarchicalContext hcontext : getHierarchicalContexts()) {
-            if (hcontext.getIncluding().contains(context)) {
+            if (hcontext.getIncluding()
+                .contains(context)) {
                 // TODO multiple parents ?
                 parent = hcontext;
                 break;

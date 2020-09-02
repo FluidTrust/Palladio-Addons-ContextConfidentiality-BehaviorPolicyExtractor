@@ -6,7 +6,6 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
 import rules.AbstractRule;
-import util.Logger;
 
 public class SimplerPolicy extends AbstractRule {
 
@@ -14,12 +13,12 @@ public class SimplerPolicy extends AbstractRule {
         super(contextModelAbs);
     }
 
-	@Override
-	public boolean applyRule(ResourceDemandingBehaviour seff) {
+    @Override
+    public boolean applyRule(ResourceDemandingBehaviour seff) {
         boolean applied = false;
-        
+
         EList<ContextSet> list = contextModelAbs.getContextSet(seff);
-        
+
         for (ContextSet set1 : list) {
             for (ContextSet set2 : list) {
                 if (set1 != set2) {
@@ -33,5 +32,5 @@ public class SimplerPolicy extends AbstractRule {
             }
         }
         return applied;
-	}
+    }
 }

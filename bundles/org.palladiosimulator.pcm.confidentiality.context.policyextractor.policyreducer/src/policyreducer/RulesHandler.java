@@ -3,8 +3,6 @@ package policyreducer;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
-import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
-import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
 import rules.IRulesDefinition;
@@ -29,37 +27,37 @@ public class RulesHandler {
     public void execute() {
         Logger.infoDetailed("Rules-Start");
 
-        new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
         int loopCount = 0;
-        while(true) {
-        	Logger.info("Loop-Start: " + loopCount + " -----------------");
+        while (true) {
+            Logger.info("Loop-Start: " + loopCount + " -----------------");
 
-        	initializeRules();
-        	
-        	for (IRulesDefinition rulesDefinition : rulesList) {
-				rulesDefinition.applyRuleToModel();
-			}
-        	
-        	//TODO crossverify records for conflicts?
-        	
-        	for (IRulesDefinition rulesDefinition : rulesList) {
-        		rulesDefinition.executeRule();
-        	}
-        	
-        	Logger.info("Loop-End: " + loopCount + " -----------------");
-        	//TODO add condition
-        	break;
+            initializeRules();
+
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                rulesDefinition.applyRuleToModel();
+            }
+
+            Logger.info("\n");
+            // TODO crossverify records for conflicts?
+
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                rulesDefinition.executeRule();
+            }
+
+            Logger.info("Loop-End: " + loopCount + " -----------------");
+            // TODO add condition
+            break;
         }
-        
 
-        new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
         Logger.infoDetailed("Rules-End");
     }
-    
+
     private void initializeRules() {
-    	rulesList = new BasicEList<>();
+        rulesList = new BasicEList<>();
 
         if (rules.isRuleEnabled(RulesType.SimplerPolicy)) {
             rulesList.add(new SimplerPolicy(contextModelAbs));

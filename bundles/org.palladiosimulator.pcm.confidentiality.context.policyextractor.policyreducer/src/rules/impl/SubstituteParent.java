@@ -1,11 +1,13 @@
-package rules;
+package rules.impl;
 
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
+import rules.AbstractRule;
 
 public class SubstituteParent extends AbstractRule {
 
@@ -13,7 +15,6 @@ public class SubstituteParent extends AbstractRule {
         super(contextModelAbs);
     }
 
-    @Override
     public boolean applyRule2(EList<ContextSet> list) {
         boolean applied = false;
         for (ContextSet set1 : list) {
@@ -44,4 +45,16 @@ public class SubstituteParent extends AbstractRule {
         }
         return applied;
     }
+
+	@Override
+	public boolean applyRule(ResourceDemandingBehaviour seff) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean executeRule() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

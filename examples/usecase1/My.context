@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
-  <setContainer id="_SoSyALkaEeq3Uqhaj7n9xA">
-    <policies id="_S2g0MLkaEeq3Uqhaj7n9xA" contexts="_T1jPUbkaEeq3Uqhaj7n9xA _UOUUorkaEeq3Uqhaj7n9xA _TchEQLkaEeq3Uqhaj7n9xA"/>
+  <setContainer id="_Zer9oO0FEeqGh7ZaAVEkAQ">
+    <policies id="_Z0cLMO0FEeqGh7ZaAVEkAQ" entityName="Simple" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ"/>
+    <policies id="_lRXhgO0FEeqGh7ZaAVEkAQ" entityName="Specific" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ _xhwVEe0FEeqGh7ZaAVEkAQ"/>
   </setContainer>
-  <contextContainer id="_SJk1sbkaEeq3Uqhaj7n9xA">
-    <context xsi:type="model:HierarchicalContext" id="_TchEQLkaEeq3Uqhaj7n9xA"/>
-    <context xsi:type="model:SingleAttributeContext" id="_T1jPUbkaEeq3Uqhaj7n9xA"/>
-    <context xsi:type="model:RelatedContextSet" id="_UOUUorkaEeq3Uqhaj7n9xA"/>
+  <setContainer id="_lp7ygO0FEeqGh7ZaAVEkAQ">
+    <policies id="_xeGtsO0REeq65b5_QdL_qw" entityName="Parent" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ"/>
+    <policies id="_x45MQO0REeq65b5_QdL_qw" entityName="Child A" contexts="_6bzUYO0EEeqGh7ZaAVEkAQ"/>
+    <policies id="_3zficO0REeq65b5_QdL_qw" entityName="Child B" contexts="_6woU4O0EEeqGh7ZaAVEkAQ"/>
+    <policies id="_7jg3cO0REeq65b5_QdL_qw" entityName="Child both" contexts="_6bzUYO0EEeqGh7ZaAVEkAQ _6woU4O0EEeqGh7ZaAVEkAQ"/>
+  </setContainer>
+  <contextContainer id="_4-uSYe0EEeqGh7ZaAVEkAQ">
+    <context xsi:type="model:HierarchicalContext" id="_5hQ-wO0EEeqGh7ZaAVEkAQ" entityName="1_A" including="_6bzUYO0EEeqGh7ZaAVEkAQ _6woU4O0EEeqGh7ZaAVEkAQ"/>
+    <context xsi:type="model:HierarchicalContext" id="_6bzUYO0EEeqGh7ZaAVEkAQ" entityName="2_A"/>
+    <context xsi:type="model:HierarchicalContext" id="_6woU4O0EEeqGh7ZaAVEkAQ" entityName="2_B"/>
+    <context xsi:type="model:SingleAttributeContext" id="_xhwVEe0FEeqGh7ZaAVEkAQ" entityName="S1" contexttype="_AZLRwO0FEeqGh7ZaAVEkAQ"/>
+    <context xsi:type="model:SingleAttributeContext" id="_4C4fwe0FEeqGh7ZaAVEkAQ" entityName="S2" contexttype="_AZLRwO0FEeqGh7ZaAVEkAQ"/>
   </contextContainer>
+  <typeContainer>
+    <types id="_AZLRwO0FEeqGh7ZaAVEkAQ" entityName="Shift"/>
+  </typeContainer>
   <pcmspecificationcontainer id="_RtPfALkaEeq3Uqhaj7n9xA">
-    <policyspecification id="_WdNOELkaEeq3Uqhaj7n9xA" policy="_S2g0MLkaEeq3Uqhaj7n9xA">
+    <policyspecification id="_WdNOELkaEeq3Uqhaj7n9xA" entityName="Simple" policy="_Z0cLMO0FEeqGh7ZaAVEkAQ _lRXhgO0FEeqGh7ZaAVEkAQ">
       <resourcedemandingbehaviour href="newRepository.repository#_N0N_ALkaEeq3Uqhaj7n9xA"/>
     </policyspecification>
-    <contextspecification id="_t_WpwbkaEeq3Uqhaj7n9xA" contextset="_S2g0MLkaEeq3Uqhaj7n9xA">
-      <usagescenario href="newUsageModel.usagemodel#_kfAU4LkaEeq3Uqhaj7n9xA"/>
-    </contextspecification>
-    <contextspecification id="_xTPcYbkaEeq3Uqhaj7n9xA" contextset="_S2g0MLkaEeq3Uqhaj7n9xA">
-      <entrylevelsystemcall href="newUsageModel.usagemodel#_n535QLkaEeq3Uqhaj7n9xA"/>
-    </contextspecification>
+    <policyspecification id="_Vlv9MO0FEeqGh7ZaAVEkAQ" entityName="Parent" policy="_x45MQO0REeq65b5_QdL_qw _3zficO0REeq65b5_QdL_qw _7jg3cO0REeq65b5_QdL_qw _xeGtsO0REeq65b5_QdL_qw">
+      <resourcedemandingbehaviour href="newRepository.repository#_NxrBULkaEeq3Uqhaj7n9xA"/>
+    </policyspecification>
   </pcmspecificationcontainer>
 </context:ConfidentialAccessSpecification>

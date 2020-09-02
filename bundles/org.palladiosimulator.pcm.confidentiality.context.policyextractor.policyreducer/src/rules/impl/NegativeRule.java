@@ -1,12 +1,14 @@
-package rules;
+package rules.impl;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
+import rules.AbstractRule;
 import util.Logger;
 
 public class NegativeRule extends AbstractRule {
@@ -15,7 +17,6 @@ public class NegativeRule extends AbstractRule {
         super(contextModelAbs);
     }
 
-    @Override
     public boolean applyRule2(EList<ContextSet> list) {
         boolean applied = false;
         for (ContextSet set1 : list) {
@@ -36,7 +37,7 @@ public class NegativeRule extends AbstractRule {
 
                             boolean containedInner = false;
                             for (ContextSet set2 : list) {
-                                if (contextModelAbs.containsAll(set2, newSet)) {
+                                if (contextModelAbs.containsAllHierarchical(set2, newSet)) {
                                     containedInner = true;
                                     removeListInner.add(set2);
                                     break;
@@ -51,7 +52,7 @@ public class NegativeRule extends AbstractRule {
 
                         if (containedOuter) {
                             Logger.info("MATCH");
-                            removeList.addAll(removeListInner);
+                            //appliedList.addAll(removeListInner);
                         }
                     }
                 }
@@ -59,4 +60,11 @@ public class NegativeRule extends AbstractRule {
         }
         return applied;
     }
+
+	@Override
+	public boolean applyRule(ResourceDemandingBehaviour seff) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

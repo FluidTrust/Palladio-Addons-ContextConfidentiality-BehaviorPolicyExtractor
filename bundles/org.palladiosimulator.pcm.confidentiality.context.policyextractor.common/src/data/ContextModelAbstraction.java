@@ -110,9 +110,9 @@ public class ContextModelAbstraction {
         return list;
     }
 
-    public void removeContextSet(ResourceDemandingBehaviour seff, EList<ContextSet> removeList) {
+    public void removeContextSet(ResourceDemandingBehaviour seff, ContextSet set) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
-            policySpecification.getPolicy().removeAll(removeList);
+            policySpecification.getPolicy().remove(set);
         }
     }
 
@@ -166,7 +166,7 @@ public class ContextModelAbstraction {
         return b;
     }
 
-    public boolean containsAll(ContextSet set2, ContextSet set1) {
+    public boolean containsAllHierarchical(ContextSet set2, ContextSet set1) {
         boolean b = true;
         for (ContextAttribute context : set1.getContexts()) {
             if (set2.getContexts().contains(context)) {
@@ -182,6 +182,10 @@ public class ContextModelAbstraction {
             }
         }
         return b;
+    }
+    
+    public boolean containsAllSimple(ContextSet set2, ContextSet set1) {
+    	return set2.getContexts().containsAll(set1.getContexts());
     }
 
     public HierarchicalContext getParent(HierarchicalContext context) {

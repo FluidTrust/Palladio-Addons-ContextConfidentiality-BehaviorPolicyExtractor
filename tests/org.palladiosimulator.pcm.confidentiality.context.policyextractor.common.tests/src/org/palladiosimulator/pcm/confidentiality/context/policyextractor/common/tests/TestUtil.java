@@ -7,8 +7,8 @@ public class TestUtil {
 
     public static String getTestDataPath() throws IOException {
         String canonicalPath = getCurrentDir();
-        String[] parts = canonicalPath.split("tests" + File.separator + File.separator  + "org.palladiosimulator.pcm.confidentiality.context.policyextractor");
-        return parts[0] + "examples" + File.separator;
+        String[] parts = canonicalPath.split("org.palladiosimulator.pcm.confidentiality.context.policyextractor");
+        return parts[0] + ".." + File.separator + "examples" + File.separator;
     }
 
     public static String getCurrentDir() throws IOException {

@@ -47,8 +47,16 @@ public class RulesHandler {
             }
 
             Logger.info("Loop-End: " + loopCount + " -----------------");
-            // TODO add condition
-            break;
+
+            // TODO better condition
+            int rulesCount = 0;
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                rulesCount += rulesDefinition.getNumberOfRecords();
+            }
+            if (rulesCount == 0) {
+                break;
+            }
+            loopCount++;
         }
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);

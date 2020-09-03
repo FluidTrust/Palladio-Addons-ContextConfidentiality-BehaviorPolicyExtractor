@@ -20,6 +20,10 @@ public abstract class AbstractRule implements IRulesDefinition {
 
     public abstract boolean applyRule(ResourceDemandingBehaviour seff);
 
+    public int getNumberOfRecords() {
+        return appliedList.size();
+    }
+
     public void applyRuleToModel() {
         boolean appliable = false;
         for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {

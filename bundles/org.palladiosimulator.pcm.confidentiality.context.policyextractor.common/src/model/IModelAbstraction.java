@@ -9,4 +9,10 @@ public interface IModelAbstraction {
     public String getAssemblyPath();
 
     public String getContextModelPath();
+
+    public String getDeriverOutPath();
+
+    public String getReducerOutPath();
+
+    public String getCleanupOutpath();
 }

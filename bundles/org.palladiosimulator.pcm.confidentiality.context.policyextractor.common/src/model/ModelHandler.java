@@ -48,48 +48,59 @@ public class ModelHandler {
         this.resourceSet.setResourceFactoryRegistry(resourceRegistry);
     }
 
-    /**
-     * Enables tracking of modifications for classes which need to be saved if setting is turned on
-     */
-    public void trackModifications() {
-        resourceContextModel.setTrackingModification(true);
-    }
-
     public UsageModel loadUsageModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getUsageModelPath());
 
-        return (UsageModel) resourceData.getContents().get(0);
+        return (UsageModel) resourceData.getContents()
+            .get(0);
     }
 
     public Repository loadRepositoryModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getRepositoryModelPath());
 
-        return (Repository) resourceData.getContents().get(0);
+        return (Repository) resourceData.getContents()
+            .get(0);
     }
 
     public System loadAssemblyModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getAssemblyPath());
 
-        return (System) resourceData.getContents().get(0);
+        return (System) resourceData.getContents()
+            .get(0);
     }
 
     public ConfidentialAccessSpecification loadContextModel() {
-        resourceContextModel = loadResource(this.resourceSet, model.getContextModelPath());
+        Resource resourceData = loadResource(this.resourceSet, model.getContextModelPath());
 
-        return (ConfidentialAccessSpecification) resourceContextModel.getContents().get(0);
-    }
-
-    public void saveContextModel() {
-        if (resourceContextModel.isModified()) {
-            try {
-                resourceContextModel.save(null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        return (ConfidentialAccessSpecification) resourceData.getContents()
+            .get(0);
     }
 
     private Resource loadResource(final ResourceSet resourceSet, final String path) {
         return resourceSet.getResource(URI.createFileURI(path), true);
+    }
+
+    public void saveDeriverModel(ConfidentialAccessSpecification contextModel) {
+        saveContextModel(contextModel, model.getDeriverOutPath());
+    }
+
+    public void saveReducerModel(ConfidentialAccessSpecification contextModel) {
+        saveContextModel(contextModel, model.getReducerOutPath());
+    }
+
+    public void saveCleanupModel(ConfidentialAccessSpecification contextModel) {
+        saveContextModel(contextModel, model.getCleanupOutpath());
+    }
+
+    private void saveContextModel(ConfidentialAccessSpecification contextModel, String path) {
+        Resource x = resourceSet.createResource(URI.createFileURI(path));
+        x.getContents()
+            .add(contextModel);
+        try {
+            x.save(null);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

@@ -41,4 +41,21 @@ public class ModelAbstraction implements IModelAbstraction {
         String path = projectPath + "/" + name;
         return path;
     }
+
+    private static String outFolder = "/_gen/";
+
+    public String getDeriverOutPath() {
+        String path = projectPath + outFolder + "deriver.context";
+        return path;
+    }
+
+    public String getReducerOutPath() {
+        String path = projectPath + outFolder + "reducer.context";
+        return path;
+    }
+
+    public String getCleanupOutpath() {
+        String path = projectPath + outFolder + "final.context";
+        return path;
+    }
 }

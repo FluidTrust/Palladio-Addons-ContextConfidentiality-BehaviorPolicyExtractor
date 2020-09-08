@@ -28,7 +28,7 @@ import util.Logger;
  * @author Thomas Lieb
  *
  */
-public class ContextHandler {
+public class PolicyDeriver {
     private final Settings settings;
     private final ContextModelAbstraction contextModelAbs;
     private final UsageModelAbstraction usageModelAbs;
@@ -37,17 +37,8 @@ public class ContextHandler {
 
     private final PalladioAbstraction palladioAbs;;
 
-    /**
-     * Constructor
-     * 
-     * @param settings
-     * @param dataSpec
-     * @param usageModel
-     * @param repo
-     * @param system
-     */
-    public ContextHandler(final Settings settings, final ConfidentialAccessSpecification contextModel,
-            final UsageModel usageModel, final Repository repo, final System system) {
+    public PolicyDeriver(Settings settings, ConfidentialAccessSpecification contextModel, UsageModel usageModel,
+            Repository repo, System system) {
         this.settings = settings;
         this.contextModelAbs = new ContextModelAbstraction(contextModel);
         this.usageModelAbs = new UsageModelAbstraction(usageModel);
@@ -94,7 +85,8 @@ public class ContextHandler {
         boolean create = true;
         for (PolicySpecification policy : contextModelAbs.getPolicySpecifications(seff)) {
             Logger.info("Policy: " + policy.getEntityName() + " : " + policy.getId());
-            if (policy.getPolicy().contains(contextSet)) {
+            if (policy.getPolicy()
+                .contains(contextSet)) {
                 Logger.info("Already contained");
                 create = false;
                 break;
@@ -106,8 +98,10 @@ public class ContextHandler {
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
             policy.setEntityName("test");
             policy.setResourcedemandingbehaviour(seff);
-            policy.getPolicy().add(contextSet);
-            contextModelAbs.getPolicySpecifications().add(policy);
+            policy.getPolicy()
+                .add(contextSet);
+            contextModelAbs.getPolicySpecifications()
+                .add(policy);
         }
 
     }
@@ -134,5 +128,9 @@ public class ContextHandler {
         }
 
         return list;
+    }
+
+    public ConfidentialAccessSpecification getContextModel() {
+        return contextModelAbs.getContextModel();
     }
 }

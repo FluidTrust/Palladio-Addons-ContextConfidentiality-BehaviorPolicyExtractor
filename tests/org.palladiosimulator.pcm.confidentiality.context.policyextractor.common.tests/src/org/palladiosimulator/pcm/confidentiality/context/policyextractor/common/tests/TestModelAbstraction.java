@@ -29,4 +29,16 @@ public class TestModelAbstraction implements IModelAbstraction {
         return path;
     }
 
+    public String getDeriverOutPath() {
+        return null;
+    }
+
+    public String getReducerOutPath() {
+        return null;
+    }
+
+    public String getCleanupOutpath() {
+        return null;
+    }
+
 }

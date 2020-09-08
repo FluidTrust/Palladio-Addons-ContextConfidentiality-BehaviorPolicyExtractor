@@ -79,4 +79,8 @@ public class RulesHandler {
             rulesList.add(new SubstituteParent(contextModelAbs));
         }
     }
+
+    public ConfidentialAccessSpecification getContextModel() {
+        return contextModelAbs.getContextModel();
+    }
 }

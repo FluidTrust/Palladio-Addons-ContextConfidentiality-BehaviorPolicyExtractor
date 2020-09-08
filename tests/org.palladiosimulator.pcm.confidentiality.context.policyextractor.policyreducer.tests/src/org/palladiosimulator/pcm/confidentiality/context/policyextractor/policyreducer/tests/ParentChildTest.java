@@ -10,7 +10,7 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
 import model.ModelHandler;
-import rules.ParentChild;
+import rules.impl.ParentChild;
 import util.ContextModelPrinter;
 import util.Logger;
 

@@ -25,11 +25,18 @@ public class ContextModelPrinter {
         ContextModelAbstraction abs = new ContextModelAbstraction(model);
 
         if (detailed) {
-            ContextSetContainer contextSetContainer = model.getSetContainer().get(0);
-            Logger.infoDetailed(
-                    "SetContainer: " + contextSetContainer.getEntityName() + "," + contextSetContainer.getId());
+            for (ContextSetContainer contextSetContainer : model.getSetContainer()) {
+                Logger.infoDetailed(
+                        "SetContainer: " + contextSetContainer.getEntityName() + "," + contextSetContainer.getId());
 
-            ContextContainer contextContainer = model.getContextContainer().get(0);
+                for (ContextSet set : contextSetContainer.getPolicies()) {
+                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts()
+                        .size());
+                }
+            }
+
+            ContextContainer contextContainer = model.getContextContainer()
+                .get(0);
             Logger.infoDetailed("Container: " + contextContainer.getEntityName() + "," + contextContainer.getId());
 
             TypeContainer typeContainer = model.getTypeContainer();
@@ -45,8 +52,9 @@ public class ContextModelPrinter {
         PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
-            Logger.infoDetailed("Policy: " + specification.getEntityName() + "," + specification.getId() + " , "
-                    + abs.getContextSet(specification.getResourcedemandingbehaviour()).size());
+            Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
+                    + abs.getContextSet(specification.getResourcedemandingbehaviour())
+                        .size());
         }
         Logger.infoDetailed("\n");
         Logger.setDetailed(false);

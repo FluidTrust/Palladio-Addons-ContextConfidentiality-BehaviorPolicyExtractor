@@ -7,10 +7,11 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
+import data.PolicyCleaner;
 import data.Settings;
 import model.ModelHandler;
 import policyderiver.PolicyDeriver;
-import policyreducer.RulesHandler;
+import policyreducer.PolicyReducer;
 import preferences.PreferenceHandler;
 import rules.RulesFlag;
 
@@ -41,14 +42,15 @@ public class MainHandler {
 
         // TODO move to Settings?
         RulesFlag rules = new RulesFlag();
-        // TODO rename to Reducer
-        final RulesHandler rh = new RulesHandler(contextModel, rules);
-        // rh.execute();
 
-        modelloader.saveReducerModel(rh.getContextModel());
+        final PolicyReducer reducer = new PolicyReducer(deriver.getContextModel(), rules);
+        reducer.execute();
+        modelloader.saveReducerModel(reducer.getContextModel());
 
         // TODO cleanup model
-        modelloader.saveCleanupModel(rh.getContextModel());
+        final PolicyCleaner cleaner = new PolicyCleaner(reducer.getContextModel());
+        cleaner.execute();
+        modelloader.saveCleanupModel(cleaner.getContextModel());
 
     }
 }

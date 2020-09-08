@@ -14,12 +14,12 @@ import rules.impl.SubstituteParent;
 import util.ContextModelPrinter;
 import util.Logger;
 
-public class RulesHandler {
+public class PolicyReducer {
     private final ContextModelAbstraction contextModelAbs;
     private final RulesFlag rules;
     private EList<IRulesDefinition> rulesList = new BasicEList<>();
 
-    public RulesHandler(ConfidentialAccessSpecification contextModel, RulesFlag rules) {
+    public PolicyReducer(ConfidentialAccessSpecification contextModel, RulesFlag rules) {
         this.contextModelAbs = new ContextModelAbstraction(contextModel);
         this.rules = rules;
     }

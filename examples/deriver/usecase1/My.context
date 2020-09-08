@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
   <setContainer id="_Zer9oO0FEeqGh7ZaAVEkAQ">
-    <policies id="_Z0cLMO0FEeqGh7ZaAVEkAQ" entityName="Simple" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ"/>
-    <policies id="_lRXhgO0FEeqGh7ZaAVEkAQ" entityName="Specific" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ _xhwVEe0FEeqGh7ZaAVEkAQ"/>
+    <policies id="_Z0cLMO0FEeqGh7ZaAVEkAQ" entityName="Simple A1" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ"/>
+    <policies id="_lRXhgO0FEeqGh7ZaAVEkAQ" entityName="Simple S1" contexts="_xhwVEe0FEeqGh7ZaAVEkAQ"/>
   </setContainer>
   <contextContainer id="_4-uSYe0EEeqGh7ZaAVEkAQ">
     <context xsi:type="model:HierarchicalContext" id="_5hQ-wO0EEeqGh7ZaAVEkAQ" entityName="1_A" including="_6bzUYO0EEeqGh7ZaAVEkAQ _6woU4O0EEeqGh7ZaAVEkAQ"/>
@@ -15,6 +15,9 @@
     <types id="_AZLRwO0FEeqGh7ZaAVEkAQ" entityName="Shift"/>
   </typeContainer>
   <pcmspecificationcontainer id="_RtPfALkaEeq3Uqhaj7n9xA">
+    <policyspecification id="_tpBHwPHNEeqlcN6hiY8LJw" entityName="X" policy="_lRXhgO0FEeqGh7ZaAVEkAQ">
+      <resourcedemandingbehaviour href="file:/C:/Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor/examples/deriver/usecase1/newRepository.repository#_N0N_ALkaEeq3Uqhaj7n9xA"/>
+    </policyspecification>
     <contextspecification id="_Op8NAfG4Eeq4cu_V_YB0aQ" entityName="call1" contextset="_Z0cLMO0FEeqGh7ZaAVEkAQ">
       <entrylevelsystemcall href="file:/C:/Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor/examples/deriver/usecase1/newUsageModel.usagemodel#_n535QLkaEeq3Uqhaj7n9xA"/>
     </contextspecification>

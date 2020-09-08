@@ -35,7 +35,9 @@ public class PolicyDeriver {
     private final Repository repo; // currently not used
     private final AssemblyAbstraction assemblyAbs;
 
-    private final PalladioAbstraction palladioAbs;;
+    private final PalladioAbstraction palladioAbs;
+
+    public EList<PolicySpecification> negativeList = new BasicEList<>();
 
     public PolicyDeriver(Settings settings, ConfidentialAccessSpecification contextModel, UsageModel usageModel,
             Repository repo, System system) {
@@ -59,6 +61,10 @@ public class PolicyDeriver {
         }
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
+
+        // TODO move
+        contextModelAbs.initNegativeList();
+        negativeList = contextModelAbs.negativeList;
     }
 
     /**
@@ -75,26 +81,26 @@ public class PolicyDeriver {
             Logger.info("SystemCall: " + systemCall.getEntityName());
             for (ResourceDemandingSEFF seff : palladioAbs.getAffectedSEFFs(systemCall)) {
                 for (ContextSet contextSet : getContextSetsToApply(scenarioBehaviour, systemCall)) {
-                    applyContextSetToSEFF(seff, contextSet);
+                    applyContextSetToSEFF(seff, contextSet, false);
                 }
             }
         }
     }
 
-    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, ContextSet contextSet) {
+    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, ContextSet contextSet, boolean negative) {
         boolean create = true;
-        for (PolicySpecification policy : contextModelAbs.getPolicySpecifications(seff)) {
-            Logger.info("Policy: " + policy.getEntityName() + " : " + policy.getId());
-            if (policy.getPolicy()
-                .contains(contextSet)) {
-                Logger.info("Already contained");
-                create = false;
-                break;
-            }
-        }
+
+        // TODO not needed, cleanup done afterwards
+        /*
+         * for (PolicySpecification policy : contextModelAbs.getPolicySpecifications(seff)) {
+         * Logger.info("Policy: " + policy.getEntityName() + " : " + policy.getId()); if
+         * (policy.getPolicy() .contains(contextSet)) { Logger.info("Already contained"); create =
+         * false; break; } }
+         */
 
         if (create) {
-            Logger.info("Create");
+            Logger.info("Create: " + seff.getDescribedService__SEFF()
+                .getEntityName());
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
             policy.setEntityName("___" + seff.getDescribedService__SEFF()
                 .getEntityName());
@@ -103,6 +109,10 @@ public class PolicyDeriver {
                 .add(contextSet);
             contextModelAbs.getPolicySpecifications()
                 .add(policy);
+
+            if (negative) {
+                negativeList.add(policy);
+            }
         }
 
     }

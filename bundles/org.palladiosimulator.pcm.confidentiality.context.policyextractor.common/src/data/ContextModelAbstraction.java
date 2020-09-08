@@ -19,6 +19,7 @@ import util.Logger;
 
 public class ContextModelAbstraction {
     private ConfidentialAccessSpecification contextModel;
+    public EList<PolicySpecification> negativeList = new BasicEList<>();
 
     public ContextModelAbstraction(ConfidentialAccessSpecification contextModel) {
         this.contextModel = contextModel;
@@ -100,12 +101,11 @@ public class ContextModelAbstraction {
     public EList<ContextSet> getContextSet(ResourceDemandingBehaviour seff) {
         EList<ContextSet> list = new BasicEList<>();
 
-        for (PolicySpecification policySpecification : getPolicySpecifications()) {
-            ResourceDemandingBehaviour rdb = policySpecification.getResourcedemandingbehaviour();
-            if (rdb != null) {
-                if (rdb == seff) {
-                    list.addAll(policySpecification.getPolicy());
-                }
+        for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
+            if (!isNegative(policySpecification)) {
+                list.addAll(policySpecification.getPolicy());
+            } else {
+                Logger.info("SKIP");
             }
         }
 
@@ -257,5 +257,20 @@ public class ContextModelAbstraction {
         }
 
         return parent;
+    }
+
+    public boolean isNegative(PolicySpecification specification) {
+        // Logger.info(specification.getId() + " --- " + negativeList.size());
+        return negativeList.contains(specification);
+    }
+
+    // TODO remove
+    public void initNegativeList() {
+        for (PolicySpecification policySpecification : getPolicySpecifications()) {
+            if (policySpecification.getEntityName()
+                .equalsIgnoreCase("X")) {
+                negativeList.add(policySpecification);
+            }
+        }
     }
 }

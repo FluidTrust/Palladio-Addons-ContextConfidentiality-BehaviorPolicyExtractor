@@ -7,6 +7,7 @@ import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
+import org.palladiosimulator.pcm.confidentiality.context.set.SetFactory;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
@@ -126,6 +127,31 @@ public class ContextModelAbstraction {
             // one(?)
             break;
         }
+    }
+
+    public ContextSet combineContextSet(ContextSet set1, ContextSet set2) {
+        ContextSet combinedSet = SetFactory.eINSTANCE.createContextSet();
+        getCreatedContextSetContainer().getPolicies()
+            .add(combinedSet);
+        combinedSet.setEntityName("__combined__");
+        combinedSet.getContexts()
+            .addAll(set1.getContexts());
+        combinedSet.getContexts()
+            .addAll(set2.getContexts());
+        return combinedSet;
+    }
+
+    // TODO move
+    private ContextSetContainer createdContainer = null;
+
+    public ContextSetContainer getCreatedContextSetContainer() {
+        if (createdContainer == null) {
+            createdContainer = SetFactory.eINSTANCE.createContextSetContainer();
+            createdContainer.setEntityName("__Generated");
+            contextModel.getSetContainer()
+                .add(createdContainer);
+        }
+        return createdContainer;
     }
 
     public ContextSetContainer getContextSetContainer(ContextSet set) {

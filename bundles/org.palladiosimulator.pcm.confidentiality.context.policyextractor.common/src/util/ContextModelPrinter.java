@@ -44,8 +44,9 @@ public class ContextModelPrinter {
                                                    // typeContainer.getId());
 
             PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
+            Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
             for (ContextSpecification specification : pcmContainer.getContextspecification()) {
-                Logger.infoDetailed(specification.getEntityName() + "," + specification.getId());
+                Logger.infoDetailed("\tSpec.: " + specification.getEntityName() + "," + specification.getId());
             }
         }
 

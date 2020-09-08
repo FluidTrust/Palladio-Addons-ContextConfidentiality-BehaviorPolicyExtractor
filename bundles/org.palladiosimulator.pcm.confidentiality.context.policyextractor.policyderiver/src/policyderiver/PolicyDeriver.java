@@ -52,13 +52,13 @@ public class PolicyDeriver {
      * Entrypoint for mainhandler
      */
     public void execute() {
-        new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
         for (ScenarioBehaviour scenarioBehaviour : usageModelAbs.getListofScenarioBehaviour()) {
             applyContextToAllSystemCalls(scenarioBehaviour);
         }
 
-        new ContextModelPrinter().print(contextModelAbs.getContextModel(), false);
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
     }
 
     /**
@@ -96,7 +96,8 @@ public class PolicyDeriver {
         if (create) {
             Logger.info("Create");
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-            policy.setEntityName("test");
+            policy.setEntityName("___" + seff.getDescribedService__SEFF()
+                .getEntityName());
             policy.setResourcedemandingbehaviour(seff);
             policy.getPolicy()
                 .add(contextSet);
@@ -112,16 +113,36 @@ public class PolicyDeriver {
         EList<ContextSet> listScenario = contextModelAbs.getContextSet(scenarioBehaviour);
         EList<ContextSet> listSystemCall = contextModelAbs.getContextSet(systemCall);
 
+        // TODO create only 2 options,
+        // Either combining the contextsets, or using one over the other...
+
         // Depending on ContextMaster a different characteristicContainer is used to be applied
         switch (settings.getContextMaster()) {
         case Characterizable:
             list = listScenario;
             break;
         case DataProcessing:
-            list = listSystemCall;
+            if (listSystemCall.isEmpty()) {
+                list = listScenario;
+            } else {
+                list = listSystemCall;
+            }
             break;
         case Combined:
-            Logger.error("TODO: Combined logic");
+            if (listSystemCall.isEmpty()) {
+                list = listScenario;
+            } else {
+                if (listScenario.isEmpty()) {
+                    list = listSystemCall;
+                } else {
+                    // Both not empty -> Combine
+                    for (ContextSet set : listSystemCall) {
+                        for (ContextSet set2 : listScenario) {
+                            list.add(contextModelAbs.combineContextSet(set, set2));
+                        }
+                    }
+                }
+            }
             break;
         default:
             break;

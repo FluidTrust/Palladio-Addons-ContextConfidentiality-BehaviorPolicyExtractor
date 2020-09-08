@@ -36,8 +36,7 @@ public class MainHandler {
         System system = modelloader.loadAssemblyModel();
 
         final PolicyDeriver deriver = new PolicyDeriver(settings, contextModel, usageModel, repo, system);
-        // ch.execute();
-
+        deriver.execute();
         modelloader.saveDeriverModel(deriver.getContextModel());
 
         // TODO move to Settings?

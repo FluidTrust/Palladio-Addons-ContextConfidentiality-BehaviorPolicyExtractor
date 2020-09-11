@@ -17,7 +17,7 @@ public class SimplerPolicy extends AbstractRule {
     public boolean applyRule(ResourceDemandingBehaviour seff) {
         boolean applied = false;
 
-        EList<ContextSet> list = contextModelAbs.getContextSet(seff);
+        EList<ContextSet> list = contextModelAbs.getContextSetFiltered(seff);
 
         for (ContextSet set1 : list) {
             for (ContextSet set2 : list) {

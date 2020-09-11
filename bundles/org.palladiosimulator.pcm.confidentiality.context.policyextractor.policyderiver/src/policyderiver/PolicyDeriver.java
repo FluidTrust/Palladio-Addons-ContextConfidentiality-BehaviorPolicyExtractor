@@ -92,7 +92,7 @@ public class PolicyDeriver {
         Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF()
             .getEntityName());
         PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-        policy.setEntityName("__2__" + seff.getDescribedService__SEFF()
+        policy.setEntityName("____" + seff.getDescribedService__SEFF()
             .getEntityName());
         policy.setResourcedemandingbehaviour(seff);
         policy.getPolicy()

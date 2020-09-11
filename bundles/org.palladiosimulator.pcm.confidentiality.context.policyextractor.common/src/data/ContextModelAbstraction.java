@@ -139,6 +139,16 @@ public class ContextModelAbstraction {
         EList<ContextSet> list = new BasicEList<>();
 
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
+            list.addAll(policySpecification.getPolicy());
+        }
+
+        return list;
+    }
+
+    public EList<ContextSet> getContextSetFiltered(ResourceDemandingBehaviour seff) {
+        EList<ContextSet> list = new BasicEList<>();
+
+        for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
             if (!isNegative(policySpecification)) {
                 list.addAll(policySpecification.getPolicy());
             } else {

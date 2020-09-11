@@ -13,19 +13,18 @@ public class ParentChild extends AbstractRule {
         super(contextModelAbs);
     }
 
-	@Override
-	public boolean applyRule(ResourceDemandingBehaviour seff) {
+    @Override
+    public boolean applyRule(ResourceDemandingBehaviour seff) {
         boolean applied = false;
 
-        EList<ContextSet> list = contextModelAbs.getContextSet(seff);
-        
+        EList<ContextSet> list = contextModelAbs.getContextSetFiltered(seff);
+
         for (ContextSet set1 : list) {
             for (ContextSet set2 : list) {
                 if (set1 != set2) {
-                	if(contextModelAbs.containsAllSimple(set2, set1))
-                	{
-                		continue;
-                	}
+                    if (contextModelAbs.containsAllSimple(set2, set1)) {
+                        continue;
+                    }
                     if (contextModelAbs.containsAllHierarchical(set2, set1)) {
                         // set1 is less specific then set2 ==> set2 already included in set1
 
@@ -36,5 +35,5 @@ public class ParentChild extends AbstractRule {
             }
         }
         return applied;
-	}
+    }
 }

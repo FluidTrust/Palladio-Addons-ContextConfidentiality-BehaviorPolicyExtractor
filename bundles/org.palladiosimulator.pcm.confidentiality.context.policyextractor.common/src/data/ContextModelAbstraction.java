@@ -29,6 +29,34 @@ public class ContextModelAbstraction {
         return contextModel;
     }
 
+    public EList<ContextSpecification> getContextSpecification(EntryLevelSystemCall systemCall) {
+        EList<ContextSpecification> list = new BasicEList<>();
+
+        for (ContextSpecification contextSpecification : getContextSpecifications()) {
+            EntryLevelSystemCall contextSystemCall = contextSpecification.getEntrylevelsystemcall();
+            if (contextSystemCall != null) {
+                if (contextSystemCall == systemCall) {
+                    list.add(contextSpecification);
+                }
+            }
+        }
+        return list;
+    }
+
+    public EList<ContextSpecification> getContextSpecification(ScenarioBehaviour scenarioBehaviour) {
+        EList<ContextSpecification> list = new BasicEList<>();
+
+        for (ContextSpecification contextSpecification : getContextSpecifications()) {
+            UsageScenario usageScenario = contextSpecification.getUsagescenario();
+            if (usageScenario != null) {
+                if (usageScenario.getScenarioBehaviour_UsageScenario() == scenarioBehaviour) {
+                    list.add(contextSpecification);
+                }
+            }
+        }
+        return list;
+    }
+
     public EList<ContextSet> getContextSet(ScenarioBehaviour scenarioBehaviour) {
         EList<ContextSet> list = new BasicEList<>();
 
@@ -65,6 +93,15 @@ public class ContextModelAbstraction {
         }
 
         return list;
+    }
+
+    public ContextSet getContextSet(ContextSpecification specification) {
+        if (specification.getContextset() != null) {
+            return specification.getContextset();
+        } else {
+            Logger.error("Error: Empty ContextSet in " + specification.getId());
+            return null;
+        }
     }
 
     public EList<PolicySpecification> getPolicySpecifications(ResourceDemandingBehaviour seff) {

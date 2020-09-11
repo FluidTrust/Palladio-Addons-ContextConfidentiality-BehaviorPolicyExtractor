@@ -4,6 +4,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.SpecificationFactory;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -80,85 +81,70 @@ public class PolicyDeriver {
         for (EntryLevelSystemCall systemCall : usageModelAbs.getListOfEntryLevelSystemCalls(scenarioBehaviour)) {
             Logger.info("SystemCall: " + systemCall.getEntityName());
             for (ResourceDemandingSEFF seff : palladioAbs.getAffectedSEFFs(systemCall)) {
-                for (ContextSet contextSet : getContextSetsToApply(scenarioBehaviour, systemCall)) {
-                    applyContextSetToSEFF(seff, contextSet, false);
+                for (DeriverRecord record : getContextSetsToApply(scenarioBehaviour, systemCall)) {
+                    applyContextSetToSEFF(seff, record);
                 }
             }
         }
     }
 
-    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, ContextSet contextSet, boolean negative) {
-        boolean create = true;
+    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, DeriverRecord record) {
+        Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF()
+            .getEntityName());
+        PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
+        policy.setEntityName("__2__" + seff.getDescribedService__SEFF()
+            .getEntityName());
+        policy.setResourcedemandingbehaviour(seff);
+        policy.getPolicy()
+            .add(record.getSetToApply());
+        contextModelAbs.getPolicySpecifications()
+            .add(policy);
 
-        // TODO not needed, cleanup done afterwards
-        /*
-         * for (PolicySpecification policy : contextModelAbs.getPolicySpecifications(seff)) {
-         * Logger.info("Policy: " + policy.getEntityName() + " : " + policy.getId()); if
-         * (policy.getPolicy() .contains(contextSet)) { Logger.info("Already contained"); create =
-         * false; break; } }
-         */
-
-        if (create) {
-            Logger.info("Create: " + seff.getDescribedService__SEFF()
-                .getEntityName());
-            PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-            policy.setEntityName("___" + seff.getDescribedService__SEFF()
-                .getEntityName());
-            policy.setResourcedemandingbehaviour(seff);
-            policy.getPolicy()
-                .add(contextSet);
-            contextModelAbs.getPolicySpecifications()
-                .add(policy);
-
-            if (negative) {
-                negativeList.add(policy);
-            }
+        if (record.isNegative()) {
+            negativeList.add(policy);
         }
-
     }
 
-    private EList<ContextSet> getContextSetsToApply(ScenarioBehaviour scenarioBehaviour,
+    private EList<DeriverRecord> getContextSetsToApply(ScenarioBehaviour scenarioBehaviour,
             EntryLevelSystemCall systemCall) {
-        EList<ContextSet> list = new BasicEList<>();
-        EList<ContextSet> listScenario = contextModelAbs.getContextSet(scenarioBehaviour);
-        EList<ContextSet> listSystemCall = contextModelAbs.getContextSet(systemCall);
+        EList<DeriverRecord> list = new BasicEList<>();
 
-        // TODO create only 2 options,
-        // Either combining the contextsets, or using one over the other...
+        EList<ContextSpecification> listScenario = contextModelAbs.getContextSpecification(scenarioBehaviour);
+        EList<ContextSpecification> listSystemCall = contextModelAbs.getContextSpecification(systemCall);
 
-        // Depending on ContextMaster a different characteristicContainer is used to be applied
-        switch (settings.getContextMaster()) {
-        case Characterizable:
-            list = listScenario;
-            break;
-        case DataProcessing:
-            if (listSystemCall.isEmpty()) {
-                list = listScenario;
-            } else {
-                list = listSystemCall;
+        if (listScenario.isEmpty()) {
+            for (ContextSpecification spec : listSystemCall) {
+                ContextSet set = contextModelAbs.getContextSet(spec);
+                Boolean negative = spec.isMissageUse();
+                list.add(new DeriverRecord(set, negative));
             }
-            break;
-        case Combined:
-            if (listSystemCall.isEmpty()) {
-                list = listScenario;
-            } else {
-                if (listScenario.isEmpty()) {
-                    list = listSystemCall;
-                } else {
-                    // Both not empty -> Combine
-                    for (ContextSet set : listSystemCall) {
-                        for (ContextSet set2 : listScenario) {
-                            list.add(contextModelAbs.combineContextSet(set, set2));
-                        }
-                    }
+        } else if (listSystemCall.isEmpty()) {
+            for (ContextSpecification spec : listScenario) {
+                ContextSet set = contextModelAbs.getContextSet(spec);
+                Boolean negative = spec.isMissageUse();
+                list.add(new DeriverRecord(set, negative));
+            }
+        } else {
+            // Both list contain something -> combine according to setting
+            for (ContextSpecification spec1 : listSystemCall) {
+                for (ContextSpecification spec2 : listScenario) {
+
+                    // TODO options
+                    ContextSet set1 = contextModelAbs.getContextSet(spec1);
+                    ContextSet set2 = contextModelAbs.getContextSet(spec2);
+
+                    ContextSet combined = contextModelAbs.combineContextSet(set1, set2);
+                    Boolean negative = spec1.isMissageUse() || spec2.isMissageUse();
+
+                    list.add(new DeriverRecord(combined, negative));
                 }
+
             }
-            break;
-        default:
-            break;
+
         }
 
         return list;
+
     }
 
     public ConfidentialAccessSpecification getContextModel() {

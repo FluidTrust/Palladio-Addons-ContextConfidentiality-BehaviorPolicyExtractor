@@ -1,14 +1,21 @@
 package policyderiver;
 
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
+import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
 
 public class DeriverRecord {
     private ContextSet setToApply;
     private boolean negative;
+    private EntryLevelSystemCall systemCall;
+    private ScenarioBehaviour scenarioBehaviour;
 
-    public DeriverRecord(ContextSet setToApply, boolean negative) {
+    public DeriverRecord(ContextSet setToApply, boolean negative, EntryLevelSystemCall systemCall,
+            ScenarioBehaviour scenarioBehaviour) {
         this.setToApply = setToApply;
         this.negative = negative;
+        this.systemCall = systemCall;
+        this.scenarioBehaviour = scenarioBehaviour;
     }
 
     public ContextSet getSetToApply() {
@@ -17,6 +24,14 @@ public class DeriverRecord {
 
     public boolean isNegative() {
         return negative;
+    }
+
+    public EntryLevelSystemCall getSystemCall() {
+        return systemCall;
+    }
+
+    public ScenarioBehaviour getScenarioBehaviour() {
+        return scenarioBehaviour;
     }
 
 }

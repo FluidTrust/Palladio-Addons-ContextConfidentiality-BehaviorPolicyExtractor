@@ -89,7 +89,8 @@ public class PolicyDeriver {
     private void applyContextSetToSEFF(ResourceDemandingSEFF seff, DeriverRecord record) {
         Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
         PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-        policy.setEntityName("____" + seff.getDescribedService__SEFF().getEntityName());
+        policy.setEntityName(
+                DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName()));
         policy.setResourcedemandingbehaviour(seff);
         policy.getPolicy().add(record.getSetToApply());
         contextModelAbs.getPolicySpecifications().add(policy);
@@ -110,13 +111,13 @@ public class PolicyDeriver {
             for (ContextSpecification spec : listSystemCall) {
                 ContextSet set = contextModelAbs.getContextSet(spec);
                 Boolean negative = spec.isMissageUse();
-                list.add(new DeriverRecord(set, negative));
+                list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
             }
         } else if (listSystemCall.isEmpty()) {
             for (ContextSpecification spec : listScenario) {
                 ContextSet set = contextModelAbs.getContextSet(spec);
                 Boolean negative = spec.isMissageUse();
-                list.add(new DeriverRecord(set, negative));
+                list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
             }
         } else {
             // Settings - combine
@@ -132,7 +133,7 @@ public class PolicyDeriver {
                         ContextSet combined = contextModelAbs.combineContextSet(set1, set2);
                         Boolean negative = spec1.isMissageUse() || spec2.isMissageUse();
 
-                        list.add(new DeriverRecord(combined, negative));
+                        list.add(new DeriverRecord(combined, negative, systemCall, scenarioBehaviour));
                     }
                 }
             } else {
@@ -140,7 +141,7 @@ public class PolicyDeriver {
                 for (ContextSpecification spec : listSystemCall) {
                     ContextSet set = contextModelAbs.getContextSet(spec);
                     Boolean negative = spec.isMissageUse();
-                    list.add(new DeriverRecord(set, negative));
+                    list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
                 }
             }
 

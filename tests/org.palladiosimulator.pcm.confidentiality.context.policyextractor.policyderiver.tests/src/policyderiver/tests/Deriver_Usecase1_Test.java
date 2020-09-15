@@ -1,6 +1,7 @@
 package policyderiver.tests;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import data.Settings;
 import model.ModelHandler;
+import policyderiver.DeriverUtil;
 import policyderiver.PolicyDeriver;
 import policyextractor.common.tests.util.TestContextModelAbstraction;
 import policyextractor.common.tests.util.TestModelAbstraction;
@@ -26,7 +28,7 @@ class Deriver_Usecase1_Test {
         String canonicalPath = TestUtil.getTestDataPath() + "deriver" + File.separator + "usecase1";
         Logger.info(canonicalPath);
 
-        Logger.setActive(false);
+        // Logger.setActive(false);
 
         ModelHandler modelloader = new ModelHandler(new TestModelAbstraction(canonicalPath));
         ConfidentialAccessSpecification contextModel = modelloader.loadContextModel();
@@ -45,15 +47,19 @@ class Deriver_Usecase1_Test {
         PolicyDeriver deriver = new PolicyDeriver(s, contextModel, usageModel, repo, system);
 
         String s1 = "method1";
-        String s2 = "method1";
+        String s2 = "method2";
 
         assertNotNull(abs.getContextSpecificationByName(s1));
         assertNotNull(abs.getContextSpecificationByName(s2));
+        assertNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s1)));
+        assertNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s2)));
 
         deriver.execute();
 
         assertNotNull(abs.getContextSpecificationByName(s1));
         assertNotNull(abs.getContextSpecificationByName(s2));
+        assertNotNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s1)));
+        assertNotNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s2)));
     }
 
 }

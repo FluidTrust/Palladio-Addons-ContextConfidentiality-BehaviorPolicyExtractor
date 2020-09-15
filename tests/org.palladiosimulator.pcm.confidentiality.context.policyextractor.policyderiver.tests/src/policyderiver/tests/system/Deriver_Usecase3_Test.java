@@ -48,7 +48,7 @@ class Deriver_Usecas3_Test extends PolicyExtractorTestTemplate {
         assertNotNull(abs.getContextSpecificationByName(s1));
         assertNotNull(abs.getContextSpecificationByName(s2));
         assertNotNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s1)));
-        assertNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s2)));
+        assertNotNull(abs.getPolicySpecificationByName(DeriverUtil.createNewPolicySpecificationName(s2)));
         assertNotNull(abs.getContextSetByName(shift1));
         assertNotNull(abs.getContextSetByName(shift2));
         assertNotNull(abs.getContextSetByName(shift3));

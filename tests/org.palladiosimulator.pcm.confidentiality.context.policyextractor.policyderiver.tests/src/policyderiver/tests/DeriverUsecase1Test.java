@@ -11,7 +11,6 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
-import data.ContextMaster;
 import data.Settings;
 import model.ModelHandler;
 import policyderiver.PolicyDeriver;
@@ -37,7 +36,7 @@ class DeriverUsecase1Test {
         assertNotNull(repo);
         assertNotNull(system);
 
-        Settings s = new Settings(canonicalPath, false, ContextMaster.Combined, false, false, false);
+        Settings s = new Settings(canonicalPath, false);
 
         PolicyDeriver deriver = new PolicyDeriver(s, contextModel, usageModel, repo, system);
         deriver.execute();

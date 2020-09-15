@@ -159,6 +159,6 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
             saveData = false;
         }
 
-        return new Settings(path, createContextCharacteristic, master, applyStereotype, saveData, false);
+        return new Settings(path, false);
     }
 }

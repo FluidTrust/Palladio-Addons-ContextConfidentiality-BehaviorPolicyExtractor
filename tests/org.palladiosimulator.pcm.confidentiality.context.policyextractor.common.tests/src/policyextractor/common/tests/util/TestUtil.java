@@ -1,4 +1,4 @@
-package policyextractor.common.tests;
+package policyextractor.common.tests.util;
 
 import java.io.File;
 import java.io.IOException;

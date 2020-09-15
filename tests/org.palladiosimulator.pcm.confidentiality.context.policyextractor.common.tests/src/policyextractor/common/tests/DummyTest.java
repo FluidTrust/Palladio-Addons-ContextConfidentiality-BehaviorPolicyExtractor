@@ -11,6 +11,8 @@ import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import model.ModelHandler;
+import policyextractor.common.tests.util.TestModelAbstraction;
+import policyextractor.common.tests.util.TestUtil;
 import util.Logger;
 
 class DummyTest {

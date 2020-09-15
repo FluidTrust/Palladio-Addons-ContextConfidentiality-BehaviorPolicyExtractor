@@ -14,8 +14,8 @@ import org.palladiosimulator.pcm.usagemodel.UsageModel;
 import data.Settings;
 import model.ModelHandler;
 import policyderiver.PolicyDeriver;
-import policyextractor.common.tests.TestModelAbstraction;
-import policyextractor.common.tests.TestUtil;
+import policyextractor.common.tests.util.TestModelAbstraction;
+import policyextractor.common.tests.util.TestUtil;
 import util.Logger;
 
 class DeriverUsecase1Test {

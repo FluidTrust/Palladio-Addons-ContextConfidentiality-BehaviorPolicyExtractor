@@ -8,8 +8,8 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import data.ContextModelAbstraction;
 import model.ModelHandler;
-import policyextractor.common.tests.TestModelAbstraction;
-import policyextractor.common.tests.TestUtil;
+import policyextractor.common.tests.util.TestModelAbstraction;
+import policyextractor.common.tests.util.TestUtil;
 import rules.impl.ParentChild;
 import util.ContextModelPrinter;
 import util.Logger;

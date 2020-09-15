@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
+  <setContainer id="_ryCCcPcnEeqbponQQjJ0bA">
+    <policies id="_-5L5gPcnEeqbponQQjJ0bA" entityName="Shift_Early" contexts="_z4w5AfcnEeqbponQQjJ0bA"/>
+    <policies id="_Ayu1EPcoEeqbponQQjJ0bA" entityName="Shift_Normal" contexts="_8iKXwfcnEeqbponQQjJ0bA"/>
+    <policies id="_hf2ykPcoEeqbponQQjJ0bA" entityName="Shift_Late" contexts="_zNr7sfcnEeqbponQQjJ0bA"/>
+  </setContainer>
+  <contextContainer id="_sK51cfcnEeqbponQQjJ0bA">
+    <context xsi:type="model:SingleAttributeContext" id="_zNr7sfcnEeqbponQQjJ0bA" entityName="Shift_Late" contexttype="_1Q_QMPcnEeqbponQQjJ0bA"/>
+    <context xsi:type="model:SingleAttributeContext" id="_z4w5AfcnEeqbponQQjJ0bA" entityName="Shift_Early" contexttype="_1Q_QMPcnEeqbponQQjJ0bA"/>
+    <context xsi:type="model:SingleAttributeContext" id="_8iKXwfcnEeqbponQQjJ0bA" entityName="Shift_Normal" contexttype="_1Q_QMPcnEeqbponQQjJ0bA"/>
+  </contextContainer>
+  <typeContainer>
+    <types id="_1Q_QMPcnEeqbponQQjJ0bA" entityName="Shift"/>
+  </typeContainer>
+  <pcmspecificationcontainer id="_SbvIkvcnEeqbponQQjJ0bA">
+    <contextspecification id="_SxmD0vcnEeqbponQQjJ0bA" entityName="method1" contextset="_-5L5gPcnEeqbponQQjJ0bA">
+      <entrylevelsystemcall href="newUsageModel.usagemodel#_n535QLkaEeq3Uqhaj7n9xA"/>
+    </contextspecification>
+    <contextspecification id="_XwLdsvcnEeqbponQQjJ0bA" entityName="method2" contextset="_Ayu1EPcoEeqbponQQjJ0bA">
+      <usagescenario href="newUsageModel.usagemodel#_kfAU4LkaEeq3Uqhaj7n9xA"/>
+    </contextspecification>
+  </pcmspecificationcontainer>
+</context:ConfidentialAccessSpecification>

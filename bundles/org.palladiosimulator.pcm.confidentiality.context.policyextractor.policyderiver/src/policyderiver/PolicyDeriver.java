@@ -63,8 +63,6 @@ public class PolicyDeriver {
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
-        // TODO move
-        contextModelAbs.initNegativeList();
         negativeList = contextModelAbs.negativeList;
     }
 
@@ -89,16 +87,12 @@ public class PolicyDeriver {
     }
 
     private void applyContextSetToSEFF(ResourceDemandingSEFF seff, DeriverRecord record) {
-        Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF()
-            .getEntityName());
+        Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
         PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-        policy.setEntityName("____" + seff.getDescribedService__SEFF()
-            .getEntityName());
+        policy.setEntityName("____" + seff.getDescribedService__SEFF().getEntityName());
         policy.setResourcedemandingbehaviour(seff);
-        policy.getPolicy()
-            .add(record.getSetToApply());
-        contextModelAbs.getPolicySpecifications()
-            .add(policy);
+        policy.getPolicy().add(record.getSetToApply());
+        contextModelAbs.getPolicySpecifications().add(policy);
 
         if (record.isNegative()) {
             negativeList.add(policy);
@@ -125,20 +119,29 @@ public class PolicyDeriver {
                 list.add(new DeriverRecord(set, negative));
             }
         } else {
-            // Both list contain something -> combine according to setting
-            for (ContextSpecification spec1 : listSystemCall) {
-                for (ContextSpecification spec2 : listScenario) {
+            // Settings - combine
+            if (settings.isCombineSystemCallAndUsageScenario()) {
 
-                    // TODO options
-                    ContextSet set1 = contextModelAbs.getContextSet(spec1);
-                    ContextSet set2 = contextModelAbs.getContextSet(spec2);
+                // Both list contain something -> combine according to setting
+                for (ContextSpecification spec1 : listSystemCall) {
+                    for (ContextSpecification spec2 : listScenario) {
 
-                    ContextSet combined = contextModelAbs.combineContextSet(set1, set2);
-                    Boolean negative = spec1.isMissageUse() || spec2.isMissageUse();
+                        ContextSet set1 = contextModelAbs.getContextSet(spec1);
+                        ContextSet set2 = contextModelAbs.getContextSet(spec2);
 
-                    list.add(new DeriverRecord(combined, negative));
+                        ContextSet combined = contextModelAbs.combineContextSet(set1, set2);
+                        Boolean negative = spec1.isMissageUse() || spec2.isMissageUse();
+
+                        list.add(new DeriverRecord(combined, negative));
+                    }
                 }
-
+            } else {
+                // Only use systemCall
+                for (ContextSpecification spec : listSystemCall) {
+                    ContextSet set = contextModelAbs.getContextSet(spec);
+                    Boolean negative = spec.isMissageUse();
+                    list.add(new DeriverRecord(set, negative));
+                }
             }
 
         }

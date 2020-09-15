@@ -45,7 +45,7 @@ public class MainHandler {
 
         final PolicyReducer reducer = new PolicyReducer(deriver.getContextModel(), rules);
         reducer.negativeList = deriver.negativeList;
-        reducer.execute();
+        // reducer.execute();
         modelloader.saveReducerModel(reducer.getContextModel());
 
         // TODO cleanup model

@@ -133,37 +133,32 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         String path = getProjectPath();
 
         ContextMaster master = ContextMaster.Combined;
-        if (PREF_STORE.getString(nameContextMaster)
-            .equalsIgnoreCase("Characterizable")) {
+        if (PREF_STORE.getString(nameContextMaster).equalsIgnoreCase("Characterizable")) {
             master = ContextMaster.Characterizable;
-        } else if (PREF_STORE.getString(nameContextMaster)
-            .equalsIgnoreCase("DataProcessing")) {
+        } else if (PREF_STORE.getString(nameContextMaster).equalsIgnoreCase("DataProcessing")) {
             master = ContextMaster.DataProcessing;
         }
 
         Boolean createContextCharacteristic;
-        if (PREF_STORE.getString(nameCreateContextCharacteristic)
-            .equalsIgnoreCase("true")) {
+        if (PREF_STORE.getString(nameCreateContextCharacteristic).equalsIgnoreCase("true")) {
             createContextCharacteristic = true;
         } else {
             createContextCharacteristic = false;
         }
         Boolean applyStereotype;
-        if (PREF_STORE.getString(nameApplyStereotype)
-            .equalsIgnoreCase("true")) {
+        if (PREF_STORE.getString(nameApplyStereotype).equalsIgnoreCase("true")) {
             applyStereotype = true;
         } else {
             applyStereotype = false;
         }
 
         Boolean saveData;
-        if (PREF_STORE.getString(nameSaveData)
-            .equalsIgnoreCase("true")) {
+        if (PREF_STORE.getString(nameSaveData).equalsIgnoreCase("true")) {
             saveData = true;
         } else {
             saveData = false;
         }
 
-        return new Settings(path, createContextCharacteristic, master, applyStereotype, saveData);
+        return new Settings(path, createContextCharacteristic, master, applyStereotype, saveData, false);
     }
 }

@@ -1,4 +1,4 @@
-package org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyderiver.tests;
+package policyderiver.tests;
 
 import static org.junit.Assert.assertFalse;
 

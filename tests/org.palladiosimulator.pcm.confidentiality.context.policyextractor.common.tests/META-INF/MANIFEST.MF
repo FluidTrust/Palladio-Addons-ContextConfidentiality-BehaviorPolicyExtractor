@@ -11,4 +11,4 @@ Require-Bundle: org.junit,
  org.eclipse.equinox.registry,
  org.palladiosimulator.pcm.confidentiality.context,
  org.palladiosimulator.pcm.confidentiality.context.policyextractor.common;bundle-version="1.0.0"
-Export-Package: org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests
+Export-Package: policyextractor.common.tests

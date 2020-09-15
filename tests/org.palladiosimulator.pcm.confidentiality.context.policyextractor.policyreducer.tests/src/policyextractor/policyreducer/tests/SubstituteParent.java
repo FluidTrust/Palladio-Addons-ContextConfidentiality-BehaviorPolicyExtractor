@@ -1,4 +1,4 @@
-package org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.tests;
+package policyextractor.policyreducer.tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

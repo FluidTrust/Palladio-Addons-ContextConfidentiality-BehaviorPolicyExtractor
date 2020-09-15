@@ -1,4 +1,4 @@
-package org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests;
+package policyextractor.common.tests;
 
 import java.io.File;
 import java.io.IOException;

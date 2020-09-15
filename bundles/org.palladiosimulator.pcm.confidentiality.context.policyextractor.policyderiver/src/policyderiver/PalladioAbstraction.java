@@ -216,4 +216,12 @@ public class PalladioAbstraction {
         // TODO create Policy if not created?
     }
 
+    public ContextModelAbstraction getContextModelAbs() {
+        return contextModelAbs;
+    }
+
+    public UsageModelAbstraction getUsageModelAbs() {
+        return usageModelAbs;
+    }
+
 }

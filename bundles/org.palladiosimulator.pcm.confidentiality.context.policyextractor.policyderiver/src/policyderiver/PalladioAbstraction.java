@@ -2,7 +2,6 @@ package policyderiver;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.core.composition.AssemblyConnector;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.core.composition.ComposedStructure;
@@ -26,12 +25,10 @@ import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import data.AssemblyAbstraction;
-import data.ContextModelAbstraction;
 import data.UsageModelAbstraction;
 import util.Logger;
 
 public class PalladioAbstraction {
-    private final ContextModelAbstraction contextModelAbs;
     private final UsageModelAbstraction usageModelAbs;
     private final Repository repo; // currently not used
     private final AssemblyAbstraction assemblyAbs;
@@ -39,9 +36,7 @@ public class PalladioAbstraction {
     private EList<InternalAction> internalActions;
     private EList<ResourceDemandingSEFF> seffs;
 
-    public PalladioAbstraction(final ConfidentialAccessSpecification contextModel, final UsageModel usageModel,
-            final Repository repo, final System system) {
-        this.contextModelAbs = new ContextModelAbstraction(contextModel);
+    public PalladioAbstraction(final UsageModel usageModel, final Repository repo, final System system) {
         this.usageModelAbs = new UsageModelAbstraction(usageModel);
         this.repo = repo;
         this.assemblyAbs = new AssemblyAbstraction(system);
@@ -214,10 +209,6 @@ public class PalladioAbstraction {
 
     private void applyContextsToInternalCall(InternalAction internalAction) {
         // TODO create Policy if not created?
-    }
-
-    public ContextModelAbstraction getContextModelAbs() {
-        return contextModelAbs;
     }
 
     public UsageModelAbstraction getUsageModelAbs() {

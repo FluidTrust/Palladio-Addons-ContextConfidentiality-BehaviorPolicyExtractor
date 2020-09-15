@@ -16,14 +16,14 @@ import util.Logger;
 
 public class Deriver {
     private final Settings settings;
-    private final PalladioAbstraction palladioAbs;
     private final ContextModelAbstraction contextModelAbs;
+    private final PalladioAbstraction palladioAbs;
     public EList<PolicySpecification> negativeList = new BasicEList<>();
 
-    public Deriver(Settings settings, PalladioAbstraction palladioAbs) {
+    public Deriver(Settings settings, ContextModelAbstraction contextModelAbs, PalladioAbstraction palladioAbs) {
         this.settings = settings;
+        this.contextModelAbs = contextModelAbs;
         this.palladioAbs = palladioAbs;
-        this.contextModelAbs = palladioAbs.getContextModelAbs();
     }
 
     /**

@@ -31,8 +31,8 @@ public class PolicyDeriver {
     public PolicyDeriver(Settings settings, ConfidentialAccessSpecification contextModel, UsageModel usageModel,
             Repository repo, System system) {
         this.contextModelAbs = new ContextModelAbstraction(contextModel);
-        this.palladioAbs = new PalladioAbstraction(contextModel, usageModel, repo, system);
-        this.deriver = new Deriver(settings, palladioAbs);
+        this.palladioAbs = new PalladioAbstraction(usageModel, repo, system);
+        this.deriver = new Deriver(settings, contextModelAbs, palladioAbs);
     }
 
     /**

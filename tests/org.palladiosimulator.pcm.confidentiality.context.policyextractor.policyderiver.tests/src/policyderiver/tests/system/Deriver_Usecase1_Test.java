@@ -1,4 +1,4 @@
-package policyderiver.tests;
+package policyderiver.tests.system;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -15,7 +15,7 @@ import policyextractor.common.tests.util.PolicyExtractorTestTemplate;
 import policyextractor.common.tests.util.TestContextModelAbstraction;
 import policyextractor.common.tests.util.TestUtil;
 
-class Deriver_Usecase1_Test extends PolicyExtractorTestTemplate {
+class Deriver_Usecas1_Test extends PolicyExtractorTestTemplate {
 
     @Test
     void test1() throws IOException {

@@ -4,6 +4,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
+import org.palladiosimulator.pcm.confidentiality.context.model.ContextContainer;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
@@ -212,6 +213,22 @@ public class ContextModelAbstraction {
 
     public EList<ContextSpecification> getContextSpecifications() {
         return contextModel.getPcmspecificationcontainer().getContextspecification();
+    }
+
+    public EList<ContextSet> getContextSets() {
+        EList<ContextSet> list = new BasicEList<ContextSet>();
+        for (ContextSetContainer container : contextModel.getSetContainer()) {
+            list.addAll(container.getPolicies());
+        }
+        return list;
+    }
+
+    public EList<ContextAttribute> getContextAttributes() {
+        EList<ContextAttribute> list = new BasicEList<ContextAttribute>();
+        for (ContextContainer container : contextModel.getContextContainer()) {
+            list.addAll(container.getContext());
+        }
+        return list;
     }
 
     public EList<HierarchicalContext> getHierarchicalContexts() {

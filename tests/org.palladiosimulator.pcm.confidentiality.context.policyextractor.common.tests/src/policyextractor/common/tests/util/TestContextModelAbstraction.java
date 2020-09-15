@@ -1,6 +1,8 @@
 package policyextractor.common.tests.util;
 
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
+import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 
@@ -27,6 +29,24 @@ public class TestContextModelAbstraction {
         for (ContextSpecification contextSpecification : contextModelAbs.getContextSpecifications()) {
             if (contextSpecification.getEntityName().equalsIgnoreCase(name)) {
                 return contextSpecification;
+            }
+        }
+        return null;
+    }
+
+    public ContextSet getContextSetByName(String name) {
+        for (ContextSet contextSet : contextModelAbs.getContextSets()) {
+            if (contextSet.getEntityName().equalsIgnoreCase(name)) {
+                return contextSet;
+            }
+        }
+        return null;
+    }
+
+    public ContextAttribute getContextByName(String name) {
+        for (ContextAttribute contextAttribute : contextModelAbs.getContextAttributes()) {
+            if (contextAttribute.getEntityName().equalsIgnoreCase(name)) {
+                return contextAttribute;
             }
         }
         return null;

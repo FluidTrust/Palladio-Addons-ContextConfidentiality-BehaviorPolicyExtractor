@@ -22,7 +22,7 @@ import data.Settings;
  */
 public class PreferenceHandler extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
     // The plug-in ID
-    private static final String PLUGIN_ID = "ContextUsageSpecification2";
+    private static final String PLUGIN_ID = "PolicyExtractor";
     private static final IPreferenceStore PREF_STORE = new ScopedPreferenceStore(InstanceScope.INSTANCE, PLUGIN_ID);
 
     // Static names/ids for the different fields

@@ -14,7 +14,7 @@ import policyextractor.common.tests.template.TestPolicySpecification;
 import policyextractor.common.tests.template.TestRecord;
 import policyextractor.common.tests.util.TestUtil;
 
-class Deriver_Usecase1_Test extends Deriver_SystemTest_Template {
+class DeriverUsecase5Test extends DeriverSystemTestTemplate {
 
     @Override
     protected void addCommonObjects() {
@@ -35,44 +35,22 @@ class Deriver_Usecase1_Test extends Deriver_SystemTest_Template {
 
     @Test
     void test1() throws IOException {
-        canonicalPath = TestUtil.getTestDataPath() + "deriver" + File.separator + "usecase1";
+        canonicalPath = TestUtil.getTestDataPath() + "deriver" + File.separator + "usecase5";
 
         init();
         addCommonObjects();
 
         // Testspecific objects
         String policy1 = DeriverUtil.createNewPolicySpecificationName(specification1, systemCall1, scenario);
-        String policy2 = DeriverUtil.createNewPolicySpecificationName(specification2, systemCall2, scenario);
+        String policy2 = DeriverUtil.createNewPolicySpecificationName(specification2, systemCall1, scenario);
         testobjectList.add(new TestPolicySpecification(abs, policy1, new TestRecord(false),
                 new TestRecord(true, new String[] { shift1 })));
         testobjectList.add(new TestPolicySpecification(abs, policy2, new TestRecord(false),
-                new TestRecord(true, new String[] { shift2 })));
+                new TestRecord(true, new String[] { shift1 })));
 
         assertBefore();
 
         execute(new Settings(canonicalPath, false));
-
-        assertAfter();
-    }
-
-    @Test
-    void test2() throws IOException {
-        canonicalPath = TestUtil.getTestDataPath() + "deriver" + File.separator + "usecase1";
-
-        init();
-        addCommonObjects();
-
-        // Testspecific objects
-        String policy1 = DeriverUtil.createNewPolicySpecificationName(specification1, systemCall1, scenario);
-        String policy2 = DeriverUtil.createNewPolicySpecificationName(specification2, systemCall2, scenario);
-        testobjectList.add(new TestPolicySpecification(abs, policy1, new TestRecord(false),
-                new TestRecord(true, new String[] { combined })));
-        testobjectList.add(new TestPolicySpecification(abs, policy2, new TestRecord(false),
-                new TestRecord(true, new String[] { shift2 })));
-
-        assertBefore();
-
-        execute(new Settings(canonicalPath, true));
 
         assertAfter();
     }

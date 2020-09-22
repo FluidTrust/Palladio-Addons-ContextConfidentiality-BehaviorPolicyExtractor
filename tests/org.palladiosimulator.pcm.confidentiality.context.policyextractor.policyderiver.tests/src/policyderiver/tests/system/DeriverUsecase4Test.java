@@ -14,7 +14,7 @@ import policyextractor.common.tests.template.TestPolicySpecification;
 import policyextractor.common.tests.template.TestRecord;
 import policyextractor.common.tests.util.TestUtil;
 
-class Deriver_Usecase5_Test extends Deriver_SystemTest_Template {
+class DeriverUsecase4Test extends DeriverSystemTestTemplate {
 
     @Override
     protected void addCommonObjects() {
@@ -35,7 +35,7 @@ class Deriver_Usecase5_Test extends Deriver_SystemTest_Template {
 
     @Test
     void test1() throws IOException {
-        canonicalPath = TestUtil.getTestDataPath() + "deriver" + File.separator + "usecase5";
+        canonicalPath = TestUtil.getTestDataPath() + "deriver" + File.separator + "usecase4";
 
         init();
         addCommonObjects();
@@ -54,5 +54,4 @@ class Deriver_Usecase5_Test extends Deriver_SystemTest_Template {
 
         assertAfter();
     }
-
 }

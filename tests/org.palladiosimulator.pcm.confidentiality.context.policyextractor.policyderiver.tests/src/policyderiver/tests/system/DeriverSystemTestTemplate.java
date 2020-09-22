@@ -4,7 +4,7 @@ import data.Settings;
 import policyderiver.PolicyDeriver;
 import policyextractor.common.tests.template.PolicyExtractorTestTemplate;
 
-abstract class Deriver_SystemTest_Template extends PolicyExtractorTestTemplate {
+abstract class DeriverSystemTestTemplate extends PolicyExtractorTestTemplate {
 
     protected String scenario = "ScenarioBehaviour";
     protected String systemCall1 = "EntryLevelSystemCall1";

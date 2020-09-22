@@ -16,7 +16,6 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryComponent;
 import org.palladiosimulator.pcm.seff.AbstractAction;
 import org.palladiosimulator.pcm.seff.ExternalCallAction;
-import org.palladiosimulator.pcm.seff.InternalAction;
 import org.palladiosimulator.pcm.seff.ResourceDemandingSEFF;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
 import org.palladiosimulator.pcm.subsystem.SubSystem;
@@ -33,7 +32,6 @@ public class PalladioAbstraction {
     private final Repository repo; // currently not used
     private final AssemblyAbstraction assemblyAbs;
 
-    private EList<InternalAction> internalActions;
     private EList<ResourceDemandingSEFF> seffs;
 
     public PalladioAbstraction(final UsageModel usageModel, final Repository repo, final System system) {
@@ -49,15 +47,6 @@ public class PalladioAbstraction {
 
         return seffs;
     }
-
-    /*
-     * public EList<InternalAction> getAffectedInternalActions(EntryLevelSystemCall
-     * entryLevelSystemCall) { internalActions = new BasicEList<InternalAction>();
-     * 
-     * applyContextToSystemCall(entryLevelSystemCall);
-     * 
-     * return internalActions; }
-     */
 
     private void applyContextToSystemCall(EntryLevelSystemCall entryLevelSystemCall) {
         Logger.infoDetailed("\nSystemCall: " + entryLevelSystemCall.getEntityName());
@@ -140,11 +129,9 @@ public class PalladioAbstraction {
     private void handleResourceDemandingSEFF(ResourceDemandingSEFF rdSeff, EList<AssemblyContext> hierarchy) {
         seffs.add(rdSeff);
 
-        // Get all internal actions, and check applied data processing
+        // Get all external actions, and apply context as well
         for (AbstractAction action : rdSeff.getSteps_Behaviour()) {
-            if (action instanceof InternalAction) {
-                // applyContextsToInternalCall((InternalAction) action);
-            } else if (action instanceof ExternalCallAction) {
+            if (action instanceof ExternalCallAction) {
                 applyContextsToExternalCall((ExternalCallAction) action, hierarchy);
             }
         }
@@ -208,10 +195,6 @@ public class PalladioAbstraction {
                 }
             }
         }
-    }
-
-    private void applyContextsToInternalCall(InternalAction internalAction) {
-        // TODO create Policy if not created?
     }
 
     public UsageModelAbstraction getUsageModelAbs() {

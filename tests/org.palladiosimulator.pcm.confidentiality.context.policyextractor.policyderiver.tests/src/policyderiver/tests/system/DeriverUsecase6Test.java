@@ -14,7 +14,7 @@ import policyextractor.common.tests.template.TestPolicySpecification;
 import policyextractor.common.tests.template.TestRecord;
 import policyextractor.common.tests.util.TestUtil;
 
-class Deriver_Usecase6_Test extends Deriver_SystemTest_Template {
+class DeriverUsecase6Test extends DeriverSystemTestTemplate {
 
     @Override
     protected void addCommonObjects() {

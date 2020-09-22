@@ -3,6 +3,7 @@ package util;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextContainer;
+import org.palladiosimulator.pcm.confidentiality.context.model.ContextType;
 import org.palladiosimulator.pcm.confidentiality.context.model.TypeContainer;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
@@ -30,18 +31,19 @@ public class ContextModelPrinter {
                         "SetContainer: " + contextSetContainer.getEntityName() + "," + contextSetContainer.getId());
 
                 for (ContextSet set : contextSetContainer.getPolicies()) {
-                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts()
-                        .size());
+                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts().size());
                 }
             }
 
-            ContextContainer contextContainer = model.getContextContainer()
-                .get(0);
+            // TODO all container
+            ContextContainer contextContainer = model.getContextContainer().get(0);
             Logger.infoDetailed("Container: " + contextContainer.getEntityName() + "," + contextContainer.getId());
 
             TypeContainer typeContainer = model.getTypeContainer();
-            Logger.infoDetailed("TypeContainer: ");// + typeContainer.getEntityName() + "," +
-                                                   // typeContainer.getId());
+            Logger.infoDetailed("TypeContainer");
+            for (ContextType type : typeContainer.getTypes()) {
+                Logger.infoDetailed("\tContextType: " + type.getEntityName() + " - " + type.getId());
+            }
 
             PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
             Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
@@ -54,8 +56,7 @@ public class ContextModelPrinter {
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
             Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
-                    + abs.getContextSet(specification.getResourcedemandingbehaviour())
-                        .size());
+                    + abs.getContextSet(specification.getResourcedemandingbehaviour()).size());
         }
         Logger.infoDetailed("\n");
         Logger.setDetailed(false);

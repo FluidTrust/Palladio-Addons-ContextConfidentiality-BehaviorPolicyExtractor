@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import data.Settings;
+import policyderiver.DeriverUtil;
 import policyextractor.common.tests.template.TestContextAttribute;
 import policyextractor.common.tests.template.TestContextSet;
 import policyextractor.common.tests.template.TestContextSpecification;
@@ -38,6 +39,10 @@ class Deriver_Usecase1_Test extends Deriver_SystemTest_Template {
 
         init();
         addCommonObjects();
+
+        // Testspecific objects
+        String policy1 = DeriverUtil.createNewPolicySpecificationName(specification1, systemCall1, scenario);
+        String policy2 = DeriverUtil.createNewPolicySpecificationName(specification2, systemCall2, scenario);
         testobjectList.add(new TestPolicySpecification(abs, policy1, new TestRecord(false),
                 new TestRecord(true, new String[] { shift1 })));
         testobjectList.add(new TestPolicySpecification(abs, policy2, new TestRecord(false),
@@ -57,6 +62,9 @@ class Deriver_Usecase1_Test extends Deriver_SystemTest_Template {
         init();
         addCommonObjects();
 
+        // Testspecific objects
+        String policy1 = DeriverUtil.createNewPolicySpecificationName(specification1, systemCall1, scenario);
+        String policy2 = DeriverUtil.createNewPolicySpecificationName(specification2, systemCall2, scenario);
         testobjectList.add(new TestPolicySpecification(abs, policy1, new TestRecord(false),
                 new TestRecord(true, new String[] { combined })));
         testobjectList.add(new TestPolicySpecification(abs, policy2, new TestRecord(false),

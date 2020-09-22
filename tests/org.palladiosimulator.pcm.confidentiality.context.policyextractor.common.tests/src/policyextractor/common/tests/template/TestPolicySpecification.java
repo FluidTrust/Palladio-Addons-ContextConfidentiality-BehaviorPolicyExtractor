@@ -23,6 +23,11 @@ public class TestPolicySpecification extends PolicyExtractorTestObject {
         if (record.isExists()) {
             PolicySpecification specification = abs.getPolicySpecificationByName(name);
             assertNotNull(specification, name);
+
+            if (specification.getPolicy().size() > 0) {
+                assertNotNull(record.getChildren(), name);
+            }
+
             if (record.getChildren() != null) {
                 assertEquals(specification.getPolicy().size(), record.getChildren().length, name);
                 for (String child : record.getChildren()) {

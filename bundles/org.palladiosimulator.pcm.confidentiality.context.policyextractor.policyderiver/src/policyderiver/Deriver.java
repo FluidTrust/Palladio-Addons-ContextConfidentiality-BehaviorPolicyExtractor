@@ -49,7 +49,8 @@ public class Deriver {
         Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
         PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
         policy.setEntityName(
-                DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName()));
+                DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName(),
+                        record.getSystemCall().getEntityName(), record.getScenarioBehaviour().getEntityName()));
         policy.setResourcedemandingbehaviour(seff);
         policy.getPolicy().add(record.getSetToApply());
         contextModelAbs.getPolicySpecifications().add(policy);

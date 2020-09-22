@@ -43,7 +43,7 @@ public class TestContextModelAbstraction {
         return null;
     }
 
-    public ContextAttribute getContextByName(String name) {
+    public ContextAttribute getContextAttributeByName(String name) {
         for (ContextAttribute contextAttribute : contextModelAbs.getContextAttributes()) {
             if (contextAttribute.getEntityName().equalsIgnoreCase(name)) {
                 return contextAttribute;

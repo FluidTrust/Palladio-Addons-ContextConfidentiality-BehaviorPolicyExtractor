@@ -1,4 +1,4 @@
-package policyextractor.common.tests.util;
+package policyextractor.common.tests.template;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -10,10 +10,11 @@ import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
 import model.ModelHandler;
+import policyextractor.common.tests.util.TestModelAbstraction;
 import util.Logger;
 
 public abstract class PolicyExtractorTestTemplate {
-    protected EList<PolicyExtractorTestRecord> recordList = new BasicEList<>();
+    protected EList<PolicyExtractorTestObject> testobjectList = new BasicEList<>();
     protected String canonicalPath;
 
     protected ConfidentialAccessSpecification testContextModel;
@@ -40,14 +41,14 @@ public abstract class PolicyExtractorTestTemplate {
     protected abstract void execute();
 
     protected void assertBefore() {
-        for (PolicyExtractorTestRecord record : recordList) {
-
+        for (PolicyExtractorTestObject testobject : testobjectList) {
+            testobject.testExists(true);
         }
     }
 
     protected void assertAfter() {
-        for (PolicyExtractorTestRecord record : recordList) {
-
+        for (PolicyExtractorTestObject testobject : testobjectList) {
+            testobject.testExists(false);
         }
     }
 }

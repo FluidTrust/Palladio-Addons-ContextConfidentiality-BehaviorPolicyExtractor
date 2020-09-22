@@ -9,7 +9,9 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
+import data.Settings;
 import model.ModelHandler;
+import policyextractor.common.tests.util.TestContextModelAbstraction;
 import policyextractor.common.tests.util.TestModelAbstraction;
 import util.Logger;
 
@@ -17,13 +19,14 @@ public abstract class PolicyExtractorTestTemplate {
     protected EList<PolicyExtractorTestObject> testobjectList = new BasicEList<>();
     protected String canonicalPath;
 
+    protected TestContextModelAbstraction abs;
     protected ConfidentialAccessSpecification testContextModel;
     protected UsageModel testUsageModel;
     protected Repository testRepo;
     protected System testSystem;
 
     protected void init() {
-        Logger.info(canonicalPath);
+        // Logger.info(canonicalPath);
         ModelHandler modelloader = new ModelHandler(new TestModelAbstraction(canonicalPath));
         testContextModel = modelloader.loadContextModel();
         testUsageModel = modelloader.loadUsageModel();
@@ -36,9 +39,13 @@ public abstract class PolicyExtractorTestTemplate {
         assertNotNull(testSystem);
 
         Logger.setActive(false);
+
+        abs = new TestContextModelAbstraction(testContextModel);
     }
 
-    protected abstract void execute();
+    protected abstract void addCommonObjects();
+
+    protected abstract void execute(Settings settings);
 
     protected void assertBefore() {
         for (PolicyExtractorTestObject testobject : testobjectList) {

@@ -10,7 +10,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
-import data.ContextMaster;
 import data.Settings;
 
 /**
@@ -32,10 +31,7 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
     private static String nameUsageModel = "2";
     private static String nameAssembly = "3";
     private static String nameRepositoryModel = "4";
-    private static String nameContextMaster = "5";
-    private static String nameCreateContextCharacteristic = "6";
-    private static String nameApplyStereotype = "7";
-    private static String nameSaveData = "8";
+    private static String nameCombine = "5";
 
     private static final int WIDTH = 75;
 
@@ -88,20 +84,11 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         addField(repository);
 
         // Settings
-        String[][] s1 = { { "Characterizable", "Characterizable" }, { "DataProcessing", "DataProcessing" },
-                { "Combined", "Combined" } };
-        RadioGroupFieldEditor contextMaster = new RadioGroupFieldEditor(nameContextMaster, "ContextMaster:", 3, s1,
-                parent);
-        addField(contextMaster);
         String[][] s2 = { { "true", "true" }, { "false", "false" } };
-        RadioGroupFieldEditor createContextCharacteristic = new RadioGroupFieldEditor(nameCreateContextCharacteristic,
-                "Create Context Characteristic:", 2, s2, parent);
+        RadioGroupFieldEditor createContextCharacteristic = new RadioGroupFieldEditor(nameCombine,
+                "Combine usageSencario and systemCall:", 2, s2, parent);
         addField(createContextCharacteristic);
-        RadioGroupFieldEditor applyStereotype = new RadioGroupFieldEditor(nameApplyStereotype, "Apply Stereotype:", 2,
-                s2, parent);
-        addField(applyStereotype);
-        RadioGroupFieldEditor saveChanges = new RadioGroupFieldEditor(nameSaveData, "SaveChanges:", 2, s2, parent);
-        addField(saveChanges);
+
     }
 
     public static String getProjectPath() {
@@ -132,33 +119,11 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
     public static Settings getSettingsFromPreferences() {
         String path = getProjectPath();
 
-        ContextMaster master = ContextMaster.Combined;
-        if (PREF_STORE.getString(nameContextMaster).equalsIgnoreCase("Characterizable")) {
-            master = ContextMaster.Characterizable;
-        } else if (PREF_STORE.getString(nameContextMaster).equalsIgnoreCase("DataProcessing")) {
-            master = ContextMaster.DataProcessing;
+        boolean combine = false;
+        if (PREF_STORE.getString(nameCombine).equalsIgnoreCase("true")) {
+            combine = true;
         }
 
-        Boolean createContextCharacteristic;
-        if (PREF_STORE.getString(nameCreateContextCharacteristic).equalsIgnoreCase("true")) {
-            createContextCharacteristic = true;
-        } else {
-            createContextCharacteristic = false;
-        }
-        Boolean applyStereotype;
-        if (PREF_STORE.getString(nameApplyStereotype).equalsIgnoreCase("true")) {
-            applyStereotype = true;
-        } else {
-            applyStereotype = false;
-        }
-
-        Boolean saveData;
-        if (PREF_STORE.getString(nameSaveData).equalsIgnoreCase("true")) {
-            saveData = true;
-        } else {
-            saveData = false;
-        }
-
-        return new Settings(path, false);
+        return new Settings(path, combine);
     }
 }

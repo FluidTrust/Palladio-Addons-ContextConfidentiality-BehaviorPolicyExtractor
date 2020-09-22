@@ -42,7 +42,7 @@
       <page
             class="preferences.PreferenceHandler"
             id="t2"
-            name="Preferences of X">
+            name="PolicyExtractor">
       </page>
    </extension>
 </plugin>

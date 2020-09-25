@@ -31,7 +31,8 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
     private static String nameUsageModel = "2";
     private static String nameAssembly = "3";
     private static String nameRepositoryModel = "4";
-    private static String nameCombine = "5";
+    private static String nameContextModel = "5";
+    private static String nameCombine = "100";
 
     private static final int WIDTH = 75;
 
@@ -55,6 +56,7 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         PREF_STORE.setDefault(nameAssembly, "newAssembly.system");
         PREF_STORE.setDefault(nameUsageModel, "newUsageModel.usagemodel");
         PREF_STORE.setDefault(nameDataprocessing, "My.dataprocessing");
+        PREF_STORE.setDefault(nameContextModel, "My.context");
     }
 
     @Override
@@ -82,6 +84,8 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         StringFieldEditor repository = new StringFieldEditor(nameRepositoryModel, "RepositoryModelFile:", WIDTH,
                 parent);
         addField(repository);
+        StringFieldEditor context = new StringFieldEditor(nameContextModel, "ContextModelFile:", WIDTH, parent);
+        addField(context);
 
         // Settings
         String[][] s2 = { { "true", "true" }, { "false", "false" } };
@@ -112,8 +116,7 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
     }
 
     public static String getPathContextModel() {
-        // TODO Auto-generated method stub
-        return "My.context";
+        return PREF_STORE.getString(nameContextModel);
     }
 
     public static Settings getSettingsFromPreferences() {

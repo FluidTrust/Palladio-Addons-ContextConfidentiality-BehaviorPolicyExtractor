@@ -1,7 +1,6 @@
-package gui;
+package preferences;
 
 import model.IModelAbstraction;
-import preferences.PreferenceHandler;
 
 /**
  * Abstracts paths to the 4 different models

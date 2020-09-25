@@ -1,4 +1,4 @@
-package gui;
+package main;
 
 import java.util.Objects;
 
@@ -12,6 +12,7 @@ import data.Settings;
 import model.ModelHandler;
 import policyderiver.PolicyDeriver;
 import policyreducer.PolicyReducer;
+import preferences.ModelAbstraction;
 import preferences.PreferenceHandler;
 import rules.RulesFlag;
 

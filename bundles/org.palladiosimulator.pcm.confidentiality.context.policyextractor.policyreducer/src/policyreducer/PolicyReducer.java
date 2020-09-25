@@ -3,7 +3,6 @@ package policyreducer;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
-import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 
 import data.ContextModelAbstraction;
 import rules.IRulesDefinition;
@@ -20,17 +19,12 @@ public class PolicyReducer {
     private final RulesFlag rules;
     private EList<IRulesDefinition> rulesList = new BasicEList<>();
 
-    public EList<PolicySpecification> negativeList = new BasicEList<>();
-
-    public PolicyReducer(ConfidentialAccessSpecification contextModel, RulesFlag rules) {
-        this.contextModelAbs = new ContextModelAbstraction(contextModel);
+    public PolicyReducer(ContextModelAbstraction contextModelAbs, RulesFlag rules) {
+        this.contextModelAbs = contextModelAbs;
         this.rules = rules;
     }
 
     public void execute() {
-        // TODO move
-        contextModelAbs.negativeList = negativeList;
-
         Logger.infoDetailed("Rules-Start");
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);

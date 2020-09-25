@@ -37,12 +37,9 @@ public class SubstituteParent extends AbstractRule {
                         for (ContextAttribute child : parent.getIncluding()) {
                             // Replace context with child and check if
                             ContextSet newSet = SetFactory.eINSTANCE.createContextSet();
-                            newSet.getContexts()
-                                .addAll(set1.getContexts());
-                            newSet.getContexts()
-                                .remove(context);
-                            newSet.getContexts()
-                                .add(child);
+                            newSet.getContexts().addAll(set1.getContexts());
+                            newSet.getContexts().remove(context);
+                            newSet.getContexts().add(child);
 
                             if (child == context) {
                                 // Skip current child, already present
@@ -81,14 +78,12 @@ public class SubstituteParent extends AbstractRule {
 
                             ContextSet newSet = SetFactory.eINSTANCE.createContextSet();
                             newSet.setEntityName(set1.getEntityName() + " *Replacement*");
-                            newSet.getContexts()
-                                .addAll(set1.getContexts());
-                            newSet.getContexts()
-                                .remove(context);
-                            newSet.getContexts()
-                                .add(parent);
+                            newSet.getContexts().addAll(set1.getContexts());
+                            newSet.getContexts().remove(context);
+                            newSet.getContexts().add(parent);
 
                             appliedList.add(createRecord(seff, set1, newSet, true));
+                            applied = true;
                         }
                     }
 

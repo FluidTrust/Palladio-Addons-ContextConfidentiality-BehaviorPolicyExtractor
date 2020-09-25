@@ -1,5 +1,6 @@
 package policyderiver.tests.system;
 
+import data.ContextModelAbstraction;
 import data.Settings;
 import policyderiver.PolicyDeriver;
 import policyextractor.common.tests.template.PolicyExtractorTestTemplate;
@@ -18,7 +19,8 @@ abstract class DeriverSystemTestTemplate extends PolicyExtractorTestTemplate {
 
     @Override
     protected void execute(Settings settings) {
-        PolicyDeriver deriver = new PolicyDeriver(settings, testContextModel, testUsageModel, testRepo, testSystem);
+        PolicyDeriver deriver = new PolicyDeriver(settings, new ContextModelAbstraction(testContextModel),
+                testUsageModel, testRepo, testSystem);
         deriver.execute();
     }
 }

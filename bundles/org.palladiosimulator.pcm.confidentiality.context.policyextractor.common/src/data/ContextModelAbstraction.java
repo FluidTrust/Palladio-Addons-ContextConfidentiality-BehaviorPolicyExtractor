@@ -20,7 +20,7 @@ import util.Logger;
 
 public class ContextModelAbstraction {
     private ConfidentialAccessSpecification contextModel;
-    public EList<PolicySpecification> negativeList = new BasicEList<>();
+    private EList<PolicySpecification> negativeList = new BasicEList<>();
 
     public ContextModelAbstraction(ConfidentialAccessSpecification contextModel) {
         this.contextModel = contextModel;
@@ -312,5 +312,9 @@ public class ContextModelAbstraction {
     public boolean isNegative(PolicySpecification specification) {
         // Logger.info(specification.getId() + " --- " + negativeList.size());
         return negativeList.contains(specification);
+    }
+
+    public void addMisuasge(PolicySpecification policy) {
+        negativeList.add(policy);
     }
 }

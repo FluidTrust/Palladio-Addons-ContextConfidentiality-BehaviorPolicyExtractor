@@ -9,23 +9,20 @@ import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpe
 public class PolicyCleaner {
     private final ContextModelAbstraction contextModelAbs;
 
-    public PolicyCleaner(ConfidentialAccessSpecification contextModel) {
-        this.contextModelAbs = new ContextModelAbstraction(contextModel);
+    public PolicyCleaner(ContextModelAbstraction contextModelAbs) {
+        this.contextModelAbs = contextModelAbs;
     }
 
     public void execute() {
 
-        PCMSpecificationContainer pcmContainer = contextModelAbs.getContextModel()
-            .getPcmspecificationcontainer();
+        PCMSpecificationContainer pcmContainer = contextModelAbs.getContextModel().getPcmspecificationcontainer();
         EList<PolicySpecification> list = new BasicEList<>();
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
-            if (specification.getPolicy()
-                .isEmpty()) {
+            if (specification.getPolicy().isEmpty()) {
                 list.add(specification);
             }
         }
-        pcmContainer.getPolicyspecification()
-            .removeAll(list);
+        pcmContainer.getPolicyspecification().removeAll(list);
     }
 
     public ConfidentialAccessSpecification getContextModel() {

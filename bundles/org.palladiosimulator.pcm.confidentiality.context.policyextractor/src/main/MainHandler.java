@@ -7,6 +7,7 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
+import data.ContextModelAbstraction;
 import data.PolicyCleaner;
 import data.Settings;
 import model.ModelHandler;
@@ -37,20 +38,18 @@ public class MainHandler {
         Repository repo = modelloader.loadRepositoryModel();
         System system = modelloader.loadAssemblyModel();
 
-        final PolicyDeriver deriver = new PolicyDeriver(settings, contextModel, usageModel, repo, system);
+        ContextModelAbstraction contextModelAbs = new ContextModelAbstraction(contextModel);
+
+        final PolicyDeriver deriver = new PolicyDeriver(settings, contextModelAbs, usageModel, repo, system);
         deriver.execute();
         modelloader.saveDeriverModel(deriver.getContextModel());
 
-        // TODO move to Settings?
         RulesFlag rules = new RulesFlag();
-
-        final PolicyReducer reducer = new PolicyReducer(deriver.getContextModel(), rules);
-        reducer.negativeList = deriver.negativeList;
+        final PolicyReducer reducer = new PolicyReducer(contextModelAbs, rules);
         reducer.execute();
         modelloader.saveReducerModel(reducer.getContextModel());
 
-        // TODO cleanup model
-        final PolicyCleaner cleaner = new PolicyCleaner(reducer.getContextModel());
+        final PolicyCleaner cleaner = new PolicyCleaner(contextModelAbs);
         cleaner.execute();
         modelloader.saveCleanupModel(cleaner.getContextModel());
 

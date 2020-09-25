@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gui
-Bundle-SymbolicName: org.palladiosimulator.pcm.confidentiality.context.policyextractor.gui;singleton:=true
+Bundle-Name: policyextractor
+Bundle-SymbolicName: org.palladiosimulator.pcm.confidentiality.context.policyextractor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: gui
 Bundle-RequiredExecutionEnvironment: JavaSE-11

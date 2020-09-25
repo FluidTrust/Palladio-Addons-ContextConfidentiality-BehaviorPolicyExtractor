@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PolicyExtractorTests
+Bundle-SymbolicName: org.palladiosimulator.pcm.confidentiality.context.policyextractor.tests
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.junit,
+ org.junit.jupiter.api,
+ org.palladiosimulator.pcm.confidentiality.context,
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests,
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor;bundle-version="1.0.0"

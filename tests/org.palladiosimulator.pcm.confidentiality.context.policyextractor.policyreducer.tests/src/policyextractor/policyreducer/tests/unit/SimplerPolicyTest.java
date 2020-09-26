@@ -1,4 +1,4 @@
-package policyextractor.policyreducer.tests;
+package policyextractor.policyreducer.tests.unit;
 
 import java.io.IOException;
 
@@ -10,15 +10,12 @@ import model.ModelHandler;
 import modelabstraction.ContextModelAbstraction;
 import policyextractor.common.tests.util.TestModelAbstraction;
 import policyextractor.common.tests.util.TestUtil;
-import rules.impl.ParentChild;
+import rules.impl.SimplerPolicy;
 import util.ContextModelPrinter;
 import util.Logger;
 
-class ParentChildTest {
+class SimplerPolicyTest {
 
-    /*
-     * @BeforeAll static void init() { }
-     */
     @Test
     void test1() throws IOException {
         String canonicalPath = TestUtil.getTestDataPath() + "usecase1";
@@ -32,7 +29,7 @@ class ParentChildTest {
             Logger.infoDetailed("SEFF:" + seff.getId());
 
             new ContextModelPrinter().printSEFF(contextModel, seff);
-            new ParentChild(contextModelAbs).applyRule(seff);
+            new SimplerPolicy(contextModelAbs).applyRule(seff);
             new ContextModelPrinter().printSEFF(contextModel, seff);
         }
 

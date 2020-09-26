@@ -15,11 +15,14 @@ import policyextractor.common.tests.util.TestModelAbstraction;
 import policyextractor.common.tests.util.TestUtil;
 import util.Logger;
 
-class DummyTest {
+/**
+ * TestClass for ModelLoader
+ * 
+ * @author Thomas Lieb
+ *
+ */
+class ModelLoaderTest {
 
-    /*
-     * @BeforeAll static void init() { }
-     */
     @Test
     void test1() throws IOException {
         String canonicalPath = TestUtil.getTestDataPath() + "usecase1";
@@ -31,6 +34,7 @@ class DummyTest {
         Repository repo = modelloader.loadRepositoryModel();
         System system = modelloader.loadAssemblyModel();
 
+        // Check each model was loaded correctly --> exists
         assertNotNull(contextModel);
         assertNotNull(usageModel);
         assertNotNull(repo);

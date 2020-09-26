@@ -29,6 +29,41 @@ public class PolicyReducer {
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
+        // TODO add proper condition, maybe settings?
+        if (true) {
+            rulesHandling1();
+        } else {
+            rulesHandling2();
+        }
+
+        new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
+
+        Logger.infoDetailed("Rules-End");
+    }
+
+    private void initializeRules() {
+        rulesList = new BasicEList<>();
+
+        if (rules.isRuleEnabled(RulesType.SimplerPolicy)) {
+            rulesList.add(new SimplerPolicy(contextModelAbs));
+        }
+
+        if (rules.isRuleEnabled(RulesType.ParentChild)) {
+            rulesList.add(new ParentChild(contextModelAbs));
+        }
+
+        if (rules.isRuleEnabled(RulesType.SubstituteParent)) {
+            rulesList.add(new SubstituteParent(contextModelAbs));
+        }
+    }
+
+    /**
+     * Implementation 1
+     * 
+     * First collect all rules which can be applied, then execute
+     */
+    private void rulesHandling1() {
+
         int loopCount = 0;
         while (true) {
             Logger.info("Loop-Start: " + loopCount + " -----------------");
@@ -58,25 +93,35 @@ public class PolicyReducer {
             }
             loopCount++;
         }
-
-        new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
-
-        Logger.infoDetailed("Rules-End");
     }
 
-    private void initializeRules() {
-        rulesList = new BasicEList<>();
+    /**
+     * Implementation 2
+     * 
+     * Execute ruleset directly, possibly changing order of rule
+     */
+    private void rulesHandling2() {
 
-        if (rules.isRuleEnabled(RulesType.SimplerPolicy)) {
-            rulesList.add(new SimplerPolicy(contextModelAbs));
-        }
+        int loopCount = 0;
+        while (true) {
+            Logger.info("Loop-Start: " + loopCount + " -----------------");
 
-        if (rules.isRuleEnabled(RulesType.ParentChild)) {
-            rulesList.add(new ParentChild(contextModelAbs));
-        }
+            initializeRules();
 
-        if (rules.isRuleEnabled(RulesType.SubstituteParent)) {
-            rulesList.add(new SubstituteParent(contextModelAbs));
+            int rulesCount = 0;
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                // TODO evaluate if difference?
+                // TODO execute each record directly in rule? (Problem with inloop change?)
+                rulesDefinition.applyRuleToModel();
+                rulesDefinition.executeRule();
+                rulesCount += rulesDefinition.getNumberOfRecords();
+            }
+            Logger.info("Loop-End: " + loopCount + " -----------------");
+
+            if (rulesCount == 0) {
+                break;
+            }
+            loopCount++;
         }
     }
 

@@ -3,7 +3,10 @@
    <feature id="org.palladiosimulator.pcm.confidentiality.context.policyextractor.feature">
       <category name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.category"/>
    </feature>
-   <feature id="org.palladiosimulator.pcm.confidentiality.context.policyextractor.feature.source">
+   <feature id="org.palladiosimulator.pcm.confidentiality.context.policyextractor.modules.feature">
+      <category name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.category"/>
+   </feature>
+   <feature id="org.palladiosimulator.pcm.confidentiality.context.policyextractor.modules.feature.source">
       <category name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.source.category"/>
    </feature>
    <category-def name="org.palladiosimulator.pcm.confidentiality.context.policyextractor.category" label="PolicyExtractor">

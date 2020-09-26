@@ -27,7 +27,6 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
 
     // Static names/ids for the different fields
     private static String namePath = "0";
-    private static String nameDataprocessing = "1";
     private static String nameUsageModel = "2";
     private static String nameAssembly = "3";
     private static String nameRepositoryModel = "4";
@@ -55,7 +54,6 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         PREF_STORE.setDefault(nameRepositoryModel, "newRepository.repository");
         PREF_STORE.setDefault(nameAssembly, "newAssembly.system");
         PREF_STORE.setDefault(nameUsageModel, "newUsageModel.usagemodel");
-        PREF_STORE.setDefault(nameDataprocessing, "My.dataprocessing");
         PREF_STORE.setDefault(nameContextModel, "My.context");
     }
 
@@ -74,9 +72,6 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         // Paths
         StringFieldEditor path = new StringFieldEditor(namePath, "Project Path:", WIDTH, parent);
         addField(path);
-        StringFieldEditor dataprocessing = new StringFieldEditor(nameDataprocessing, "DataProcessingFile:", WIDTH,
-                parent);
-        addField(dataprocessing);
         StringFieldEditor useagemodel = new StringFieldEditor(nameUsageModel, "UsageModelFile:", WIDTH, parent);
         addField(useagemodel);
         StringFieldEditor assembly = new StringFieldEditor(nameAssembly, "AssemblyFile:", WIDTH, parent);
@@ -111,10 +106,6 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         return PREF_STORE.getString(nameUsageModel);
     }
 
-    public static String getPathdataprocessing() {
-        return PREF_STORE.getString(nameDataprocessing);
-    }
-
     public static String getPathContextModel() {
         return PREF_STORE.getString(nameContextModel);
     }
@@ -123,7 +114,8 @@ public class PreferenceHandler extends FieldEditorPreferencePage implements IWor
         String path = getProjectPath();
 
         boolean combine = false;
-        if (PREF_STORE.getString(nameCombine).equalsIgnoreCase("true")) {
+        if (PREF_STORE.getString(nameCombine)
+            .equalsIgnoreCase("true")) {
             combine = true;
         }
 

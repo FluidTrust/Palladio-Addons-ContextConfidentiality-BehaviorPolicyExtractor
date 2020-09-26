@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import data.Settings;
 import policyderiver.DeriverUtil;
 import policyextractor.common.tests.template.TestContextAttribute;
 import policyextractor.common.tests.template.TestContextSet;
@@ -13,6 +12,7 @@ import policyextractor.common.tests.template.TestContextSpecification;
 import policyextractor.common.tests.template.TestPolicySpecification;
 import policyextractor.common.tests.template.TestRecord;
 import policyextractor.common.tests.util.TestUtil;
+import settings.Settings;
 
 class DeriverUsecase1Test extends DeriverSystemTestTemplate {
 

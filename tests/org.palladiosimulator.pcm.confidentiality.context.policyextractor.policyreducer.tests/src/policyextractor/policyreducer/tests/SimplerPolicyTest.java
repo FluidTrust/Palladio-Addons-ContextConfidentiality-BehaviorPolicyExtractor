@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
-import data.ContextModelAbstraction;
 import model.ModelHandler;
+import modelabstraction.ContextModelAbstraction;
 import policyextractor.common.tests.util.TestModelAbstraction;
 import policyextractor.common.tests.util.TestUtil;
 import rules.impl.SimplerPolicy;
@@ -31,9 +31,9 @@ class SimplerPolicyTest {
         for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
             Logger.infoDetailed("SEFF:" + seff.getId());
 
-            new ContextModelPrinter().printSEFF(contextModel, seff, false);
+            new ContextModelPrinter().printSEFF(contextModel, seff);
             new SimplerPolicy(contextModelAbs).applyRule(seff);
-            new ContextModelPrinter().printSEFF(contextModel, seff, false);
+            new ContextModelPrinter().printSEFF(contextModel, seff);
         }
 
     }

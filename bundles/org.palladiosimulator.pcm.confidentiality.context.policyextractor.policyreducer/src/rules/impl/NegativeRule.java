@@ -7,7 +7,7 @@ import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalConte
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
-import data.ContextModelAbstraction;
+import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
 import util.Logger;
 

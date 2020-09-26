@@ -10,8 +10,8 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingSEFF;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
 
-import data.ContextModelAbstraction;
-import data.Settings;
+import modelabstraction.ContextModelAbstraction;
+import settings.Settings;
 import util.Logger;
 
 public class Deriver {
@@ -55,7 +55,7 @@ public class Deriver {
         contextModelAbs.getPolicySpecifications().add(policy);
 
         if (record.isNegative()) {
-            contextModelAbs.addMisuasge(policy);
+            contextModelAbs.addMisusage(policy);
         }
     }
 

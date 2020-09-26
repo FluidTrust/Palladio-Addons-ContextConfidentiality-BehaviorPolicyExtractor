@@ -4,7 +4,7 @@ import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
-import data.ContextModelAbstraction;
+import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
 
 public class ParentChild extends AbstractRule {

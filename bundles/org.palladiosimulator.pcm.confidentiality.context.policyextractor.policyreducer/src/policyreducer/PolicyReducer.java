@@ -4,7 +4,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 
-import data.ContextModelAbstraction;
+import modelabstraction.ContextModelAbstraction;
 import rules.IRulesDefinition;
 import rules.RulesFlag;
 import rules.RulesType;

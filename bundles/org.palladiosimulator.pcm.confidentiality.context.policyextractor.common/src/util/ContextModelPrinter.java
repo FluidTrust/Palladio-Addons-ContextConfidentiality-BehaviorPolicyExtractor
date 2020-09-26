@@ -12,12 +12,11 @@ import org.palladiosimulator.pcm.confidentiality.context.specification.PCMSpecif
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
-import data.ContextModelAbstraction;
+import modelabstraction.ContextModelAbstraction;
 
 public class ContextModelPrinter {
 
     public ContextModelPrinter() {
-        // TODO Auto-generated constructor stub
     }
 
     public void print(ConfidentialAccessSpecification model, boolean detailed) {
@@ -31,12 +30,14 @@ public class ContextModelPrinter {
                         "SetContainer: " + contextSetContainer.getEntityName() + "," + contextSetContainer.getId());
 
                 for (ContextSet set : contextSetContainer.getPolicies()) {
-                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts().size());
+                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts()
+                        .size());
                 }
             }
 
             // TODO all container
-            ContextContainer contextContainer = model.getContextContainer().get(0);
+            ContextContainer contextContainer = model.getContextContainer()
+                .get(0);
             Logger.infoDetailed("Container: " + contextContainer.getEntityName() + "," + contextContainer.getId());
 
             TypeContainer typeContainer = model.getTypeContainer();
@@ -56,13 +57,14 @@ public class ContextModelPrinter {
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
             Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
-                    + abs.getContextSet(specification.getResourcedemandingbehaviour()).size());
+                    + abs.getContextSet(specification.getResourcedemandingbehaviour())
+                        .size());
         }
         Logger.infoDetailed("\n");
         Logger.setDetailed(false);
     }
 
-    public void printSEFF(ConfidentialAccessSpecification model, ResourceDemandingBehaviour seff, boolean b) {
+    public void printSEFF(ConfidentialAccessSpecification model, ResourceDemandingBehaviour seff) {
         PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
 
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
@@ -71,7 +73,7 @@ public class ContextModelPrinter {
                 for (ContextSet set : specification.getPolicy()) {
                     Logger.info("Set:");
                     for (ContextAttribute attribute : set.getContexts()) {
-                        Logger.info("Attribute: " + attribute.getEntityName());
+                        Logger.info("\tAttribute: " + attribute.getEntityName());
                     }
                 }
             }

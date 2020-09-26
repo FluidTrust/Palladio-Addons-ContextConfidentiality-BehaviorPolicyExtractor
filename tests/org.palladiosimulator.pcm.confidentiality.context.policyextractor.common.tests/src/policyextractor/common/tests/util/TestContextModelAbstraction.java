@@ -6,7 +6,7 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 
-import data.ContextModelAbstraction;
+import modelabstraction.ContextModelAbstraction;
 
 public class TestContextModelAbstraction {
     private ContextModelAbstraction contextModelAbs;

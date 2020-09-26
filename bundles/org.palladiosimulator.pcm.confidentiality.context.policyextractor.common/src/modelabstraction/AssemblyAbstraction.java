@@ -1,4 +1,4 @@
-package data;
+package modelabstraction;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;

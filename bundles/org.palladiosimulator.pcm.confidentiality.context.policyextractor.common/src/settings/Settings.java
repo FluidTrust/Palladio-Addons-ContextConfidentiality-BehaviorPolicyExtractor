@@ -1,7 +1,7 @@
-package data;
+package settings;
 
 /**
- * Contains all settings which alter behaviour of contexthandler
+ * Contains all settings which alter behaviour of policyextractor
  * 
  * @author Thomas Lieb
  *
@@ -10,7 +10,7 @@ public class Settings {
     // Configuration
     private String path;
 
-    // New Settings
+    // Settings
     private boolean combineSystemCallAndUsageScenario;
 
     public Settings(String path, boolean combineSystemCallAndUsageScenario) {

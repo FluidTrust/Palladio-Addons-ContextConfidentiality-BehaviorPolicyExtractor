@@ -23,8 +23,8 @@ import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
-import data.AssemblyAbstraction;
-import data.UsageModelAbstraction;
+import modelabstraction.AssemblyAbstraction;
+import modelabstraction.UsageModelAbstraction;
 import util.Logger;
 
 public class PalladioAbstraction {

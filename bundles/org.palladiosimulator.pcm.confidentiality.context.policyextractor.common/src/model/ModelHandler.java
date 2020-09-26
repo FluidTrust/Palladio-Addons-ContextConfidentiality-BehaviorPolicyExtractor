@@ -21,7 +21,7 @@ import org.palladiosimulator.pcm.usagemodel.UsagemodelPackage;
 /**
  * Handles loading and saving of models/resources
  * 
- * Initialises MDSD profile and handles EMF eCore model
+ * Initialises and handles EMF eCore model
  * 
  * @author Thomas Lieb
  *
@@ -35,7 +35,7 @@ public class ModelHandler {
         this.model = model;
         this.resourceSet = new ResourceSetImpl();
 
-        // Needed to load MDSD profiles from beginning
+        // Needed to load eCore model
         RepositoryPackage.eINSTANCE.eClass();
         UsagemodelPackage.eINSTANCE.eClass();
         SystemPackage.eINSTANCE.eClass();
@@ -51,25 +51,29 @@ public class ModelHandler {
     public UsageModel loadUsageModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getUsageModelPath());
 
-        return (UsageModel) resourceData.getContents().get(0);
+        return (UsageModel) resourceData.getContents()
+            .get(0);
     }
 
     public Repository loadRepositoryModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getRepositoryModelPath());
 
-        return (Repository) resourceData.getContents().get(0);
+        return (Repository) resourceData.getContents()
+            .get(0);
     }
 
     public System loadAssemblyModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getAssemblyPath());
 
-        return (System) resourceData.getContents().get(0);
+        return (System) resourceData.getContents()
+            .get(0);
     }
 
     public ConfidentialAccessSpecification loadContextModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getContextModelPath());
 
-        return (ConfidentialAccessSpecification) resourceData.getContents().get(0);
+        return (ConfidentialAccessSpecification) resourceData.getContents()
+            .get(0);
     }
 
     private Resource loadResource(final ResourceSet resourceSet, final String path) {
@@ -90,7 +94,8 @@ public class ModelHandler {
 
     private void saveContextModel(ConfidentialAccessSpecification contextModel, String path) {
         Resource x = resourceSet.createResource(URI.createFileURI(path));
-        x.getContents().add(contextModel);
+        x.getContents()
+            .add(contextModel);
         try {
             x.save(null);
         } catch (IOException e) {

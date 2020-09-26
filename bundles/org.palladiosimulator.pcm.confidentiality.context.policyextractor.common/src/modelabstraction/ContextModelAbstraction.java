@@ -1,4 +1,4 @@
-package data;
+package modelabstraction;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -314,7 +314,7 @@ public class ContextModelAbstraction {
         return negativeList.contains(specification);
     }
 
-    public void addMisuasge(PolicySpecification policy) {
+    public void addMisusage(PolicySpecification policy) {
         negativeList.add(policy);
     }
 }

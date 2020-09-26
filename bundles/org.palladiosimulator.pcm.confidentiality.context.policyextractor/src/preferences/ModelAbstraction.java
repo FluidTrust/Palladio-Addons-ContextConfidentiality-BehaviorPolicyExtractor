@@ -3,7 +3,7 @@ package preferences;
 import model.IModelAbstraction;
 
 /**
- * Abstracts paths to the 4 different models
+ * Abstracts paths to the different models
  * 
  * Needed to enable different handling in tests
  * 

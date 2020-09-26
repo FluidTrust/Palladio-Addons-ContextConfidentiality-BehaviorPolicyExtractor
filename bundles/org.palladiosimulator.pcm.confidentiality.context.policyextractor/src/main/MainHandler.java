@@ -7,15 +7,15 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
-import data.ContextModelAbstraction;
-import data.PolicyCleaner;
-import data.Settings;
 import model.ModelHandler;
+import modelabstraction.ContextModelAbstraction;
 import policyderiver.PolicyDeriver;
 import policyreducer.PolicyReducer;
 import preferences.ModelAbstraction;
 import preferences.PreferenceHandler;
 import rules.RulesFlag;
+import settings.Settings;
+import util.PolicyCleaner;
 
 /**
  * Handles to basic logic of plugin

@@ -6,7 +6,7 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
-import data.ContextModelAbstraction;
+import modelabstraction.ContextModelAbstraction;
 import util.Logger;
 
 public abstract class AbstractRule implements IRulesDefinition {

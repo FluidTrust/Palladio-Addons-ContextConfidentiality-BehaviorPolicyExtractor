@@ -5,8 +5,8 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
-import data.ContextModelAbstraction;
-import data.Settings;
+import modelabstraction.ContextModelAbstraction;
+import settings.Settings;
 import util.ContextModelPrinter;
 
 /**

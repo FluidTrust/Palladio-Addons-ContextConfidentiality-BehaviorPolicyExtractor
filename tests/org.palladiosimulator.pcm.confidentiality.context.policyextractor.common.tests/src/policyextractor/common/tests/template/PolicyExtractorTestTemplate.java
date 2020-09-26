@@ -9,10 +9,10 @@ import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
 
-import data.Settings;
 import model.ModelHandler;
 import policyextractor.common.tests.util.TestContextModelAbstraction;
 import policyextractor.common.tests.util.TestModelAbstraction;
+import settings.Settings;
 import util.Logger;
 
 public abstract class PolicyExtractorTestTemplate {

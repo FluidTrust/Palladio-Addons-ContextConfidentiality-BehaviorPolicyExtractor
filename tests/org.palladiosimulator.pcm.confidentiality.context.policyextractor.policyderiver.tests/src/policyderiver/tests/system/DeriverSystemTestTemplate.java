@@ -1,9 +1,9 @@
 package policyderiver.tests.system;
 
-import data.ContextModelAbstraction;
-import data.Settings;
+import modelabstraction.ContextModelAbstraction;
 import policyderiver.PolicyDeriver;
 import policyextractor.common.tests.template.PolicyExtractorTestTemplate;
+import settings.Settings;
 
 abstract class DeriverSystemTestTemplate extends PolicyExtractorTestTemplate {
 

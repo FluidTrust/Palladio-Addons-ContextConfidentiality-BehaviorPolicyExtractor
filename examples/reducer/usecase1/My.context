@@ -30,11 +30,7 @@
       <resourcedemandingbehaviour href="newRepository.repository#_N0N_ALkaEeq3Uqhaj7n9xA"/>
     </policyspecification>
     <policyspecification id="_Vlv9MO0FEeqGh7ZaAVEkAQ" entityName="Parent" policy="_x45MQO0REeq65b5_QdL_qw _3zficO0REeq65b5_QdL_qw _7jg3cO0REeq65b5_QdL_qw _xeGtsO0REeq65b5_QdL_qw"/>
-    <policyspecification id="_dnn8YO0aEeq65b5_QdL_qw" entityName="SubstituteParent1" policy="_k586gO0aEeq65b5_QdL_qw _lUzqgO0aEeq65b5_QdL_qw">
-      <resourcedemandingbehaviour href="newRepository.repository#_cEy3sO0aEeq65b5_QdL_qw"/>
-    </policyspecification>
-    <policyspecification id="_9hqQEO0aEeq65b5_QdL_qw" entityName="SubstituteParent2" policy="_qUFn8O0aEeq65b5_QdL_qw">
-      <resourcedemandingbehaviour href="newRepository.repository#_EXb1EO0bEeq65b5_QdL_qw"/>
-    </policyspecification>
+    <policyspecification id="_dnn8YO0aEeq65b5_QdL_qw" entityName="SubstituteParent1" policy="_k586gO0aEeq65b5_QdL_qw _lUzqgO0aEeq65b5_QdL_qw"/>
+    <policyspecification id="_9hqQEO0aEeq65b5_QdL_qw" entityName="SubstituteParent2" policy="_qUFn8O0aEeq65b5_QdL_qw"/>
   </pcmspecificationcontainer>
 </context:ConfidentialAccessSpecification>

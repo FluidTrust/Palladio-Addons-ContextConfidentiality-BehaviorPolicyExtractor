@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
-  <setContainer id="_Zer9oO0FEeqGh7ZaAVEkAQ">
+  <setContainer id="_Zer9oO0FEeqGh7ZaAVEkAQ" entityName="Simple">
     <policies id="_Z0cLMO0FEeqGh7ZaAVEkAQ" entityName="Simple" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ"/>
     <policies id="_lRXhgO0FEeqGh7ZaAVEkAQ" entityName="Specific" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ _xhwVEe0FEeqGh7ZaAVEkAQ"/>
   </setContainer>
-  <setContainer id="_lp7ygO0FEeqGh7ZaAVEkAQ">
+  <setContainer id="_lp7ygO0FEeqGh7ZaAVEkAQ" entityName="Parent">
     <policies id="_xeGtsO0REeq65b5_QdL_qw" entityName="Parent" contexts="_5hQ-wO0EEeqGh7ZaAVEkAQ"/>
     <policies id="_x45MQO0REeq65b5_QdL_qw" entityName="Child A" contexts="_6bzUYO0EEeqGh7ZaAVEkAQ"/>
     <policies id="_3zficO0REeq65b5_QdL_qw" entityName="Child B" contexts="_6woU4O0EEeqGh7ZaAVEkAQ"/>
     <policies id="_7jg3cO0REeq65b5_QdL_qw" entityName="Child both" contexts="_6bzUYO0EEeqGh7ZaAVEkAQ _6woU4O0EEeqGh7ZaAVEkAQ"/>
   </setContainer>
-  <setContainer id="_kSkxcO0aEeq65b5_QdL_qw">
+  <setContainer id="_kSkxcO0aEeq65b5_QdL_qw" entityName="SubstituteParent">
     <policies id="_k586gO0aEeq65b5_QdL_qw" entityName="Subst Child A" contexts="_6bzUYO0EEeqGh7ZaAVEkAQ"/>
     <policies id="_lUzqgO0aEeq65b5_QdL_qw" entityName="Subst Child B" contexts="_6woU4O0EEeqGh7ZaAVEkAQ"/>
     <policies id="_qUFn8O0aEeq65b5_QdL_qw" entityName="Subst Child A + B" contexts="_6bzUYO0EEeqGh7ZaAVEkAQ _6woU4O0EEeqGh7ZaAVEkAQ"/>
@@ -26,15 +26,11 @@
     <types id="_AZLRwO0FEeqGh7ZaAVEkAQ" entityName="Shift"/>
   </typeContainer>
   <pcmspecificationcontainer id="_RtPfALkaEeq3Uqhaj7n9xA">
-    <policyspecification id="_WdNOELkaEeq3Uqhaj7n9xA" entityName="Simple" policy="_Z0cLMO0FEeqGh7ZaAVEkAQ _lRXhgO0FEeqGh7ZaAVEkAQ">
-      <resourcedemandingbehaviour href="newRepository.repository#_N0N_ALkaEeq3Uqhaj7n9xA"/>
-    </policyspecification>
-    <policyspecification id="_Vlv9MO0FEeqGh7ZaAVEkAQ" entityName="Parent" policy="_x45MQO0REeq65b5_QdL_qw _3zficO0REeq65b5_QdL_qw _7jg3cO0REeq65b5_QdL_qw _xeGtsO0REeq65b5_QdL_qw"/>
-    <policyspecification id="_dnn8YO0aEeq65b5_QdL_qw" entityName="SubstituteParent1" policy="_k586gO0aEeq65b5_QdL_qw _lUzqgO0aEeq65b5_QdL_qw">
+    <policyspecification id="_WdNOELkaEeq3Uqhaj7n9xA" entityName="Simple" policy="_Z0cLMO0FEeqGh7ZaAVEkAQ _lRXhgO0FEeqGh7ZaAVEkAQ"/>
+    <policyspecification id="_Vlv9MO0FEeqGh7ZaAVEkAQ" entityName="Parent" policy="_x45MQO0REeq65b5_QdL_qw _3zficO0REeq65b5_QdL_qw _7jg3cO0REeq65b5_QdL_qw _xeGtsO0REeq65b5_QdL_qw">
       <resourcedemandingbehaviour href="newRepository.repository#_cEy3sO0aEeq65b5_QdL_qw"/>
     </policyspecification>
-    <policyspecification id="_9hqQEO0aEeq65b5_QdL_qw" entityName="SubstituteParent2" policy="_qUFn8O0aEeq65b5_QdL_qw">
-      <resourcedemandingbehaviour href="newRepository.repository#_EXb1EO0bEeq65b5_QdL_qw"/>
-    </policyspecification>
+    <policyspecification id="_dnn8YO0aEeq65b5_QdL_qw" entityName="SubstituteParent1" policy="_k586gO0aEeq65b5_QdL_qw _lUzqgO0aEeq65b5_QdL_qw"/>
+    <policyspecification id="_9hqQEO0aEeq65b5_QdL_qw" entityName="SubstituteParent2" policy="_qUFn8O0aEeq65b5_QdL_qw"/>
   </pcmspecificationcontainer>
 </context:ConfidentialAccessSpecification>

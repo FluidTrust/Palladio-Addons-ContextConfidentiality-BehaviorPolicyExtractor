@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import policyextractor.common.tests.template.TestPolicySpecification;
+import policyextractor.common.tests.template.TestRecord;
 import policyextractor.common.tests.util.TestUtil;
 import rules.RulesType;
 import settings.Settings;
@@ -13,6 +15,7 @@ class DeriverUsecase1Test extends ReducerSystemTestTemplate {
 
     @Override
     protected void addCommonObjects() {
+        // TODO create common superset from all testcases
     }
 
     @Test
@@ -23,6 +26,12 @@ class DeriverUsecase1Test extends ReducerSystemTestTemplate {
         addCommonObjects();
 
         // Testspecific objects
+        String policy1 = "Simple";
+        String contextSet1 = "Simple";
+        String contextSet2 = "Specific";
+        testobjectList.add(new TestPolicySpecification(abs, policy1,
+                new TestRecord(true, new String[] { contextSet1, contextSet2 }),
+                new TestRecord(true, new String[] { contextSet1 })));
 
         assertBefore();
 
@@ -41,6 +50,12 @@ class DeriverUsecase1Test extends ReducerSystemTestTemplate {
         addCommonObjects();
 
         // Testspecific objects
+        String policy1 = "Simple";
+        String contextSet1 = "Simple";
+        String contextSet2 = "Specific";
+        testobjectList.add(new TestPolicySpecification(abs, policy1,
+                new TestRecord(true, new String[] { contextSet1, contextSet2 }),
+                new TestRecord(true, new String[] { contextSet1 })));
 
         assertBefore();
 

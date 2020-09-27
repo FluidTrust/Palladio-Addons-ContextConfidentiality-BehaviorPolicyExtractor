@@ -14,6 +14,12 @@ import rules.impl.SubstituteParent;
 import util.ContextModelPrinter;
 import util.Logger;
 
+/**
+ * Execute a set of rules on the given context model
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class PolicyReducer {
     private final ContextModelAbstraction contextModelAbs;
     private final RulesFlag rules;
@@ -24,6 +30,15 @@ public class PolicyReducer {
         this.rules = rules;
     }
 
+    /**
+     * Execute the rules
+     * 
+     * For each defined rule, it is check if it can be applied, and record of the data is created,
+     * and afterwards executed
+     * 
+     * If the context model is changed during the process, these steps are repeated. Executing a
+     * rule can result in an other rule beeing applicable. (Similar: Fixpunktiteration)
+     */
     public void execute() {
         Logger.infoDetailed("Rules-Start");
 
@@ -64,6 +79,9 @@ public class PolicyReducer {
         Logger.infoDetailed("Rules-End");
     }
 
+    /**
+     * Add rules to list for execution, depeding on ruleflag
+     */
     private void initializeRules() {
         rulesList = new BasicEList<>();
 

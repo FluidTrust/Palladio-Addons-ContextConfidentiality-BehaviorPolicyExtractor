@@ -9,6 +9,12 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import modelabstraction.ContextModelAbstraction;
 import util.Logger;
 
+/**
+ * Implements basic functionality for a Rule, leaving application of rule abstract
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public abstract class AbstractRule implements IRulesDefinition {
     protected EList<RulesRecord> appliedList = new BasicEList<>();
     protected ContextModelAbstraction contextModelAbs;
@@ -18,12 +24,23 @@ public abstract class AbstractRule implements IRulesDefinition {
         this.contextModelAbs = contextModelAbs;
     }
 
+    /**
+     * Abstract method, different implementation depending on ruleset
+     * 
+     * @param seff
+     * @return
+     */
     public abstract boolean applyRule(ResourceDemandingBehaviour seff);
 
     public int getNumberOfRecords() {
         return appliedList.size();
     }
 
+    /**
+     * For each data element (= SEFF), execute the rule.
+     * 
+     * If applicable, rulesrecord is created
+     */
     public void applyRuleToModel() {
         boolean appliable = false;
         for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
@@ -33,6 +50,9 @@ public abstract class AbstractRule implements IRulesDefinition {
         Logger.info(getClass().getSimpleName() + ": " + appliable + " : " + appliedList.size());
     }
 
+    /**
+     * Applying a rule is the same for each rule, all information is collected in RulesRecord
+     */
     public boolean executeRule() {
         Logger.info(getClass().getSimpleName());
         for (RulesRecord record : appliedList) {
@@ -53,6 +73,15 @@ public abstract class AbstractRule implements IRulesDefinition {
         return true;
     }
 
+    /**
+     * Create a record for the current rules implementation
+     * 
+     * @param seff
+     * @param remove
+     * @param replacedBy
+     * @param created
+     * @return
+     */
     protected RulesRecord createRecord(ResourceDemandingBehaviour seff, ContextSet remove, ContextSet replacedBy,
             boolean created) {
         IRulesDefinition rule = this;

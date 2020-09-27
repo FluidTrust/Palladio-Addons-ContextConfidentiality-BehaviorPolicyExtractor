@@ -7,6 +7,12 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
 
+/**
+ * Ruleset for parent child in hierarchical context
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class ParentChild extends AbstractRule {
 
     public ParentChild(ContextModelAbstraction contextModelAbs) {

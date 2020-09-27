@@ -7,6 +7,14 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
 
+/**
+ * Ruleset for simpler policy
+ * 
+ * (one policy already included in the other policy for the same seff)
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class SimplerPolicy extends AbstractRule {
 
     public SimplerPolicy(ContextModelAbstraction contextModelAbs) {

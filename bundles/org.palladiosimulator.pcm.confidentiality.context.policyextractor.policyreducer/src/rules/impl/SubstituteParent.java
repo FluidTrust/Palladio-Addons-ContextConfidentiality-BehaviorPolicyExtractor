@@ -12,6 +12,14 @@ import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
 import util.Logger;
 
+/**
+ * Ruleset for Substitute Parent
+ * 
+ * (all children in hierarchical context --> replace with parent)
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class SubstituteParent extends AbstractRule {
 
     public SubstituteParent(ContextModelAbstraction contextModelAbs) {
@@ -26,6 +34,7 @@ public class SubstituteParent extends AbstractRule {
 
         for (ContextSet set1 : list) {
             for (ContextAttribute context : set1.getContexts()) {
+                // TODO Richtung?
                 if (context instanceof HierarchicalContext) {
 
                     HierarchicalContext parent = contextModelAbs.getParent((HierarchicalContext) context);
@@ -37,9 +46,12 @@ public class SubstituteParent extends AbstractRule {
                         for (ContextAttribute child : parent.getIncluding()) {
                             // Replace context with child and check if
                             ContextSet newSet = SetFactory.eINSTANCE.createContextSet();
-                            newSet.getContexts().addAll(set1.getContexts());
-                            newSet.getContexts().remove(context);
-                            newSet.getContexts().add(child);
+                            newSet.getContexts()
+                                .addAll(set1.getContexts());
+                            newSet.getContexts()
+                                .remove(context);
+                            newSet.getContexts()
+                                .add(child);
 
                             if (child == context) {
                                 // Skip current child, already present
@@ -78,9 +90,12 @@ public class SubstituteParent extends AbstractRule {
 
                             ContextSet newSet = SetFactory.eINSTANCE.createContextSet();
                             newSet.setEntityName(set1.getEntityName() + " *Replacement*");
-                            newSet.getContexts().addAll(set1.getContexts());
-                            newSet.getContexts().remove(context);
-                            newSet.getContexts().add(parent);
+                            newSet.getContexts()
+                                .addAll(set1.getContexts());
+                            newSet.getContexts()
+                                .remove(context);
+                            newSet.getContexts()
+                                .add(parent);
 
                             appliedList.add(createRecord(seff, set1, newSet, true));
                             applied = true;

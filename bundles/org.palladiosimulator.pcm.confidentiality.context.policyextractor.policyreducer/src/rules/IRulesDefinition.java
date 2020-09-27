@@ -1,5 +1,11 @@
 package rules;
 
+/**
+ * Interface for rulesets
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public interface IRulesDefinition {
     public void applyRuleToModel();
 

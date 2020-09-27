@@ -2,6 +2,12 @@ package rules;
 
 import java.util.HashMap;
 
+/**
+ * Class to allow rules to be enabled or disabled.
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class RulesFlag {
     private HashMap<RulesType, Boolean> flags = new HashMap<>();
 

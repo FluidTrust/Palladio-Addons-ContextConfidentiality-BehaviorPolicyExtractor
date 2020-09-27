@@ -27,9 +27,15 @@ import modelabstraction.AssemblyAbstraction;
 import modelabstraction.UsageModelAbstraction;
 import util.Logger;
 
+/**
+ * Encapsulates logic to go from system call to seff
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class PalladioAbstraction {
     private final UsageModelAbstraction usageModelAbs;
-    private final Repository repo; // currently not used
+    private final Repository repo; // not used anymore -> remove?
     private final AssemblyAbstraction assemblyAbs;
 
     private EList<ResourceDemandingSEFF> seffs;
@@ -40,31 +46,54 @@ public class PalladioAbstraction {
         this.assemblyAbs = new AssemblyAbstraction(system);
     }
 
+    /**
+     * Function to get all seffs affected by this system call
+     * 
+     * @param entryLevelSystemCall
+     * @return
+     */
     public EList<ResourceDemandingSEFF> getAffectedSEFFs(EntryLevelSystemCall entryLevelSystemCall) {
         seffs = new BasicEList<ResourceDemandingSEFF>();
 
-        applyContextToSystemCall(entryLevelSystemCall);
+        entryPointSystemCall(entryLevelSystemCall);
 
         return seffs;
     }
 
-    private void applyContextToSystemCall(EntryLevelSystemCall entryLevelSystemCall) {
+    /**
+     * Start from system call
+     * 
+     * Extract needed information from system call, start on composed structure with system
+     * 
+     * @param entryLevelSystemCall
+     */
+    private void entryPointSystemCall(EntryLevelSystemCall entryLevelSystemCall) {
         Logger.infoDetailed("\nSystemCall: " + entryLevelSystemCall.getEntityName());
         OperationProvidedRole opr = entryLevelSystemCall.getProvidedRole_EntryLevelSystemCall();
         OperationSignature op = entryLevelSystemCall.getOperationSignature__EntryLevelSystemCall();
 
         EList<AssemblyContext> hierarchy = new BasicEList<AssemblyContext>();
-        applyContextsToComposedStructure(assemblyAbs.getSystem(), hierarchy, opr, op);
+        entryPointComposedStructure(assemblyAbs.getSystem(), hierarchy, opr, op);
     }
 
-    private void applyContextsToComposedStructure(ComposedStructure composedStructure, EList<AssemblyContext> hierarchy,
+    /**
+     * Enter composed structure. Call repository components
+     * 
+     * Hierarchy needed for nested composed structures
+     * 
+     * @param composedStructure
+     * @param hierarchy
+     * @param operationProvidedRole
+     * @param operationSignature
+     */
+    private void entryPointComposedStructure(ComposedStructure composedStructure, EList<AssemblyContext> hierarchy,
             OperationProvidedRole operationProvidedRole, OperationSignature operationSignature) {
 
         // Find Component by iterating connectors,
         // Check outer role with passed operationProvidedRole
         // If match, pass inner role
         for (ProvidedDelegationConnector connector : assemblyAbs
-                .getListOfProvidedDelegationConnector(composedStructure)) {
+            .getListOfProvidedDelegationConnector(composedStructure)) {
             Logger.info("Structure: " + composedStructure.getEntityName());
             Logger.info("Conntector: " + connector.getEntityName());
 
@@ -72,18 +101,20 @@ public class PalladioAbstraction {
             OperationProvidedRole innerRole = connector.getInnerProvidedRole_ProvidedDelegationConnector();
 
             if (assemblyAbs.isOperationProvidedRoleMatch(operationProvidedRole, outerRole)) {
-                Logger.infoDetailed(connector.getAssemblyContext_ProvidedDelegationConnector().getEntityName());
+                Logger.infoDetailed(connector.getAssemblyContext_ProvidedDelegationConnector()
+                    .getEntityName());
                 AssemblyContext ac = connector.getAssemblyContext_ProvidedDelegationConnector();
                 RepositoryComponent rc = ac.getEncapsulatedComponent__AssemblyContext();
                 Logger.infoDetailed(rc.getEntityName());
 
                 // If child component is same as parent or already contained in hierarchy--> endless
                 // loop
-                if (!rc.getId().equalsIgnoreCase(composedStructure.getId()) && !hierarchy.contains(ac)) {
+                if (!rc.getId()
+                    .equalsIgnoreCase(composedStructure.getId()) && !hierarchy.contains(ac)) {
                     EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
                     copy.addAll(hierarchy);
                     copy.add(ac);
-                    applyContextToRepositoryComponent(rc, copy, innerRole, operationSignature);
+                    entryPointRepositoryComponent(rc, copy, innerRole, operationSignature);
                 } else {
                     Logger.error("Error in component(" + composedStructure.getId() + "): Recursion without end");
                 }
@@ -91,17 +122,25 @@ public class PalladioAbstraction {
         }
     }
 
-    private void applyContextToRepositoryComponent(RepositoryComponent repositoryComponent,
+    /**
+     * Enter repository component. Switch between basic or composed structure
+     * 
+     * @param repositoryComponent
+     * @param hierarchy
+     * @param operationProvidedRole
+     * @param operationSignature
+     */
+    private void entryPointRepositoryComponent(RepositoryComponent repositoryComponent,
             EList<AssemblyContext> hierarchy, OperationProvidedRole operationProvidedRole,
             OperationSignature operationSignature) {
 
         if (repositoryComponent instanceof BasicComponent) {
-            applyContextsToBasicComponent((BasicComponent) repositoryComponent, hierarchy, operationSignature);
+            entryPointBasicComponent((BasicComponent) repositoryComponent, hierarchy, operationSignature);
         } else if (repositoryComponent instanceof CompositeComponent) {
-            applyContextsToComposedStructure((CompositeComponent) repositoryComponent, hierarchy, operationProvidedRole,
+            entryPointComposedStructure((CompositeComponent) repositoryComponent, hierarchy, operationProvidedRole,
                     operationSignature);
         } else if (repositoryComponent instanceof SubSystem) {
-            applyContextsToComposedStructure((SubSystem) repositoryComponent, hierarchy, operationProvidedRole,
+            entryPointComposedStructure((SubSystem) repositoryComponent, hierarchy, operationProvidedRole,
                     operationSignature);
         } else {
             Logger.error(
@@ -109,10 +148,18 @@ public class PalladioAbstraction {
         }
     }
 
-    private void applyContextsToBasicComponent(BasicComponent basicComponent, EList<AssemblyContext> hierarchy,
+    /**
+     * Enter basic component. Iterate seff
+     * 
+     * @param basicComponent
+     * @param hierarchy
+     * @param operationSignature
+     */
+    private void entryPointBasicComponent(BasicComponent basicComponent, EList<AssemblyContext> hierarchy,
             OperationSignature operationSignature) {
         for (ServiceEffectSpecification seff : basicComponent.getServiceEffectSpecifications__BasicComponent()) {
-            Logger.infoDetailed(seff.getDescribedService__SEFF().getEntityName());
+            Logger.infoDetailed(seff.getDescribedService__SEFF()
+                .getEntityName());
             if (seff.getDescribedService__SEFF() == operationSignature) {
                 Logger.infoDetailed("SEFF matched");
 
@@ -126,28 +173,53 @@ public class PalladioAbstraction {
         }
     }
 
+    /**
+     * Add seffs to list
+     * 
+     * If seff has external calls, other composed structures are called/affected
+     * 
+     * @param rdSeff
+     * @param hierarchy
+     */
     private void handleResourceDemandingSEFF(ResourceDemandingSEFF rdSeff, EList<AssemblyContext> hierarchy) {
         seffs.add(rdSeff);
 
         // Get all external actions, and apply context as well
         for (AbstractAction action : rdSeff.getSteps_Behaviour()) {
             if (action instanceof ExternalCallAction) {
-                applyContextsToExternalCall((ExternalCallAction) action, hierarchy);
+                handleExternalCall((ExternalCallAction) action, hierarchy);
             }
         }
     }
 
-    private void applyContextsToExternalCall(ExternalCallAction externalAction, EList<AssemblyContext> hierarchy) {
+    /**
+     * Similar to entrypoint systemcall.
+     * 
+     * But new operation paramteres.
+     * 
+     * @param externalAction
+     * @param hierarchy
+     */
+    private void handleExternalCall(ExternalCallAction externalAction, EList<AssemblyContext> hierarchy) {
         Logger.infoDetailed(externalAction.getEntityName());
-        Logger.infoDetailed(externalAction.getCalledService_ExternalService().getEntityName());
+        Logger.infoDetailed(externalAction.getCalledService_ExternalService()
+            .getEntityName());
         OperationSignature externalSignature = externalAction.getCalledService_ExternalService();
         OperationRequiredRole requiredRole = externalAction.getRole_ExternalService();
         Logger.infoDetailed(requiredRole.getEntityName());
-        Logger.infoDetailed(requiredRole.getRequiredInterface__OperationRequiredRole().getEntityName());
+        Logger.infoDetailed(requiredRole.getRequiredInterface__OperationRequiredRole()
+            .getEntityName());
 
         searchForMatchingExternalComponent(hierarchy, requiredRole, externalSignature);
     }
 
+    /**
+     * Find component called by external call
+     * 
+     * @param hierarchy
+     * @param requiredRole
+     * @param externalSignature
+     */
     private void searchForMatchingExternalComponent(EList<AssemblyContext> hierarchy,
             OperationRequiredRole requiredRole, OperationSignature externalSignature) {
 
@@ -168,7 +240,7 @@ public class PalladioAbstraction {
                     Logger.infoDetailed(rc.getEntityName());
                     EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
                     copy.addAll(hierarchy);
-                    applyContextToRepositoryComponent(rc, copy, opr, externalSignature);
+                    entryPointRepositoryComponent(rc, copy, opr, externalSignature);
                 }
             }
         }

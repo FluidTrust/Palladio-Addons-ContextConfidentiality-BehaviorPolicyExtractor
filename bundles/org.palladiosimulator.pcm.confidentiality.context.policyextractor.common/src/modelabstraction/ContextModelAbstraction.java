@@ -36,7 +36,8 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             EntryLevelSystemCall contextSystemCall = contextSpecification.getEntrylevelsystemcall();
             if (contextSystemCall != null) {
-                if (contextSystemCall.getId().equalsIgnoreCase(systemCall.getId())) {
+                if (contextSystemCall.getId()
+                    .equalsIgnoreCase(systemCall.getId())) {
                     list.add(contextSpecification);
                 }
             }
@@ -50,8 +51,9 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             UsageScenario usageScenario = contextSpecification.getUsagescenario();
             if (usageScenario != null) {
-                if (usageScenario.getScenarioBehaviour_UsageScenario().getId()
-                        .equalsIgnoreCase(scenarioBehaviour.getId())) {
+                if (usageScenario.getScenarioBehaviour_UsageScenario()
+                    .getId()
+                    .equalsIgnoreCase(scenarioBehaviour.getId())) {
                     list.add(contextSpecification);
                 }
             }
@@ -147,6 +149,7 @@ public class ContextModelAbstraction {
         return list;
     }
 
+    // TODO remove logic from here, instead use records and move logic to external caller
     public EList<ContextSet> getContextSetFiltered(ResourceDemandingBehaviour seff) {
         EList<ContextSet> list = new BasicEList<>();
 
@@ -161,15 +164,29 @@ public class ContextModelAbstraction {
         return list;
     }
 
+    public EList<ContextSetRecord> getContextSetRecords(ResourceDemandingBehaviour seff) {
+        EList<ContextSetRecord> list = new BasicEList<>();
+
+        for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
+            for (ContextSet set : policySpecification.getPolicy()) {
+                list.add(new ContextSetRecord(set, policySpecification, isNegative(policySpecification)));
+            }
+        }
+
+        return list;
+    }
+
     public void removeContextSet(ResourceDemandingBehaviour seff, ContextSet set) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
-            policySpecification.getPolicy().remove(set);
+            policySpecification.getPolicy()
+                .remove(set);
         }
     }
 
     public void addContextSet(ResourceDemandingBehaviour seff, ContextSet newSet) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
-            policySpecification.getPolicy().add(newSet);
+            policySpecification.getPolicy()
+                .add(newSet);
             // TODO Correct like this? If one seff has multiple policies containers, only needed in
             // one(?)
             break;
@@ -178,10 +195,13 @@ public class ContextModelAbstraction {
 
     public ContextSet combineContextSet(ContextSet set1, ContextSet set2) {
         ContextSet combinedSet = SetFactory.eINSTANCE.createContextSet();
-        getCreatedContextSetContainer().getPolicies().add(combinedSet);
+        getCreatedContextSetContainer().getPolicies()
+            .add(combinedSet);
         combinedSet.setEntityName("__combined__");
-        combinedSet.getContexts().addAll(set1.getContexts());
-        combinedSet.getContexts().addAll(set2.getContexts());
+        combinedSet.getContexts()
+            .addAll(set1.getContexts());
+        combinedSet.getContexts()
+            .addAll(set2.getContexts());
         return combinedSet;
     }
 
@@ -192,7 +212,8 @@ public class ContextModelAbstraction {
         if (createdContainer == null) {
             createdContainer = SetFactory.eINSTANCE.createContextSetContainer();
             createdContainer.setEntityName("__Generated");
-            contextModel.getSetContainer().add(createdContainer);
+            contextModel.getSetContainer()
+                .add(createdContainer);
         }
         return createdContainer;
     }
@@ -200,7 +221,8 @@ public class ContextModelAbstraction {
     public ContextSetContainer getContextSetContainer(ContextSet set) {
         ContextSetContainer setContainer = null;
         for (ContextSetContainer container : contextModel.getSetContainer()) {
-            if (container.getPolicies().contains(set)) {
+            if (container.getPolicies()
+                .contains(set)) {
                 setContainer = container;
             }
         }
@@ -208,11 +230,13 @@ public class ContextModelAbstraction {
     }
 
     public EList<PolicySpecification> getPolicySpecifications() {
-        return contextModel.getPcmspecificationcontainer().getPolicyspecification();
+        return contextModel.getPcmspecificationcontainer()
+            .getPolicyspecification();
     }
 
     public EList<ContextSpecification> getContextSpecifications() {
-        return contextModel.getPcmspecificationcontainer().getContextspecification();
+        return contextModel.getPcmspecificationcontainer()
+            .getContextspecification();
     }
 
     public EList<ContextSet> getContextSets() {
@@ -233,7 +257,9 @@ public class ContextModelAbstraction {
 
     public EList<HierarchicalContext> getHierarchicalContexts() {
         EList<HierarchicalContext> list = new BasicEList<>();
-        for (ContextAttribute context : contextModel.getContextContainer().get(0).getContext()) {
+        for (ContextAttribute context : contextModel.getContextContainer()
+            .get(0)
+            .getContext()) {
             if (context instanceof HierarchicalContext) {
                 list.add((HierarchicalContext) context);
             }
@@ -241,10 +267,12 @@ public class ContextModelAbstraction {
         return list;
     }
 
+    // TODO separate class for hierarchical context handling
     public boolean isParentChild(HierarchicalContext parent, HierarchicalContext child) {
         boolean b = false;
 
-        if (parent.getIncluding().contains(child)) {
+        if (parent.getIncluding()
+            .contains(child)) {
             return true;
         } else {
             for (ContextAttribute including : parent.getIncluding()) {
@@ -276,7 +304,8 @@ public class ContextModelAbstraction {
     public boolean containsAllHierarchical(ContextSet set2, ContextSet set1) {
         boolean b = true;
         for (ContextAttribute context : set1.getContexts()) {
-            if (set2.getContexts().contains(context)) {
+            if (set2.getContexts()
+                .contains(context)) {
             } else if (context instanceof HierarchicalContext) {
                 if (containsHierarchicalChild(set2, (HierarchicalContext) context)) {
 
@@ -292,14 +321,16 @@ public class ContextModelAbstraction {
     }
 
     public boolean containsAllSimple(ContextSet set2, ContextSet set1) {
-        return set2.getContexts().containsAll(set1.getContexts());
+        return set2.getContexts()
+            .containsAll(set1.getContexts());
     }
 
     public HierarchicalContext getParent(HierarchicalContext context) {
         HierarchicalContext parent = null;
 
         for (HierarchicalContext hcontext : getHierarchicalContexts()) {
-            if (hcontext.getIncluding().contains(context)) {
+            if (hcontext.getIncluding()
+                .contains(context)) {
                 // TODO multiple parents ?
                 parent = hcontext;
                 break;

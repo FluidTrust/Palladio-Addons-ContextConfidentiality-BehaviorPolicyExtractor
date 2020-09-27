@@ -4,6 +4,12 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
 
+/**
+ * Contains all information needed to create a new policy specification
+ * 
+ * @author Thomas Lieb
+ *
+ */
 public class DeriverRecord {
     private ContextSet setToApply;
     private boolean negative;

@@ -30,7 +30,7 @@ public class ButtonHandler extends AbstractHandler {
         Logger.info("ButtonHandler-Start");
 
         // Logger settings
-        Logger.setActive(true);
+        Logger.setActive(false);
         Logger.setDetailed(false);
 
         // Needed here to ensure default values are set if PreferencesPage has never been opened

@@ -38,7 +38,7 @@ public abstract class PolicyExtractorTestTemplate {
         assertNotNull(testRepo);
         assertNotNull(testSystem);
 
-        Logger.setActive(false);
+        Logger.setActive(true);
 
         abs = new TestContextModelAbstraction(testContextModel);
     }

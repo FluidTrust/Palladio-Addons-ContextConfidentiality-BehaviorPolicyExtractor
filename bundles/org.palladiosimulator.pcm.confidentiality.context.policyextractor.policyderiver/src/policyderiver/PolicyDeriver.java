@@ -10,7 +10,7 @@ import settings.Settings;
 import util.ContextModelPrinter;
 
 /**
- * Contains all logic / functionality
+ * Entrypoint for plugin. Calls Deriver for execution
  * 
  * Needs the 4 different models as input, calls the different abstraction classes for specific logic
  * 

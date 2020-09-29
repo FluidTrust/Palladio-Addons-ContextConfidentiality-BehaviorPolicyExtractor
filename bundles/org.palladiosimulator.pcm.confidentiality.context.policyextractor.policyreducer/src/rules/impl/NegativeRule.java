@@ -1,15 +1,12 @@
 package rules.impl;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
-import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
+import modelabstraction.ContextSetRecord;
 import rules.AbstractRule;
-import util.Logger;
 
 public class NegativeRule extends AbstractRule {
 
@@ -17,42 +14,31 @@ public class NegativeRule extends AbstractRule {
         super(contextModelAbs);
     }
 
-    public boolean applyRule2(EList<ContextSet> list) {
+    @Override
+    public boolean applyRule(ResourceDemandingBehaviour seff) {
         boolean applied = false;
-        for (ContextSet set1 : list) {
+        EList<ContextSetRecord> list = contextModelAbs.getContextSetRecords(seff);
 
-            for (ContextAttribute context : set1.getContexts()) {
-                if (context instanceof HierarchicalContext) {
-                    HierarchicalContext parent = contextModelAbs.getParent((HierarchicalContext) context);
-                    if (parent != null) {
-                        Logger.info("Parent");
+        // Compare each record with all other records
+        for (ContextSetRecord record1 : list) {
+            for (ContextSetRecord record2 : list) {
+                // Skip itself
+                if (record1 != record2) {
+                    ContextSet set1 = record1.getContextSet();
+                    ContextSet set2 = record2.getContextSet();
 
-                        boolean containedOuter = true;
-                        EList<ContextSet> removeListInner = new BasicEList<>();
+                    if (contextModelAbs.containsAllSimple(set2, set1)) {
 
-                        for (ContextAttribute child : parent.getIncluding()) {
-                            ContextSet newSet = set1;
-                            newSet.getContexts().remove(context);
-                            newSet.getContexts().add(child);
+                        if (record1.isNegative() && !record2.isNegative()) {
+                            // TODO hierarchical handling -> add degree of error ?
 
-                            boolean containedInner = false;
-                            for (ContextSet set2 : list) {
-                                if (contextModelAbs.containsAllHierarchical(set2, newSet)) {
-                                    containedInner = true;
-                                    removeListInner.add(set2);
-                                    break;
-                                }
-                            }
-
-                            if (!containedInner) {
-                                containedOuter = false;
-                                break;
-                            }
+                            // TODO create error class instead, different handling
+                            // appliedList.add(createRecord(seff, set2, null, false));
+                            // applied = true;
                         }
 
-                        if (containedOuter) {
-                            Logger.info("MATCH");
-                            //appliedList.addAll(removeListInner);
+                        if (record2.isNegative() && !record1.isNegative()) {
+                            // TODO This case is allowed (?)
                         }
                     }
                 }
@@ -60,11 +46,5 @@ public class NegativeRule extends AbstractRule {
         }
         return applied;
     }
-
-	@Override
-	public boolean applyRule(ResourceDemandingBehaviour seff) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

@@ -8,6 +8,8 @@ import modelabstraction.ContextModelAbstraction;
 import rules.IRulesDefinition;
 import rules.RulesFlag;
 import rules.RulesType;
+import rules.impl.NegativeRule;
+import rules.impl.NegativeRuleParentChild;
 import rules.impl.ParentChild;
 import rules.impl.SimplerPolicy;
 import rules.impl.SubstituteParent;
@@ -75,6 +77,22 @@ public class PolicyReducer {
         }
     }
 
+    /**
+     * Add rules to list for execution, depeding on ruleflag
+     */
+    private void initializeNegativeRules() {
+
+        rulesList = new BasicEList<>();
+
+        if (rules.isRuleEnabled(RulesType.NegativeSimple)) {
+            rulesList.add(new NegativeRule(contextModelAbs));
+        }
+
+        if (rules.isRuleEnabled(RulesType.NegativeParentChild)) {
+            rulesList.add(new NegativeRuleParentChild(contextModelAbs));
+        }
+    }
+
     public ConfidentialAccessSpecification getContextModel() {
         return contextModelAbs.getContextModel();
     }
@@ -115,6 +133,34 @@ public class PolicyReducer {
             }
             loopCount++;
         }
+
+        loopCount = 0;
+        while (true) {
+            Logger.info("Loop-Negative-Start: " + loopCount + " -----------------");
+
+            initializeNegativeRules();
+
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                rulesDefinition.applyRuleToModel();
+            }
+
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                rulesDefinition.executeRule();
+            }
+
+            Logger.info("Loop-Negative-End: " + loopCount + " -----------------");
+
+            // TODO better condition
+            int rulesCount = 0;
+            for (IRulesDefinition rulesDefinition : rulesList) {
+                rulesCount += rulesDefinition.getNumberOfRecords();
+            }
+            if (rulesCount == 0) {
+                break;
+            }
+            loopCount++;
+        }
+
     }
 
     /**

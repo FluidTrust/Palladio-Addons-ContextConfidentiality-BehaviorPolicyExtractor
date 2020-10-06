@@ -109,8 +109,7 @@ public class PalladioAbstraction {
 
                 // If child component is same as parent or already contained in hierarchy--> endless
                 // loop
-                if (!rc.getId()
-                    .equalsIgnoreCase(composedStructure.getId()) && !hierarchy.contains(ac)) {
+                if (!rc.getId().equalsIgnoreCase(composedStructure.getId()) && !hierarchy.contains(ac)) {
                     EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
                     copy.addAll(hierarchy);
                     copy.add(ac);

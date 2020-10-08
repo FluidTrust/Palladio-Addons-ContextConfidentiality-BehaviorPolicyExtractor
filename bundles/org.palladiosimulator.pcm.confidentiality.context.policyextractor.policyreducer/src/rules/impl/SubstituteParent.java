@@ -37,7 +37,7 @@ public class SubstituteParent extends AbstractRule {
                 // TODO Richtung?
                 if (context instanceof HierarchicalContext) {
 
-                    HierarchicalContext parent = contextModelAbs.getParent((HierarchicalContext) context);
+                    HierarchicalContext parent = hierarchicalContextAbs.getParent((HierarchicalContext) context);
                     if (parent != null) {
 
                         boolean containedOuter = true;
@@ -65,7 +65,7 @@ public class SubstituteParent extends AbstractRule {
                                     continue;
                                 }
 
-                                if (contextModelAbs.containsAllHierarchical(set2, newSet)) {
+                                if (hierarchicalContextAbs.containsAllHierarchical(set2, newSet)) {
                                     containedInner = true;
                                     removeListInner.add(set2);
 

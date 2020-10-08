@@ -27,7 +27,7 @@ public class NegativeRuleParentChild extends AbstractRule {
                     ContextSet set1 = record1.getContextSet();
                     ContextSet set2 = record2.getContextSet();
 
-                    if (contextModelAbs.containsAllSimple(set2, set1)) {
+                    if (hierarchicalContextAbs.containsAllSimple(set2, set1)) {
 
                         if (record1.isNegative() && !record2.isNegative()) {
                             // TODO hierarchical handling -> add degree of error ?

@@ -30,7 +30,7 @@ public class SimplerPolicy extends AbstractRule {
         for (ContextSet set1 : list) {
             for (ContextSet set2 : list) {
                 if (set1 != set2) {
-                    if (contextModelAbs.containsAllSimple(set2, set1)) {
+                    if (hierarchicalContextAbs.containsAllSimple(set2, set1)) {
                         // set1 is less specific then set2 ==> set2 already included in set1
 
                         appliedList.add(createRecord(seff, set2, set1, false));

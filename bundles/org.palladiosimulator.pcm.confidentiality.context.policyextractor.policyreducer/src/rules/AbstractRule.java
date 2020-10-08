@@ -7,6 +7,7 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
+import modelabstraction.HierarchicalContextAbstraction;
 import util.Logger;
 
 /**
@@ -18,10 +19,12 @@ import util.Logger;
 public abstract class AbstractRule implements IRulesDefinition {
     protected EList<RulesRecord> appliedList = new BasicEList<>();
     protected ContextModelAbstraction contextModelAbs;
+    protected HierarchicalContextAbstraction hierarchicalContextAbs;
 
     public AbstractRule(ContextModelAbstraction contextModelAbs) {
         super();
         this.contextModelAbs = contextModelAbs;
+        this.hierarchicalContextAbs = new HierarchicalContextAbstraction(contextModelAbs);
     }
 
     /**
@@ -56,15 +59,12 @@ public abstract class AbstractRule implements IRulesDefinition {
     public boolean executeRule() {
         Logger.info(getClass().getSimpleName());
         for (RulesRecord record : appliedList) {
-            Logger.info("\tRemove: " + record.getRemove()
-                .getEntityName() + " : "
-                    + record.getReplacedBy()
-                        .getEntityName());
+            Logger.info(
+                    "\tRemove: " + record.getRemove().getEntityName() + " : " + record.getReplacedBy().getEntityName());
 
             if (record.isCreated()) {
                 ContextSetContainer container = contextModelAbs.getContextSetContainer(record.getRemove());
-                container.getPolicies()
-                    .add(record.getReplacedBy());
+                container.getPolicies().add(record.getReplacedBy());
                 contextModelAbs.addContextSet(record.getSeff(), record.getReplacedBy());
             }
 

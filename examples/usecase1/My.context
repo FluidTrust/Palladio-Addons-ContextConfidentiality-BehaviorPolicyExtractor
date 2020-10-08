@@ -21,6 +21,7 @@
     <context xsi:type="model:HierarchicalContext" id="_6woU4O0EEeqGh7ZaAVEkAQ" entityName="2_B"/>
     <context xsi:type="model:SingleAttributeContext" id="_xhwVEe0FEeqGh7ZaAVEkAQ" entityName="S1" contexttype="_AZLRwO0FEeqGh7ZaAVEkAQ"/>
     <context xsi:type="model:SingleAttributeContext" id="_4C4fwe0FEeqGh7ZaAVEkAQ" entityName="S2" contexttype="_AZLRwO0FEeqGh7ZaAVEkAQ"/>
+    <context xsi:type="model:RelatedContextSet" id="_uKr1Agl0Eeu-ye6aO9AHuQ"/>
   </contextContainer>
   <typeContainer>
     <types id="_AZLRwO0FEeqGh7ZaAVEkAQ" entityName="Shift"/>

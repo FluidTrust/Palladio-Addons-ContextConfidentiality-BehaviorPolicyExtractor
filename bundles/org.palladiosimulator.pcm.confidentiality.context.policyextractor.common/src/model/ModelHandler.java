@@ -28,7 +28,6 @@ import org.palladiosimulator.pcm.usagemodel.UsagemodelPackage;
  */
 public class ModelHandler {
     private ResourceSet resourceSet;
-    private Resource resourceContextModel;
     private IModelAbstraction model;
 
     public ModelHandler(final IModelAbstraction model) {
@@ -51,29 +50,25 @@ public class ModelHandler {
     public UsageModel loadUsageModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getUsageModelPath());
 
-        return (UsageModel) resourceData.getContents()
-            .get(0);
+        return (UsageModel) resourceData.getContents().get(0);
     }
 
     public Repository loadRepositoryModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getRepositoryModelPath());
 
-        return (Repository) resourceData.getContents()
-            .get(0);
+        return (Repository) resourceData.getContents().get(0);
     }
 
     public System loadAssemblyModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getAssemblyPath());
 
-        return (System) resourceData.getContents()
-            .get(0);
+        return (System) resourceData.getContents().get(0);
     }
 
     public ConfidentialAccessSpecification loadContextModel() {
         Resource resourceData = loadResource(this.resourceSet, model.getContextModelPath());
 
-        return (ConfidentialAccessSpecification) resourceData.getContents()
-            .get(0);
+        return (ConfidentialAccessSpecification) resourceData.getContents().get(0);
     }
 
     private Resource loadResource(final ResourceSet resourceSet, final String path) {
@@ -93,11 +88,10 @@ public class ModelHandler {
     }
 
     private void saveContextModel(ConfidentialAccessSpecification contextModel, String path) {
-        Resource x = resourceSet.createResource(URI.createFileURI(path));
-        x.getContents()
-            .add(contextModel);
+        Resource resource = resourceSet.createResource(URI.createFileURI(path));
+        resource.getContents().add(contextModel);
         try {
-            x.save(null);
+            resource.save(null);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -1,14 +1,11 @@
 package policyextractor.tests.util;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
-
-import policyextractor.common.tests.util.TestUtil;
 
 public class PalladioModelGenerator {
     private UsageModel usageModel;
@@ -30,6 +27,7 @@ public class PalladioModelGenerator {
 
         // Create Roles in System
         AssemblyGenerator.createInterfaces();
+        AssemblyGenerator.createComponents();
 
         // Create usagemodel last
         UsageModelGenerator.generateUsageScenarios();
@@ -40,20 +38,20 @@ public class PalladioModelGenerator {
     }
 
     public void saveTestModels() {
-        try {
-            String usageModelPath = TestUtil.getTestDataPath() + "performance" + File.separator
-                    + "newUsageModel.usagemodel";
-            String repositoryPath = TestUtil.getTestDataPath() + "performance" + File.separator
-                    + "newRepository.repository";
-            String systemPath = TestUtil.getTestDataPath() + "performance" + File.separator + "newAssembly.system";
-            String contextModelPath = TestUtil.getTestDataPath() + "performance" + File.separator + "My.context";
 
-            new TestDataHandler().saveTestModel(repository, repositoryPath);
-            new TestDataHandler().saveTestModel(system, systemPath);
-            new TestDataHandler().saveTestModel(usageModel, usageModelPath);
-            new TestDataHandler().saveTestModel(contextModel, contextModelPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // TODO porper path names?
+        String usageModelPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
+                + File.separator + "newUsageModel.usagemodel";
+        String repositoryPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
+                + File.separator + "newRepository.repository";
+        String systemPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
+                + File.separator + "newAssembly.system";
+        String contextModelPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
+                + File.separator + "My.context";
+
+        new TestDataHandler().saveTestModel(repository, repositoryPath);
+        new TestDataHandler().saveTestModel(system, systemPath);
+        new TestDataHandler().saveTestModel(usageModel, usageModelPath);
+        new TestDataHandler().saveTestModel(contextModel, contextModelPath);
     }
 }

@@ -20,7 +20,6 @@ public class ContextModelPrinter {
     }
 
     public void print(ConfidentialAccessSpecification model, boolean detailed) {
-        Logger.setDetailed(true);
         Logger.infoDetailed("\nContextModel");
         ContextModelAbstraction abs = new ContextModelAbstraction(model);
 
@@ -30,14 +29,12 @@ public class ContextModelPrinter {
                         "SetContainer: " + contextSetContainer.getEntityName() + "," + contextSetContainer.getId());
 
                 for (ContextSet set : contextSetContainer.getPolicies()) {
-                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts()
-                        .size());
+                    Logger.infoDetailed("\tContextSet: " + set.getEntityName() + " - " + set.getContexts().size());
                 }
             }
 
             // TODO all container
-            ContextContainer contextContainer = model.getContextContainer()
-                .get(0);
+            ContextContainer contextContainer = model.getContextContainer().get(0);
             Logger.infoDetailed("Container: " + contextContainer.getEntityName() + "," + contextContainer.getId());
 
             TypeContainer typeContainer = model.getTypeContainer();
@@ -57,11 +54,9 @@ public class ContextModelPrinter {
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
             Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
-                    + abs.getContextSet(specification.getResourcedemandingbehaviour())
-                        .size());
+                    + abs.getContextSet(specification.getResourcedemandingbehaviour()).size());
         }
         Logger.infoDetailed("\n");
-        Logger.setDetailed(false);
     }
 
     public void printSEFF(ConfidentialAccessSpecification model, ResourceDemandingBehaviour seff) {

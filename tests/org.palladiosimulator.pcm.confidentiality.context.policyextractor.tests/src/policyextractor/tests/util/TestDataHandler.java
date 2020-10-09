@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.ContextPackage;
 import org.palladiosimulator.pcm.repository.RepositoryPackage;
 import org.palladiosimulator.pcm.system.SystemPackage;
@@ -42,13 +42,12 @@ public class TestDataHandler {
         this.resourceSet.setResourceFactoryRegistry(resourceRegistry);
     }
 
-    public void saveContextModel(ConfidentialAccessSpecification contextModel, String path) {
+    public void saveTestModel(EObject model, String path) {
         Resource resource = resourceSet.createResource(URI.createFileURI(path));
-        resource.getContents().add(contextModel);
+        resource.getContents().add(model);
         try {
             resource.save(null);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

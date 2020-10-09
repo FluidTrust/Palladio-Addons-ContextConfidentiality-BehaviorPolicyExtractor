@@ -14,9 +14,11 @@ import org.palladiosimulator.pcm.confidentiality.context.model.TypeContainer;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
 import org.palladiosimulator.pcm.confidentiality.context.set.SetFactory;
+import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PCMSpecificationContainer;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.SpecificationFactory;
+import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 
 import policyextractor.common.tests.util.TestContextModelAbstraction;
 
@@ -38,15 +40,27 @@ public class ContextModelGenerator {
     public static ConfidentialAccessSpecification createNewContextModel() {
         model = ContextFactory.eINSTANCE.createConfidentialAccessSpecification();
 
+        PCMSpecificationContainer specificationContainer = SpecificationFactory.eINSTANCE
+                .createPCMSpecificationContainer();
+        model.setPcmspecificationcontainer(specificationContainer);
+
         testContextModelAbs = new TestContextModelAbstraction(model);
 
-        // TODO populate
+        return model;
+    }
+
+    public static void createContexts() {
         generateContextTypes();
         generateContexts();
         generateContextSets();
-        generatePolicies();
+    }
 
-        return model;
+    public static void createPolicies() {
+        generatePolicies();
+    }
+
+    public static void createSpecifications() {
+        generateSpecifications();
     }
 
     /**
@@ -159,9 +173,7 @@ public class ContextModelGenerator {
     }
 
     private static void generatePolicies() {
-        PCMSpecificationContainer specificationContainer = SpecificationFactory.eINSTANCE
-                .createPCMSpecificationContainer();
-        model.setPcmspecificationcontainer(specificationContainer);
+        PCMSpecificationContainer specificationContainer = model.getPcmspecificationcontainer();
 
         for (int i = 0; i < numPolicies; i++) {
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
@@ -176,6 +188,48 @@ public class ContextModelGenerator {
 
             specificationContainer.getPolicyspecification().add(policy);
         }
+    }
+
+    private static void generateSpecifications() {
+        PCMSpecificationContainer specificationContainer = model.getPcmspecificationcontainer();
+
+        for (int indexBehaviour = 0; indexBehaviour < GenerationParameters.numInterfacesIn; indexBehaviour++) {
+            for (int indexInterface = 0; indexInterface < GenerationParameters.numInterfacesIn; indexInterface++) {
+                // Call each method
+                for (int indexOperation = 0; indexOperation < GenerationParameters.numOperationPerInterface; indexOperation++) {
+                    // Call defined number of times
+                    for (int indexCount = 0; indexCount < GenerationParameters.numSystemCallsPerInterfaceMethod; indexCount++) {
+
+                        ContextSpecification specification = SpecificationFactory.eINSTANCE
+                                .createContextSpecification();
+                        specification.setEntityName(
+                                getSpecificationName(indexBehaviour, indexInterface, indexOperation, indexCount));
+
+                        int numPolicies = random.nextInt(maxPolicyPolicies);
+                        for (int policyIndex = 0; policyIndex <= numPolicies; policyIndex++) {
+                            int index = random.nextInt(numContextSets);
+                            ContextSet set = testContextModelAbs.getContextSetByName(getContextSetName(index));
+                            specification.setContextset(set);
+                        }
+
+                        String systemCallName = UsageModelGenerator.getEntryLevelSystemCallName(indexInterface,
+                                indexOperation, indexCount);
+                        EntryLevelSystemCall systemCall = UsageModelGenerator.systemCalls.get(systemCallName);
+                        specification.setEntrylevelsystemcall(systemCall);
+
+                        specificationContainer.getContextspecification().add(specification);
+                    }
+                }
+            }
+
+            // TODO context for behaviour
+        }
+    }
+
+    private static String getSpecificationName(int indexBehaviour, int indexInterface, int indexOperation,
+            int indexCount) {
+        return "ContextSpecification__" + indexBehaviour + "_" + indexInterface + "_" + indexOperation + "_"
+                + indexCount;
     }
 
     private static String getPolicyName(int i) {

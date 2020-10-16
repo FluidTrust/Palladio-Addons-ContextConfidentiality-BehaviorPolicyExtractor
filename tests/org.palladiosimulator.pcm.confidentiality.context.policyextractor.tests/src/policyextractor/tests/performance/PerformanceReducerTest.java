@@ -26,7 +26,8 @@ class PerformanceReducerTest {
         for (int i = 0; i < numRuns; i++) {
 
             ConfidentialAccessSpecification contextModel = ContextModelGenerator.createNewContextModel();
-            // new TestDataHandler().saveTestModel(contextModel, contextModelPath);
+            ContextModelGenerator.createContexts();
+            ContextModelGenerator.createPolicies();
 
             ContextModelAbstraction contextModelAbs = new ContextModelAbstraction(contextModel);
             RulesFlag rules = new RulesFlag();

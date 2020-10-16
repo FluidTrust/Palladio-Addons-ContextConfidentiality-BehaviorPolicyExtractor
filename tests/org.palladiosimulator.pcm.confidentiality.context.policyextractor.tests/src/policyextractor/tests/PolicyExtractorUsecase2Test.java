@@ -20,7 +20,7 @@ class PolicyExtractorUsecase2Test extends PolicyExtractorSystemTestTemplate {
 
     @Test
     void test1() throws IOException {
-        canonicalPath = TestUtil.getTestDataPath() + "PolicyExtractor" + File.separator + "usecase1";
+        canonicalPath = TestUtil.getTestDataPath() + "policyextractor" + File.separator + "usecase1";
 
         init();
         addCommonObjects();

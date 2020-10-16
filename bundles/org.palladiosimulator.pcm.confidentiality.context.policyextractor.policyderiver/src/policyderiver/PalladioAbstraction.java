@@ -93,7 +93,7 @@ public class PalladioAbstraction {
         // Check outer role with passed operationProvidedRole
         // If match, pass inner role
         for (ProvidedDelegationConnector connector : assemblyAbs
-            .getListOfProvidedDelegationConnector(composedStructure)) {
+                .getListOfProvidedDelegationConnector(composedStructure)) {
             Logger.info("Structure: " + composedStructure.getEntityName());
             Logger.info("Conntector: " + connector.getEntityName());
 
@@ -101,8 +101,7 @@ public class PalladioAbstraction {
             OperationProvidedRole innerRole = connector.getInnerProvidedRole_ProvidedDelegationConnector();
 
             if (assemblyAbs.isOperationProvidedRoleMatch(operationProvidedRole, outerRole)) {
-                Logger.infoDetailed(connector.getAssemblyContext_ProvidedDelegationConnector()
-                    .getEntityName());
+                Logger.infoDetailed(connector.getAssemblyContext_ProvidedDelegationConnector().getEntityName());
                 AssemblyContext ac = connector.getAssemblyContext_ProvidedDelegationConnector();
                 RepositoryComponent rc = ac.getEncapsulatedComponent__AssemblyContext();
                 Logger.infoDetailed(rc.getEntityName());
@@ -157,8 +156,7 @@ public class PalladioAbstraction {
     private void entryPointBasicComponent(BasicComponent basicComponent, EList<AssemblyContext> hierarchy,
             OperationSignature operationSignature) {
         for (ServiceEffectSpecification seff : basicComponent.getServiceEffectSpecifications__BasicComponent()) {
-            Logger.infoDetailed(seff.getDescribedService__SEFF()
-                .getEntityName());
+            Logger.infoDetailed(seff.getDescribedService__SEFF().getEntityName());
             if (seff.getDescribedService__SEFF() == operationSignature) {
                 Logger.infoDetailed("SEFF matched");
 
@@ -201,13 +199,11 @@ public class PalladioAbstraction {
      */
     private void handleExternalCall(ExternalCallAction externalAction, EList<AssemblyContext> hierarchy) {
         Logger.infoDetailed(externalAction.getEntityName());
-        Logger.infoDetailed(externalAction.getCalledService_ExternalService()
-            .getEntityName());
+        Logger.infoDetailed(externalAction.getCalledService_ExternalService().getEntityName());
         OperationSignature externalSignature = externalAction.getCalledService_ExternalService();
         OperationRequiredRole requiredRole = externalAction.getRole_ExternalService();
         Logger.infoDetailed(requiredRole.getEntityName());
-        Logger.infoDetailed(requiredRole.getRequiredInterface__OperationRequiredRole()
-            .getEntityName());
+        Logger.infoDetailed(requiredRole.getRequiredInterface__OperationRequiredRole().getEntityName());
 
         searchForMatchingExternalComponent(hierarchy, requiredRole, externalSignature);
     }
@@ -237,8 +233,11 @@ public class PalladioAbstraction {
                 if (orr.equals(requiredRole)) {
                     RepositoryComponent rc = targetComponent.getEncapsulatedComponent__AssemblyContext();
                     Logger.infoDetailed(rc.getEntityName());
+                    // Adapt hierarchy
                     EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
                     copy.addAll(hierarchy);
+                    copy.remove(currentContext);
+                    copy.add(targetComponent);
                     entryPointRepositoryComponent(rc, copy, opr, externalSignature);
                 }
             }

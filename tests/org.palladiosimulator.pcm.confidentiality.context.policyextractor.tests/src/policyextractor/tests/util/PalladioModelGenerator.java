@@ -1,11 +1,14 @@
 package policyextractor.tests.util;
 
-import java.io.File;
+import java.io.IOException;
 
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.UsageModel;
+
+import policyextractor.common.tests.util.TestUtil;
+import util.Logger;
 
 public class PalladioModelGenerator {
     private UsageModel usageModel;
@@ -20,7 +23,11 @@ public class PalladioModelGenerator {
         usageModel = UsageModelGenerator.createNewUsageModel();
         contextModel = ContextModelGenerator.createNewContextModel();
 
-        saveTestModels();
+        try {
+            saveTestModels();
+        } catch (IOException e) {
+            Logger.error("Couldn't create TestData");
+        }
 
         // Create Interfaces
         RepositoryGenerator.createInterfaces();
@@ -37,17 +44,12 @@ public class PalladioModelGenerator {
         ContextModelGenerator.createSpecifications();
     }
 
-    public void saveTestModels() {
+    public void saveTestModels() throws IOException {
 
-        // TODO porper path names?
-        String usageModelPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
-                + File.separator + "newUsageModel.usagemodel";
-        String repositoryPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
-                + File.separator + "newRepository.repository";
-        String systemPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
-                + File.separator + "newAssembly.system";
-        String contextModelPath = "E:\\MasterThesis\\Palladio-Addons-ContextConfidentiality-BehaviorPolicyExtractor\\examples\\performance"
-                + File.separator + "My.context";
+        String usageModelPath = TestUtil.getTestDataPathForGeneration() + "newUsageModel.usagemodel";
+        String repositoryPath = TestUtil.getTestDataPathForGeneration() + "newRepository.repository";
+        String systemPath = TestUtil.getTestDataPathForGeneration() + "newAssembly.system";
+        String contextModelPath = TestUtil.getTestDataPathForGeneration() + "My.context";
 
         new TestDataHandler().saveTestModel(repository, repositoryPath);
         new TestDataHandler().saveTestModel(system, systemPath);

@@ -1,6 +1,7 @@
 package policyextractor.tests.util;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.palladiosimulator.pcm.core.composition.ComposedStructure;
 import org.palladiosimulator.pcm.core.composition.CompositionFactory;
 import org.palladiosimulator.pcm.core.composition.ProvidedDelegationConnector;
 import org.palladiosimulator.pcm.core.composition.RequiredDelegationConnector;
+import org.palladiosimulator.pcm.repository.CompositeComponent;
 import org.palladiosimulator.pcm.repository.OperationInterface;
 import org.palladiosimulator.pcm.repository.OperationProvidedRole;
 import org.palladiosimulator.pcm.repository.OperationRequiredRole;
@@ -43,8 +45,8 @@ public class AssemblyGenerator {
             interfacesIn.put(getInterfaceInName(i), provideRole);
 
             // Connect
-            OperationInterface provideInterface = RepositoryGenerator.interfaces
-                    .get(RepositoryGenerator.getOperationInterfaceName(i));
+            OperationInterface provideInterface = RepositoryGenerator.interfaces.get(
+                    RepositoryGenerator.getOperationInterfaceName(i));
             provideRole.setProvidedInterface__OperationProvidedRole(provideInterface);
         }
 
@@ -57,8 +59,8 @@ public class AssemblyGenerator {
             interfacesOut.put(getInterfaceOutName(i), requireRole);
 
             // Connect
-            OperationInterface provideInterface = RepositoryGenerator.interfaces
-                    .get(RepositoryGenerator.getOperationInterfaceName(i));
+            OperationInterface provideInterface = RepositoryGenerator.interfaces.get(
+                    RepositoryGenerator.getOperationInterfaceName(i));
             requireRole.setRequiredInterface__OperationRequiredRole(provideInterface);
         }
 
@@ -79,8 +81,9 @@ public class AssemblyGenerator {
     public static void createComponentsWidth(ComposedStructure parent, int depth) {
         boolean basic = true;
 
-        // EList<Connector> provideRoles = new BasicEList<Connector>();
-        // provideRoles = parent.getConnectors__ComposedStructure();
+        if (depth < GenerationParameters.numComposedDepth) {
+            basic = false;
+        }
 
         AssemblyContext previous = null;
         AssemblyContext current = null;
@@ -104,24 +107,22 @@ public class AssemblyGenerator {
                 first = current;
             } else {
                 // Assembly Connector
-                assertEquals(GenerationParameters.numInterfaces, current.getEncapsulatedComponent__AssemblyContext()
-                        .getProvidedRoles_InterfaceProvidingEntity().size());
-                assertEquals(GenerationParameters.numInterfaces, previous.getEncapsulatedComponent__AssemblyContext()
-                        .getProvidedRoles_InterfaceProvidingEntity().size());
+                assertEquals(GenerationParameters.numInterfaces,
+                        current.getEncapsulatedComponent__AssemblyContext().getProvidedRoles_InterfaceProvidingEntity().size());
+                assertEquals(GenerationParameters.numInterfaces,
+                        previous.getEncapsulatedComponent__AssemblyContext().getProvidedRoles_InterfaceProvidingEntity().size());
 
-                for (ProvidedRole provideRole : current.getEncapsulatedComponent__AssemblyContext()
-                        .getProvidedRoles_InterfaceProvidingEntity()) {
+                for (ProvidedRole provideRole : current.getEncapsulatedComponent__AssemblyContext().getProvidedRoles_InterfaceProvidingEntity()) {
                     // TODO check
                     OperationProvidedRole opr = (OperationProvidedRole) provideRole;
                     OperationRequiredRole matchingRole = null;
-                    for (RequiredRole requireRole : previous.getEncapsulatedComponent__AssemblyContext()
-                            .getRequiredRoles_InterfaceRequiringEntity()) {
+                    for (RequiredRole requireRole : previous.getEncapsulatedComponent__AssemblyContext().getRequiredRoles_InterfaceRequiringEntity()) {
 
                         // TODO check
                         OperationRequiredRole orr = (OperationRequiredRole) requireRole;
 
-                        if (orr.getRequiredInterface__OperationRequiredRole().getId()
-                                .equals(opr.getProvidedInterface__OperationProvidedRole().getId())) {
+                        if (orr.getRequiredInterface__OperationRequiredRole().getId().equals(
+                                opr.getProvidedInterface__OperationProvidedRole().getId())) {
                             matchingRole = orr;
                             break;
                         }
@@ -139,6 +140,12 @@ public class AssemblyGenerator {
                     parent.getConnectors__ComposedStructure().add(connector);
 
                 }
+            }
+
+            // Recursive call if composite component
+            if (depth < GenerationParameters.numComposedDepth) {
+                assertTrue(component instanceof CompositeComponent);
+                createComponentsWidth((CompositeComponent) component, depth + 1);
             }
         }
 
@@ -165,22 +172,20 @@ public class AssemblyGenerator {
 
             OperationProvidedRole opr = (OperationProvidedRole) provideRole;
             OperationProvidedRole matchingRole = null;
-            for (ProvidedRole provideRoleInner : first.getEncapsulatedComponent__AssemblyContext()
-                    .getProvidedRoles_InterfaceProvidingEntity()) {
+            for (ProvidedRole provideRoleInner : first.getEncapsulatedComponent__AssemblyContext().getProvidedRoles_InterfaceProvidingEntity()) {
 
                 // TODO check
                 OperationProvidedRole opr2 = (OperationProvidedRole) provideRoleInner;
 
-                if (opr2.getProvidedInterface__OperationProvidedRole().getId()
-                        .equals(opr.getProvidedInterface__OperationProvidedRole().getId())) {
+                if (opr2.getProvidedInterface__OperationProvidedRole().getId().equals(
+                        opr.getProvidedInterface__OperationProvidedRole().getId())) {
                     matchingRole = opr2;
                     break;
                 }
             }
 
             assertNotNull(matchingRole);
-            ProvidedDelegationConnector provideConnector = CompositionFactory.eINSTANCE
-                    .createProvidedDelegationConnector();
+            ProvidedDelegationConnector provideConnector = CompositionFactory.eINSTANCE.createProvidedDelegationConnector();
             parent.getConnectors__ComposedStructure().add(provideConnector);
             // TODO
             provideConnector.setEntityName("ProvideConnector");
@@ -193,21 +198,19 @@ public class AssemblyGenerator {
 
             OperationRequiredRole orr = (OperationRequiredRole) requiredRole;
             OperationRequiredRole matchingRole = null;
-            for (RequiredRole requireRoleInner : current.getEncapsulatedComponent__AssemblyContext()
-                    .getRequiredRoles_InterfaceRequiringEntity()) {
+            for (RequiredRole requireRoleInner : current.getEncapsulatedComponent__AssemblyContext().getRequiredRoles_InterfaceRequiringEntity()) {
 
                 OperationRequiredRole orr2 = (OperationRequiredRole) requireRoleInner;
 
-                if (orr2.getRequiredInterface__OperationRequiredRole().getId()
-                        .equals(orr.getRequiredInterface__OperationRequiredRole().getId())) {
+                if (orr2.getRequiredInterface__OperationRequiredRole().getId().equals(
+                        orr.getRequiredInterface__OperationRequiredRole().getId())) {
                     matchingRole = orr2;
                     break;
                 }
             }
 
             assertNotNull(matchingRole);
-            RequiredDelegationConnector requireConnector = CompositionFactory.eINSTANCE
-                    .createRequiredDelegationConnector();
+            RequiredDelegationConnector requireConnector = CompositionFactory.eINSTANCE.createRequiredDelegationConnector();
             parent.getConnectors__ComposedStructure().add(requireConnector);
             // TODO
             requireConnector.setEntityName("RequireConnector");

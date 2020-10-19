@@ -50,7 +50,7 @@ public class RepositoryGenerator {
     public static RepositoryComponent createComponent(boolean basic) {
         RepositoryComponent component = null;
         String componentName = getComponentName(components.size());
-        if (true) {
+        if (basic) {
             BasicComponent basicComponent = RepositoryFactory.eINSTANCE.createBasicComponent();
             basicComponent.setEntityName(componentName);
             model.getComponents__Repository().add(basicComponent);
@@ -84,8 +84,7 @@ public class RepositoryGenerator {
             if (component instanceof BasicComponent) {
                 for (int operationIndex = 0; operationIndex < GenerationParameters.numOperationPerInterface; operationIndex++) {
                     ResourceDemandingSEFF seff = SeffFactory.eINSTANCE.createResourceDemandingSEFF();
-                    OperationSignature signature = operations
-                            .get(getOperationSignatureName(interfaceIndex, operationIndex));
+                    OperationSignature signature = operations.get(getOperationSignatureName(interfaceIndex, operationIndex));
                     seff.setDescribedService__SEFF(signature);
                     ((BasicComponent) component).getServiceEffectSpecifications__BasicComponent().add(seff);
 
@@ -125,8 +124,7 @@ public class RepositoryGenerator {
 
                 for (int operationIndex = 0; operationIndex < GenerationParameters.numOperationPerInterface; operationIndex++) {
                     ResourceDemandingSEFF seff = SeffFactory.eINSTANCE.createResourceDemandingSEFF();
-                    OperationSignature signature = operations
-                            .get(getOperationSignatureName(interfaceIndex, operationIndex));
+                    OperationSignature signature = operations.get(getOperationSignatureName(interfaceIndex, operationIndex));
                     seff.setDescribedService__SEFF(signature);
                     basicComponent.getServiceEffectSpecifications__BasicComponent().add(seff);
                 }

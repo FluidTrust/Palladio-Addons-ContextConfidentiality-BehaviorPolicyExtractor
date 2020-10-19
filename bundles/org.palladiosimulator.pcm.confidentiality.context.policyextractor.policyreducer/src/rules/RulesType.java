@@ -7,5 +7,5 @@ package rules;
  *
  */
 public enum RulesType {
-    SimplerPolicy, ParentChild, SubstituteParent, NegativeSimple, NegativeParentChild
+    SamePolicy, SimplerPolicy, ParentChild, SubstituteParent, NegativeSimple, NegativeParentChild
 }

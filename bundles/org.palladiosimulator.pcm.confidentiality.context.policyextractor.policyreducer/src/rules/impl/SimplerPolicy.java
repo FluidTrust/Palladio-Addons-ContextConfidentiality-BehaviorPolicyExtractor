@@ -33,8 +33,11 @@ public class SimplerPolicy extends AbstractRule {
                     if (hierarchicalContextAbs.containsAllSimple(set2, set1)) {
                         // set1 is less specific then set2 ==> set2 already included in set1
 
-                        appliedList.add(createRecord(seff, set2, set1, false));
-                        applied = true;
+                        // Ignore policies which are the same -> different ruleset
+                        if (!hierarchicalContextAbs.containsAllSimple(set1, set2)) {
+                            appliedList.add(createRecord(seff, set2, set1, false));
+                            applied = true;
+                        }
                     }
                 }
             }

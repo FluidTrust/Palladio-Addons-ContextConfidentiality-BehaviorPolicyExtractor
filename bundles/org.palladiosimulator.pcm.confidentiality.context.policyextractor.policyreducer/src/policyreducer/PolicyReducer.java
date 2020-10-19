@@ -11,6 +11,7 @@ import rules.RulesType;
 import rules.impl.NegativeRule;
 import rules.impl.NegativeRuleParentChild;
 import rules.impl.ParentChild;
+import rules.impl.SamePolicy;
 import rules.impl.SimplerPolicy;
 import rules.impl.SubstituteParent;
 import util.ContextModelPrinter;
@@ -63,6 +64,10 @@ public class PolicyReducer {
      */
     private void initializeRules() {
         rulesList = new BasicEList<>();
+
+        if (rules.isRuleEnabled(RulesType.SamePolicy)) {
+            rulesList.add(new SamePolicy(contextModelAbs));
+        }
 
         if (rules.isRuleEnabled(RulesType.SimplerPolicy)) {
             rulesList.add(new SimplerPolicy(contextModelAbs));

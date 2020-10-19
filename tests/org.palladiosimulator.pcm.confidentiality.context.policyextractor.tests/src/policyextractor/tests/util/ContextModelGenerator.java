@@ -1,5 +1,7 @@
 package policyextractor.tests.util;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Random;
 
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
@@ -40,8 +42,7 @@ public class ContextModelGenerator {
     public static ConfidentialAccessSpecification createNewContextModel() {
         model = ContextFactory.eINSTANCE.createConfidentialAccessSpecification();
 
-        PCMSpecificationContainer specificationContainer = SpecificationFactory.eINSTANCE
-                .createPCMSpecificationContainer();
+        PCMSpecificationContainer specificationContainer = SpecificationFactory.eINSTANCE.createPCMSpecificationContainer();
         model.setPcmspecificationcontainer(specificationContainer);
 
         testContextModelAbs = new TestContextModelAbstraction(model);
@@ -158,14 +159,21 @@ public class ContextModelGenerator {
                 boolean isSimple = random.nextBoolean();
                 if (isSimple) {
                     int index = random.nextInt(numSingleContext);
-                    ContextAttribute context = testContextModelAbs
-                            .getContextAttributeByName(getSingleAttributeContextName(index));
+                    ContextAttribute context = testContextModelAbs.getContextAttributeByName(
+                            getSingleAttributeContextName(index));
                     set.getContexts().add(context);
                 } else {
                     int index = random.nextInt(numHierarchicalContext);
-                    // TODO
-                    ContextAttribute context = testContextModelAbs
-                            .getContextAttributeByName(getSingleAttributeContextName(index));
+                    int numdepth = random.nextInt(numHierarchicalContextDepth);
+
+                    String childString = "0";
+                    for (int depth = 0; depth <= numdepth; depth++) {
+                        int numwidth = random.nextInt(numHierarchicalContextWidth);
+                        childString = childString + "_" + numwidth;
+                    }
+                    String name = getHierarchicalContextName(index, childString);
+                    ContextAttribute context = testContextModelAbs.getContextAttributeByName(name);
+                    assertNotNull(context, name);
                     set.getContexts().add(context);
                 }
             }
@@ -200,8 +208,7 @@ public class ContextModelGenerator {
                     // Call defined number of times
                     for (int indexCount = 0; indexCount < GenerationParameters.numSystemCallsPerInterfaceMethod; indexCount++) {
 
-                        ContextSpecification specification = SpecificationFactory.eINSTANCE
-                                .createContextSpecification();
+                        ContextSpecification specification = SpecificationFactory.eINSTANCE.createContextSpecification();
                         specification.setEntityName(
                                 getSpecificationName(indexBehaviour, indexInterface, indexOperation, indexCount));
 
@@ -216,6 +223,9 @@ public class ContextModelGenerator {
                                 indexOperation, indexCount);
                         EntryLevelSystemCall systemCall = UsageModelGenerator.systemCalls.get(systemCallName);
                         specification.setEntrylevelsystemcall(systemCall);
+
+                        Boolean isMisusage = random.nextBoolean();
+                        specification.setMissageUse(isMisusage);
 
                         specificationContainer.getContextspecification().add(specification);
                     }

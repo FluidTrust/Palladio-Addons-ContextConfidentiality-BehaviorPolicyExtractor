@@ -50,8 +50,8 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             UsageScenario usageScenario = contextSpecification.getUsagescenario();
             if (usageScenario != null) {
-                if (usageScenario.getScenarioBehaviour_UsageScenario().getId()
-                        .equalsIgnoreCase(scenarioBehaviour.getId())) {
+                if (usageScenario.getScenarioBehaviour_UsageScenario().getId().equalsIgnoreCase(
+                        scenarioBehaviour.getId())) {
                     list.add(contextSpecification);
                 }
             }
@@ -155,7 +155,7 @@ public class ContextModelAbstraction {
             if (!isNegative(policySpecification)) {
                 list.addAll(policySpecification.getPolicy());
             } else {
-                Logger.info("SKIP");
+                // Logger.info("SKIP");
             }
         }
 

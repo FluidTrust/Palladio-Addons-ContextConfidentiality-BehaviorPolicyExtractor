@@ -8,8 +8,10 @@ import modelabstraction.ContextModelAbstraction;
 import rules.IRulesDefinition;
 import rules.RulesFlag;
 import rules.RulesType;
+import rules.impl.NegativeCleanup;
 import rules.impl.NegativeRule;
 import rules.impl.NegativeRuleParentChild;
+import rules.impl.NegativeRuleSame;
 import rules.impl.ParentChild;
 import rules.impl.SamePolicy;
 import rules.impl.SimplerPolicy;
@@ -47,12 +49,7 @@ public class PolicyReducer {
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
-        // TODO add proper condition, maybe settings?
-        if (true) {
-            rulesHandling1();
-        } else {
-            rulesHandling2();
-        }
+        rulesHandling1();
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
@@ -88,6 +85,10 @@ public class PolicyReducer {
     private void initializeNegativeRules() {
 
         rulesList = new BasicEList<>();
+
+        if (rules.isRuleEnabled(RulesType.NegavativeSame)) {
+            rulesList.add(new NegativeRuleSame(contextModelAbs));
+        }
 
         if (rules.isRuleEnabled(RulesType.NegativeSimple)) {
             rulesList.add(new NegativeRule(contextModelAbs));
@@ -172,35 +173,9 @@ public class PolicyReducer {
             loopCount++;
         }
 
-    }
-
-    /**
-     * Implementation 2
-     * 
-     * Execute ruleset directly, possibly changing order of rule
-     */
-    private void rulesHandling2() {
-
-        int loopCount = 0;
-        while (true) {
-            Logger.info("Loop-Start: " + loopCount + " -----------------");
-
-            initializeRules();
-
-            int rulesCount = 0;
-            for (IRulesDefinition rulesDefinition : rulesList) {
-                // TODO evaluate if difference?
-                // TODO execute each record directly in rule? (Problem with inloop change?)
-                rulesDefinition.applyRuleToModel();
-                rulesDefinition.executeRule();
-                rulesCount += rulesDefinition.getNumberOfRecords();
-            }
-            Logger.info("Loop-End: " + loopCount + " -----------------");
-
-            if (rulesCount == 0) {
-                break;
-            }
-            loopCount++;
-        }
+        // Remove negative contexts from model
+        NegativeCleanup cleanup = new NegativeCleanup(contextModelAbs);
+        cleanup.applyRuleToModel();
+        cleanup.executeRule();
     }
 }

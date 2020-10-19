@@ -131,7 +131,13 @@ public class PolicyReducer {
             if (rulesCount == 0) {
                 break;
             }
+
             loopCount++;
+            // TODO exit loop for now, prevent endless
+            if (loopCount == 10) {
+                Logger.error("\nEndless Loop in PolicyReducer!");
+                break;
+            }
         }
 
         loopCount = 0;

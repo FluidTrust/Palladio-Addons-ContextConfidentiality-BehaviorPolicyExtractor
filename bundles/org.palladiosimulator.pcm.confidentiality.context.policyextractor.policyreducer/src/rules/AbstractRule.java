@@ -47,10 +47,12 @@ public abstract class AbstractRule implements IRulesDefinition {
     public void applyRuleToModel() {
         boolean appliable = false;
         for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
-            appliable = appliable || applyRule(seff);
+            boolean ret = applyRule(seff);
+            appliable = ret || appliable;
         }
 
-        Logger.info(getClass().getSimpleName() + ": " + appliable + " : " + appliedList.size());
+        Logger.info(getClass().getSimpleName() + ": " + appliable + " : " + appliedList.size() + " out of "
+                + contextModelAbs.getSEFFs().size());
     }
 
     /**
@@ -59,8 +61,8 @@ public abstract class AbstractRule implements IRulesDefinition {
     public boolean executeRule() {
         Logger.info(getClass().getSimpleName());
         for (RulesRecord record : appliedList) {
-            Logger.info(
-                    "\tRemove: " + record.getRemove().getEntityName() + " : " + record.getReplacedBy().getEntityName());
+            Logger.info("\tRemove: " + record.getRemove().getEntityName() + " : "
+                    + record.getReplacedBy().getEntityName() + " : SEFF(" + record.getSeff().getId() + ")");
 
             if (record.isCreated()) {
                 ContextSetContainer container = contextModelAbs.getContextSetContainer(record.getRemove());

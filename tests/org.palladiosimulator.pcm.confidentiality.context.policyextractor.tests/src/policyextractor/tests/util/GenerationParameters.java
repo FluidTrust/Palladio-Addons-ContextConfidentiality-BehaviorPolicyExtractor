@@ -9,12 +9,12 @@ public class GenerationParameters {
 
     static int numInterfaces = numInterfacesIn;
     // Repository
-    static int numOperationPerInterface = 1;
+    static int numOperationPerInterface = 5;
     static int numBasicComponents = 10;
 
     // UsageModel
     static int numUsageScenarios = 10;
-    static int numSystemCallsPerInterfaceMethod = 1;
+    static int numSystemCallsPerInterfaceMethod = 3;
 
     // TODO negative usagecases
 }

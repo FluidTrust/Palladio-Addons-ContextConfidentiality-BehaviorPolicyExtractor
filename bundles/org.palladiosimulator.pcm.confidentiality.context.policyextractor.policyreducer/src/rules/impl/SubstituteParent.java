@@ -10,7 +10,6 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
-import util.Logger;
 
 /**
  * Ruleset for Substitute Parent
@@ -82,8 +81,8 @@ public class SubstituteParent extends AbstractRule {
                         }
 
                         if (containedOuter) {
-                            Logger.info("MATCH:" + context.getEntityName() + " - " + parent.getEntityName() + " - "
-                                    + seff.getId());
+                            // Logger.info("MATCH:" + context.getEntityName() + " - " +
+                            // parent.getEntityName() + " - " + seff.getId());
 
                             ContextSet newSet = SetFactory.eINSTANCE.createContextSet();
                             newSet.setEntityName(set1.getEntityName() + " *Replacement*");

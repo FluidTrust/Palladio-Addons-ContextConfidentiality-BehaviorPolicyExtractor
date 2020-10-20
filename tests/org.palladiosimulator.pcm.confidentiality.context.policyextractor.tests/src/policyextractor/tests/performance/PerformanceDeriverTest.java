@@ -56,9 +56,11 @@ class PerformanceDeriverTest {
 
             PolicyReducer reducer = new PolicyReducer(contextModelAbs, new RulesFlag());
             Logger.setActive(true);
-            int x = reducer.t1();
+            reducer.t1();
+            Logger.setActive(false);
+            reducer.execute();
 
-            if (x != 100) {
+            if (false) {
                 PalladioAbstraction palladioAbs = new PalladioAbstraction(testUsageModel, testRepo, testSystem);
                 for (ScenarioBehaviour scenarioBehaviour : palladioAbs.getUsageModelAbs().getListofScenarioBehaviour()) {
                     Logger.info("ScenarioBehaviour: " + scenarioBehaviour.getEntityName());

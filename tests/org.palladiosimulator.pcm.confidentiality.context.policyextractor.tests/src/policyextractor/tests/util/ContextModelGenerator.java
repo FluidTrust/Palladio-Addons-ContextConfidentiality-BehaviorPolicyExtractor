@@ -34,10 +34,10 @@ public class ContextModelGenerator {
     private static int numHierarchicalContext = 10;
     private static int numHierarchicalContextDepth = 3;
     private static int numHierarchicalContextWidth = 3;
-    private static int numContextSets = 10;
+    private static int numContextSets = 50;
     private static int maxContextSetContexts = 5;
     private static int numPolicies = 10;
-    private static int maxPolicyPolicies = 5;
+    private static int maxPolicyPolicies = 1;
 
     public static ConfidentialAccessSpecification createNewContextModel() {
         model = ContextFactory.eINSTANCE.createConfidentialAccessSpecification();
@@ -201,7 +201,7 @@ public class ContextModelGenerator {
     private static void generateSpecifications() {
         PCMSpecificationContainer specificationContainer = model.getPcmspecificationcontainer();
 
-        for (int indexBehaviour = 0; indexBehaviour < GenerationParameters.numInterfacesIn; indexBehaviour++) {
+        for (int indexBehaviour = 0; indexBehaviour < GenerationParameters.numUsageScenarios; indexBehaviour++) {
             for (int indexInterface = 0; indexInterface < GenerationParameters.numInterfacesIn; indexInterface++) {
                 // Call each method
                 for (int indexOperation = 0; indexOperation < GenerationParameters.numOperationPerInterface; indexOperation++) {
@@ -219,8 +219,8 @@ public class ContextModelGenerator {
                             specification.setContextset(set);
                         }
 
-                        String systemCallName = UsageModelGenerator.getEntryLevelSystemCallName(indexInterface,
-                                indexOperation, indexCount);
+                        String systemCallName = UsageModelGenerator.getEntryLevelSystemCallName(indexBehaviour,
+                                indexInterface, indexOperation, indexCount);
                         EntryLevelSystemCall systemCall = UsageModelGenerator.systemCalls.get(systemCallName);
                         specification.setEntrylevelsystemcall(systemCall);
 

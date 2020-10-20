@@ -40,13 +40,12 @@ public class Deriver {
      * Use palladio abstraction
      */
     public void execute() {
-        for (ScenarioBehaviour scenarioBehaviour : palladioAbs.getUsageModelAbs()
-            .getListofScenarioBehaviour()) {
+        for (ScenarioBehaviour scenarioBehaviour : palladioAbs.getUsageModelAbs().getListofScenarioBehaviour()) {
             Logger.infoDetailed("ScenarioBehaviour: " + scenarioBehaviour.getEntityName());
 
-            for (EntryLevelSystemCall systemCall : palladioAbs.getUsageModelAbs()
-                .getListOfEntryLevelSystemCalls(scenarioBehaviour)) {
-                Logger.info("SystemCall: " + systemCall.getEntityName());
+            for (EntryLevelSystemCall systemCall : palladioAbs.getUsageModelAbs().getListOfEntryLevelSystemCalls(
+                    scenarioBehaviour)) {
+                Logger.infoDetailed("SystemCall: " + systemCall.getEntityName());
                 for (ResourceDemandingSEFF seff : palladioAbs.getAffectedSEFFs(systemCall)) {
                     for (DeriverRecord record : getContextSetsToApply(scenarioBehaviour, systemCall)) {
                         applyContextSetToSEFF(seff, record);
@@ -63,20 +62,14 @@ public class Deriver {
      * @param record
      */
     private void applyContextSetToSEFF(ResourceDemandingSEFF seff, DeriverRecord record) {
-        Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF()
-            .getEntityName());
+        Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
         PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-        policy.setEntityName(DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF()
-            .getEntityName(),
-                record.getSystemCall()
-                    .getEntityName(),
-                record.getScenarioBehaviour()
-                    .getEntityName()));
+        policy.setEntityName(
+                DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName(),
+                        record.getSystemCall().getEntityName(), record.getScenarioBehaviour().getEntityName()));
         policy.setResourcedemandingbehaviour(seff);
-        policy.getPolicy()
-            .add(record.getSetToApply());
-        contextModelAbs.getPolicySpecifications()
-            .add(policy);
+        policy.getPolicy().add(record.getSetToApply());
+        contextModelAbs.getPolicySpecifications().add(policy);
 
         if (record.isNegative()) {
             contextModelAbs.addMisusage(policy);
@@ -94,7 +87,7 @@ public class Deriver {
      * @param systemCall
      * @return
      */
-    private EList<DeriverRecord> getContextSetsToApply(ScenarioBehaviour scenarioBehaviour,
+    public EList<DeriverRecord> getContextSetsToApply(ScenarioBehaviour scenarioBehaviour,
             EntryLevelSystemCall systemCall) {
         EList<DeriverRecord> list = new BasicEList<>();
 

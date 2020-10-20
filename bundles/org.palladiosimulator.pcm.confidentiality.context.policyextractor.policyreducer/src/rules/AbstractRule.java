@@ -62,8 +62,8 @@ public abstract class AbstractRule implements IRulesDefinition {
         Logger.info(getClass().getSimpleName());
         for (RulesRecord record : appliedList) {
             String replacedByString = record.getReplacedBy() == null ? "-" : record.getReplacedBy().getEntityName();
-            Logger.info("\tRemove: " + record.getRemove().getEntityName() + " : " + replacedByString + " : SEFF("
-                    + record.getSeff().getId() + ")");
+            Logger.infoDetailed("\tRemove: " + record.getRemove().getEntityName() + " : " + replacedByString
+                    + " : SEFF(" + record.getSeff().getId() + ")");
 
             if (record.isCreated()) {
                 ContextSetContainer container = contextModelAbs.getContextSetContainer(record.getRemove());

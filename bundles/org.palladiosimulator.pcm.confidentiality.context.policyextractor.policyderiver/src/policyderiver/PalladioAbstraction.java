@@ -92,10 +92,10 @@ public class PalladioAbstraction {
         // Find Component by iterating connectors,
         // Check outer role with passed operationProvidedRole
         // If match, pass inner role
-        for (ProvidedDelegationConnector connector : assemblyAbs
-                .getListOfProvidedDelegationConnector(composedStructure)) {
-            Logger.info("Structure: " + composedStructure.getEntityName());
-            Logger.info("Conntector: " + connector.getEntityName());
+        for (ProvidedDelegationConnector connector : assemblyAbs.getListOfProvidedDelegationConnector(
+                composedStructure)) {
+            Logger.infoDetailed("Structure: " + composedStructure.getEntityName());
+            Logger.infoDetailed("Conntector: " + connector.getEntityName());
 
             OperationProvidedRole outerRole = connector.getOuterProvidedRole_ProvidedDelegationConnector();
             OperationProvidedRole innerRole = connector.getInnerProvidedRole_ProvidedDelegationConnector();

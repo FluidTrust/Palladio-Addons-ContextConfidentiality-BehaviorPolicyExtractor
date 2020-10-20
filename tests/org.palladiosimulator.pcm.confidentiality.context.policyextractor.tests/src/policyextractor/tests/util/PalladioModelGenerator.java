@@ -11,10 +11,10 @@ import policyextractor.common.tests.util.TestUtil;
 import util.Logger;
 
 public class PalladioModelGenerator {
-    private UsageModel usageModel;
-    private Repository repository;
-    private System system;
-    private ConfidentialAccessSpecification contextModel;
+    public UsageModel usageModel;
+    public Repository repository;
+    public System system;
+    public ConfidentialAccessSpecification contextModel;
 
     public PalladioModelGenerator() {
         // Create models

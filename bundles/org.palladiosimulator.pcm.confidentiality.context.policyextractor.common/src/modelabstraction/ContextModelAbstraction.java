@@ -36,7 +36,7 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             EntryLevelSystemCall contextSystemCall = contextSpecification.getEntrylevelsystemcall();
             if (contextSystemCall != null) {
-                if (contextSystemCall.getId().equalsIgnoreCase(systemCall.getId())) {
+                if (contextSystemCall.getId().equals(systemCall.getId())) {
                     list.add(contextSpecification);
                 }
             }
@@ -84,7 +84,7 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             EntryLevelSystemCall contextSystemCall = contextSpecification.getEntrylevelsystemcall();
             if (contextSystemCall != null) {
-                if (contextSystemCall == systemCall) {
+                if (contextSystemCall.getId().equals(systemCall.getId())) {
                     if (contextSpecification.getContextset() != null) {
                         list.add(contextSpecification.getContextset());
                     } else {

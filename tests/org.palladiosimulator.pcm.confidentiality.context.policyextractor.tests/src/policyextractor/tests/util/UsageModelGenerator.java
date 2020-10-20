@@ -35,11 +35,11 @@ public class UsageModelGenerator {
             scenario.setScenarioBehaviour_UsageScenario(behaviour);
             behaviours.put(behaviourName, behaviour);
 
-            generateBehaviourContent(behaviour);
+            generateBehaviourContent(behaviour, i);
         }
     }
 
-    private static void generateBehaviourContent(ScenarioBehaviour behaviour) {
+    private static void generateBehaviourContent(ScenarioBehaviour behaviour, int behaviourIndex) {
         Start start = UsagemodelFactory.eINSTANCE.createStart();
         behaviour.getActions_ScenarioBehaviour().add(start);
 
@@ -52,7 +52,8 @@ public class UsageModelGenerator {
                 // Call defined number of times
                 for (int indexCount = 0; indexCount < GenerationParameters.numSystemCallsPerInterfaceMethod; indexCount++) {
                     EntryLevelSystemCall systemCall = UsagemodelFactory.eINSTANCE.createEntryLevelSystemCall();
-                    String systemCallName = getEntryLevelSystemCallName(indexInterface, indexOperation, indexCount);
+                    String systemCallName = getEntryLevelSystemCallName(behaviourIndex, indexInterface, indexOperation,
+                            indexCount);
                     systemCall.setEntityName(systemCallName);
                     systemCalls.put(systemCallName, systemCall);
 
@@ -64,12 +65,12 @@ public class UsageModelGenerator {
                     predecessor = systemCall;
 
                     // Connect in Assembly
-                    OperationProvidedRole provideRole = AssemblyGenerator.interfacesIn
-                            .get(AssemblyGenerator.getInterfaceInName(indexInterface));
+                    OperationProvidedRole provideRole = AssemblyGenerator.interfacesIn.get(
+                            AssemblyGenerator.getInterfaceInName(indexInterface));
                     systemCall.setProvidedRole_EntryLevelSystemCall(provideRole);
 
-                    OperationSignature signature = RepositoryGenerator.operations
-                            .get(RepositoryGenerator.getOperationSignatureName(indexInterface, indexOperation));
+                    OperationSignature signature = RepositoryGenerator.operations.get(
+                            RepositoryGenerator.getOperationSignatureName(indexInterface, indexOperation));
                     systemCall.setOperationSignature__EntryLevelSystemCall(signature);
                 }
             }
@@ -88,7 +89,8 @@ public class UsageModelGenerator {
         return "ScenarioBehaviour_" + i;
     }
 
-    public static String getEntryLevelSystemCallName(int indexInterface, int indexOperation, int indexCount) {
-        return "EntryLevelSystemCall__" + indexInterface + "_" + indexOperation + "_" + indexCount;
+    public static String getEntryLevelSystemCallName(int behaviour, int indexInterface, int indexOperation,
+            int indexCount) {
+        return "EntryLevelSystemCall__" + behaviour + "_" + indexInterface + "_" + indexOperation + "_" + indexCount;
     }
 }

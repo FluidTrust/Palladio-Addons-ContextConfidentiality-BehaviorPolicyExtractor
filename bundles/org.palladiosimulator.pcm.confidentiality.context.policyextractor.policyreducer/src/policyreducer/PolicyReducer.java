@@ -3,6 +3,8 @@ package policyreducer;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
+import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
 import rules.IRulesDefinition;
@@ -35,6 +37,21 @@ public class PolicyReducer {
         this.rules = rules;
     }
 
+    public int t1() {
+        int seffs = 0;
+        int pspecs = 0;
+        int sets = 0;
+        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
+            seffs++;
+            pspecs = pspecs + contextModelAbs.getPolicySpecifications(seff).size();
+            for (PolicySpecification policySpecification : contextModelAbs.getPolicySpecifications(seff)) {
+                sets = sets + policySpecification.getPolicy().size();
+            }
+        }
+        Logger.info("" + seffs + " : " + pspecs + " : " + sets);
+        return sets;
+    }
+
     /**
      * Execute the rules
      * 
@@ -45,6 +62,8 @@ public class PolicyReducer {
      * rule can result in an other rule beeing applicable. (Similar: Fixpunktiteration)
      */
     public void execute() {
+        t1();
+
         Logger.infoDetailed("Rules-Start");
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);

@@ -20,12 +20,20 @@ public class NegativeCleanup extends AbstractRule {
 
         // Compare each record with all other records
         for (ContextSetRecord record1 : list) {
-            if (record1.isNegative()) {
+            if (isRuleApplicable(record1, null)) {
                 appliedList.add(createRecord(seff, record1.getContextSet(), null, false));
                 applied = true;
             }
         }
         return applied;
+    }
+
+    public boolean isRuleApplicable(ContextSetRecord record1, ContextSetRecord record2) {
+        boolean applicable = false;
+        if (record1.isNegative()) {
+            applicable = true;
+        }
+        return applicable;
     }
 
 }

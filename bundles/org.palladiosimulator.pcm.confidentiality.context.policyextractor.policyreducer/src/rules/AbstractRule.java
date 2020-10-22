@@ -7,6 +7,7 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
+import modelabstraction.ContextSetRecordCompare;
 import modelabstraction.HierarchicalContextAbstraction;
 import util.Logger;
 
@@ -20,11 +21,13 @@ public abstract class AbstractRule implements IRulesDefinition {
     protected EList<RulesRecord> appliedList = new BasicEList<>();
     protected ContextModelAbstraction contextModelAbs;
     protected HierarchicalContextAbstraction hierarchicalContextAbs;
+    protected ContextSetRecordCompare recordCompare;
 
     public AbstractRule(ContextModelAbstraction contextModelAbs) {
         super();
         this.contextModelAbs = contextModelAbs;
         this.hierarchicalContextAbs = new HierarchicalContextAbstraction(contextModelAbs);
+        this.recordCompare = new ContextSetRecordCompare(hierarchicalContextAbs);
     }
 
     /**

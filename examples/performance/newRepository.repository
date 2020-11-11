@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ASCII"?>
+<repository:Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:seff="http://palladiosimulator.org/PalladioComponentModel/SEFF/5.2" id="_msrfIQ_GEeuiopay3TX2Cg">
+  <components__Repository xsi:type="repository:BasicComponent" id="_mt8qcA_GEeuiopay3TX2Cg" entityName="RepositoryComponent_0">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_mt8qcQ_GEeuiopay3TX2Cg" providedInterface__OperationProvidedRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_mt8qcg_GEeuiopay3TX2Cg" requiredInterface__OperationRequiredRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_mt94kA_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wA_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_mt_GsA_GEeuiopay3TX2Cg" successor_AbstractAction="_muAU0A_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_mt_twA_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muAU0A_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muAU0A_GEeuiopay3TX2Cg" predecessor_AbstractAction="_mt_GsA_GEeuiopay3TX2Cg" successor_AbstractAction="_mt_twA_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wA_GEeuiopay3TX2Cg" role_ExternalService="_mt8qcg_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muA74A_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wQ_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muA74Q_GEeuiopay3TX2Cg" successor_AbstractAction="_muBi8Q_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muBi8A_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muBi8Q_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muBi8Q_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muA74Q_GEeuiopay3TX2Cg" successor_AbstractAction="_muBi8A_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wQ_GEeuiopay3TX2Cg" role_ExternalService="_mt8qcg_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <components__Repository xsi:type="repository:BasicComponent" id="_muCKAQ_GEeuiopay3TX2Cg" entityName="RepositoryComponent_1">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_muCKAg_GEeuiopay3TX2Cg" providedInterface__OperationProvidedRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_muCKAw_GEeuiopay3TX2Cg" requiredInterface__OperationRequiredRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muCKBA_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wA_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muCKBQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muCKBw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muCKBg_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muCKBw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muCKBw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muCKBQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muCKBg_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wA_GEeuiopay3TX2Cg" role_ExternalService="_muCKAw_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muCKCA_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wQ_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muCKCQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muCKCw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muCKCg_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muCKCw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muCKCw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muCKCQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muCKCg_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wQ_GEeuiopay3TX2Cg" role_ExternalService="_muCKAw_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <components__Repository xsi:type="repository:BasicComponent" id="_muHCgg_GEeuiopay3TX2Cg" entityName="RepositoryComponent_2">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_muHCgw_GEeuiopay3TX2Cg" providedInterface__OperationProvidedRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_muHChA_GEeuiopay3TX2Cg" requiredInterface__OperationRequiredRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muHChQ_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wA_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muHChg_GEeuiopay3TX2Cg" successor_AbstractAction="_muHCiA_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muHChw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muHCiA_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muHCiA_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muHChg_GEeuiopay3TX2Cg" successor_AbstractAction="_muHChw_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wA_GEeuiopay3TX2Cg" role_ExternalService="_muHChA_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muHpkA_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wQ_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muHpkQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muHpkw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muHpkg_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muHpkw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muHpkw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muHpkQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muHpkg_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wQ_GEeuiopay3TX2Cg" role_ExternalService="_muHChA_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <components__Repository xsi:type="repository:BasicComponent" id="_muHplg_GEeuiopay3TX2Cg" entityName="RepositoryComponent_3">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_muHplw_GEeuiopay3TX2Cg" providedInterface__OperationProvidedRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_muHpmA_GEeuiopay3TX2Cg" requiredInterface__OperationRequiredRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muHpmQ_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wA_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muHpmg_GEeuiopay3TX2Cg" successor_AbstractAction="_muHpnA_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muHpmw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muHpnA_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muHpnA_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muHpmg_GEeuiopay3TX2Cg" successor_AbstractAction="_muHpmw_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wA_GEeuiopay3TX2Cg" role_ExternalService="_muHpmA_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muIQoA_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wQ_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muIQoQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muIQow_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muIQog_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muIQow_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muIQow_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muIQoQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muIQog_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wQ_GEeuiopay3TX2Cg" role_ExternalService="_muHpmA_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <components__Repository xsi:type="repository:BasicComponent" id="_muIQpg_GEeuiopay3TX2Cg" entityName="RepositoryComponent_4">
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_muIQpw_GEeuiopay3TX2Cg" providedInterface__OperationProvidedRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_muIQqA_GEeuiopay3TX2Cg" requiredInterface__OperationRequiredRole="_mt0uoA_GEeuiopay3TX2Cg"/>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muIQqQ_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wA_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muIQqg_GEeuiopay3TX2Cg" successor_AbstractAction="_muIQrA_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muIQqw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muIQrA_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muIQrA_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muIQqg_GEeuiopay3TX2Cg" successor_AbstractAction="_muIQqw_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wA_GEeuiopay3TX2Cg" role_ExternalService="_muIQqA_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+    <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_muI3sA_GEeuiopay3TX2Cg" describedService__SEFF="_mt18wQ_GEeuiopay3TX2Cg">
+      <steps_Behaviour xsi:type="seff:StartAction" id="_muI3sQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muI3sw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:StopAction" id="_muI3sg_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muI3sw_GEeuiopay3TX2Cg"/>
+      <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_muI3sw_GEeuiopay3TX2Cg" predecessor_AbstractAction="_muI3sQ_GEeuiopay3TX2Cg" successor_AbstractAction="_muI3sg_GEeuiopay3TX2Cg" calledService_ExternalService="_mt18wQ_GEeuiopay3TX2Cg" role_ExternalService="_muIQqA_GEeuiopay3TX2Cg"/>
+    </serviceEffectSpecifications__BasicComponent>
+  </components__Repository>
+  <interfaces__Repository xsi:type="repository:OperationInterface" id="_mt0uoA_GEeuiopay3TX2Cg" entityName="OperationInterface_0">
+    <signatures__OperationInterface id="_mt18wA_GEeuiopay3TX2Cg" entityName="I0_Method0"/>
+    <signatures__OperationInterface id="_mt18wQ_GEeuiopay3TX2Cg" entityName="I0_Method1"/>
+  </interfaces__Repository>
+</repository:Repository>

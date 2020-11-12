@@ -4,6 +4,7 @@ import model.IModelAbstraction;
 
 public class EvaluationModelAbstraction implements IModelAbstraction {
     private String projectPath;
+    public String contextName = "default.context";
 
     public EvaluationModelAbstraction(String path) {
         this.projectPath = path;
@@ -25,7 +26,7 @@ public class EvaluationModelAbstraction implements IModelAbstraction {
     }
 
     public String getContextModelPath() {
-        String path = projectPath + "/" + "default.context";
+        String path = projectPath + "/" + contextName;
         return path;
     }
 

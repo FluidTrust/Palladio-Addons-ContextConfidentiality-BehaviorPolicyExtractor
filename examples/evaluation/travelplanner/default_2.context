@@ -36,5 +36,14 @@
     <contextspecification id="_TFOcciTEEeuH1ukusQtjeg" entityName="book" contextset="_73qJoCTDEeuH1ukusQtjeg">
       <entrylevelsystemcall href="default.usagemodel#_ClGTkHZtEeaE4tGRMtTb7A"/>
     </contextspecification>
+    <contextspecification id="_2GGlQiTEEeuH1ukusQtjeg" entityName="E_release" contextset="_tSvusCTDEeuH1ukusQtjeg" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_WtNmwN5gEeeel_96Qa_d5A"/>
+    </contextspecification>
+    <contextspecification id="__kWBUiTEEeuH1ukusQtjeg" entityName="E_declassify" contextset="_tSvusCTDEeuH1ukusQtjeg" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_uA4ooHZsEeaE4tGRMtTb7A"/>
+    </contextspecification>
+    <contextspecification id="_CPjDUiTFEeuH1ukusQtjeg" entityName="E_book" contextset="_1P6ZkCTDEeuH1ukusQtjeg" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_ClGTkHZtEeaE4tGRMtTb7A"/>
+    </contextspecification>
   </pcmspecificationcontainer>
 </context:ConfidentialAccessSpecification>

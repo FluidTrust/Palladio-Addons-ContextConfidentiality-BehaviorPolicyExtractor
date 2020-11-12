@@ -24,17 +24,11 @@
     <types id="_NaFUACTDEeuH1ukusQtjeg" entityName="TravelCreditCardStatus" unique="true"/>
   </typeContainer>
   <pcmspecificationcontainer id="_jHkwoCTCEeuH1ukusQtjeg">
-    <contextspecification id="_LJLy8iTEEeuH1ukusQtjeg" entityName="getOffer" contextset="_tSvusCTDEeuH1ukusQtjeg">
-      <entrylevelsystemcall href="default.usagemodel#_zqfVcHZsEeaE4tGRMtTb7A"/>
-    </contextspecification>
     <contextspecification id="_R-NxEiTEEeuH1ukusQtjeg" entityName="releaseCCD" contextset="_yfVIUCTDEeuH1ukusQtjeg">
       <entrylevelsystemcall href="default.usagemodel#_WtNmwN5gEeeel_96Qa_d5A"/>
     </contextspecification>
-    <contextspecification id="_SshokiTEEeuH1ukusQtjeg" entityName="declassify" contextset="_1P6ZkCTDEeuH1ukusQtjeg">
-      <entrylevelsystemcall href="default.usagemodel#_uA4ooHZsEeaE4tGRMtTb7A"/>
-    </contextspecification>
-    <contextspecification id="_TFOcciTEEeuH1ukusQtjeg" entityName="book" contextset="_73qJoCTDEeuH1ukusQtjeg">
-      <entrylevelsystemcall href="default.usagemodel#_ClGTkHZtEeaE4tGRMtTb7A"/>
+    <contextspecification id="_2GGlQiTEEeuH1ukusQtjeg" entityName="E_release" contextset="_tSvusCTDEeuH1ukusQtjeg" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_WtNmwN5gEeeel_96Qa_d5A"/>
     </contextspecification>
   </pcmspecificationcontainer>
 </context:ConfidentialAccessSpecification>

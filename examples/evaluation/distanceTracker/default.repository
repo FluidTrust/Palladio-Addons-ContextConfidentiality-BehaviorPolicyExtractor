@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataProcessingProfile="http://anonymized/profile/0.1/" xmlns:emfprofileapplication="http://www.modelversioning.org/emfprofile/application/1.1" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:seff="http://palladiosimulator.org/PalladioComponentModel/SEFF/5.2">
+  <repository:Repository id="_z4FZwNwtEeiXzNImH0otAg" entityName="DistanceTracker Repository">
+    <components__Repository xsi:type="repository:BasicComponent" id="_7COsQNwtEeiXzNImH0otAg" entityName="DistanceTracker">
+      <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_CtSeANwvEeiXzNImH0otAg" entityName="DistanceTracker.TrackerApplication.provided" providedInterface__OperationProvidedRole="_Alnm4NwvEeiXzNImH0otAg"/>
+      <requiredRoles_InterfaceRequiringEntity xsi:type="repository:OperationRequiredRole" id="_4gKisNwuEeiXzNImH0otAg" entityName="DistanceTracker.DistanceRecorder.required" requiredInterface__OperationRequiredRole="_BnX0QNwuEeiXzNImH0otAg"/>
+      <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_JTl-cNxBEeiXzNImH0otAg" describedService__SEFF="_NaAfYNwvEeiXzNImH0otAg">
+        <steps_Behaviour xsi:type="seff:StartAction" id="_J1BQgNxBEeiXzNImH0otAg" successor_AbstractAction="_KACi0NxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:StopAction" id="_J1BQgdxBEeiXzNImH0otAg" predecessor_AbstractAction="_KACi0NxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:InternalAction" id="_KACi0NxDEeiXzNImH0otAg" entityName="calculateAndReturnDistance" predecessor_AbstractAction="_J1BQgNxBEeiXzNImH0otAg" successor_AbstractAction="_J1BQgdxBEeiXzNImH0otAg"/>
+      </serviceEffectSpecifications__BasicComponent>
+      <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_Kykd4NxBEeiXzNImH0otAg" describedService__SEFF="_IctNANwxEeiXzNImH0otAg">
+        <steps_Behaviour xsi:type="seff:StartAction" id="_LS_DUNxBEeiXzNImH0otAg" successor_AbstractAction="_PfE-YNxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:StopAction" id="_LS_DUdxBEeiXzNImH0otAg" predecessor_AbstractAction="_PfE-YNxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:InternalAction" id="_PfE-YNxDEeiXzNImH0otAg" entityName="returnDistanceData" predecessor_AbstractAction="_LS_DUNxBEeiXzNImH0otAg" successor_AbstractAction="_LS_DUdxBEeiXzNImH0otAg"/>
+      </serviceEffectSpecifications__BasicComponent>
+      <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_Llw1YNxBEeiXzNImH0otAg" describedService__SEFF="_UdRGwNwvEeiXzNImH0otAg">
+        <steps_Behaviour xsi:type="seff:StartAction" id="_MC3BENxBEeiXzNImH0otAg" successor_AbstractAction="_TYZZUNxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:StopAction" id="_MC3BEdxBEeiXzNImH0otAg" predecessor_AbstractAction="_TYZZUNxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:ExternalCallAction" id="_TYZZUNxDEeiXzNImH0otAg" entityName="callTrackingService" predecessor_AbstractAction="_MC3BENxBEeiXzNImH0otAg" successor_AbstractAction="_MC3BEdxBEeiXzNImH0otAg" calledService_ExternalService="_iYC1ANwuEeiXzNImH0otAg" role_ExternalService="_4gKisNwuEeiXzNImH0otAg"/>
+      </serviceEffectSpecifications__BasicComponent>
+    </components__Repository>
+    <components__Repository xsi:type="repository:BasicComponent" id="_8wwqoNwtEeiXzNImH0otAg" entityName="TrackerService">
+      <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_3MzdYNwuEeiXzNImH0otAg" entityName="TrackerService.DistanceRecorder.provided" providedInterface__OperationProvidedRole="_BnX0QNwuEeiXzNImH0otAg"/>
+      <serviceEffectSpecifications__BasicComponent xsi:type="seff:ResourceDemandingSEFF" id="_3M_DkNwuEeiXzNImH0otAg" describedService__SEFF="_iYC1ANwuEeiXzNImH0otAg">
+        <steps_Behaviour xsi:type="seff:StartAction" id="_3M_DkdwuEeiXzNImH0otAg" successor_AbstractAction="_Y15j0NxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:StopAction" id="_3M_DktwuEeiXzNImH0otAg" predecessor_AbstractAction="_Y15j0NxDEeiXzNImH0otAg"/>
+        <steps_Behaviour xsi:type="seff:InternalAction" id="_Y15j0NxDEeiXzNImH0otAg" entityName="saveDistance" predecessor_AbstractAction="_3M_DkdwuEeiXzNImH0otAg" successor_AbstractAction="_3M_DktwuEeiXzNImH0otAg"/>
+      </serviceEffectSpecifications__BasicComponent>
+    </components__Repository>
+    <interfaces__Repository xsi:type="repository:OperationInterface" id="_BnX0QNwuEeiXzNImH0otAg" entityName="DistanceRecorder">
+      <signatures__OperationInterface id="_iYC1ANwuEeiXzNImH0otAg" entityName="recordDistance" returnType__OperationSignature="_4VGc3d6MEei-stRtqUekHw">
+        <parameters__OperationSignature dataType__Parameter="_o8uC8NwuEeiXzNImH0otAg" parameterName="record"/>
+      </signatures__OperationInterface>
+    </interfaces__Repository>
+    <interfaces__Repository xsi:type="repository:OperationInterface" id="_Alnm4NwvEeiXzNImH0otAg" entityName="TrackerApplication">
+      <signatures__OperationInterface id="_Krx-kNwvEeiXzNImH0otAg" entityName="startTracking"/>
+      <signatures__OperationInterface id="_L8Yq0NwvEeiXzNImH0otAg" entityName="stopTracking"/>
+      <signatures__OperationInterface id="_NaAfYNwvEeiXzNImH0otAg" entityName="getDistance" returnType__OperationSignature="_o8uC8NwuEeiXzNImH0otAg"/>
+      <signatures__OperationInterface id="_UdRGwNwvEeiXzNImH0otAg" entityName="submitDistance" returnType__OperationSignature="_4VGc3d6MEei-stRtqUekHw">
+        <parameters__OperationSignature dataType__Parameter="_o8uC8NwuEeiXzNImH0otAg" parameterName="distanceRecord"/>
+      </signatures__OperationInterface>
+      <signatures__OperationInterface id="_IctNANwxEeiXzNImH0otAg" entityName="declassifyDistance" returnType__OperationSignature="_o8uC8NwuEeiXzNImH0otAg">
+        <parameters__OperationSignature dataType__Parameter="_o8uC8NwuEeiXzNImH0otAg" parameterName="distanceRecord"/>
+      </signatures__OperationInterface>
+    </interfaces__Repository>
+    <dataTypes__Repository xsi:type="repository:CompositeDataType" id="_GgXjgNwuEeiXzNImH0otAg" entityName="Distance">
+      <innerDeclaration_CompositeDataType entityName="distance">
+        <datatype_InnerDeclaration xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.0"/>
+      </innerDeclaration_CompositeDataType>
+    </dataTypes__Repository>
+    <dataTypes__Repository xsi:type="repository:CompositeDataType" id="_RGPWANwuEeiXzNImH0otAg" entityName="GPSCoordinate">
+      <innerDeclaration_CompositeDataType entityName="x">
+        <datatype_InnerDeclaration xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.3"/>
+      </innerDeclaration_CompositeDataType>
+      <innerDeclaration_CompositeDataType entityName="y">
+        <datatype_InnerDeclaration xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.3"/>
+      </innerDeclaration_CompositeDataType>
+      <innerDeclaration_CompositeDataType entityName="z">
+        <datatype_InnerDeclaration xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.3"/>
+      </innerDeclaration_CompositeDataType>
+    </dataTypes__Repository>
+    <dataTypes__Repository xsi:type="repository:CollectionDataType" id="_bJlDMNwuEeiXzNImH0otAg" entityName="Route" innerType_CollectionDataType="_RGPWANwuEeiXzNImH0otAg"/>
+    <dataTypes__Repository xsi:type="repository:CompositeDataType" id="_o8uC8NwuEeiXzNImH0otAg" entityName="DistanceRecord">
+      <innerDeclaration_CompositeDataType entityName="nickname">
+        <datatype_InnerDeclaration xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.1"/>
+      </innerDeclaration_CompositeDataType>
+      <innerDeclaration_CompositeDataType entityName="distance" datatype_InnerDeclaration="_GgXjgNwuEeiXzNImH0otAg"/>
+    </dataTypes__Repository>
+    <dataTypes__Repository xsi:type="repository:CompositeDataType" id="_4VGc3d6MEei-stRtqUekHw" entityName="Confirmation">
+      <innerDeclaration_CompositeDataType entityName="confirmation">
+        <datatype_InnerDeclaration xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.2"/>
+      </innerDeclaration_CompositeDataType>
+    </dataTypes__Repository>
+  </repository:Repository>
+  <emfprofileapplication:ProfileApplication>
+    <stereotypeApplications xsi:type="dataProcessingProfile:OperationSignatureDataRefinement" appliedTo="_iYC1ANwuEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_u8vnsLydEeiT-9xxrec-9Q"/>
+      <operationSignatureDataRefinement href="DataSpecification.xmi#_tHO2ZtxAEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:OperationSignatureDataRefinement" appliedTo="_NaAfYNwvEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_u8vnsLydEeiT-9xxrec-9Q"/>
+      <operationSignatureDataRefinement href="DataSpecification.xmi#_xSpt9txAEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:OperationSignatureDataRefinement" appliedTo="_UdRGwNwvEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_u8vnsLydEeiT-9xxrec-9Q"/>
+      <operationSignatureDataRefinement href="DataSpecification.xmi#_215UFtxAEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:OperationSignatureDataRefinement" appliedTo="_IctNANwxEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_u8vnsLydEeiT-9xxrec-9Q"/>
+      <operationSignatureDataRefinement href="DataSpecification.xmi#_01zrptxAEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:StoreHaving" appliedTo="_7COsQNwtEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_pFHmQFqjEeiW1d-qz7Oqsw"/>
+      <storeContainer href="DataSpecification.xmi#_UGEpmtxBEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:DataProcessingSpecification" appliedTo="_KACi0NxDEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_YGiQIFqhEeiGTpqaWj7bwA"/>
+      <dataProcessingContainer href="DataSpecification.xmi#_12wgYNxCEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:DataProcessingSpecification" appliedTo="_PfE-YNxDEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_YGiQIFqhEeiGTpqaWj7bwA"/>
+      <dataProcessingContainer href="DataSpecification.xmi#_8SqM0NxCEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:DataProcessingSpecification" appliedTo="_TYZZUNxDEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_YpnIAFqhEeiGTpqaWj7bwA"/>
+      <dataProcessingContainer href="DataSpecification.xmi#_98yzYNxCEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:DataProcessingSpecification" appliedTo="_Y15j0NxDEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_YGiQIFqhEeiGTpqaWj7bwA"/>
+      <dataProcessingContainer href="DataSpecification.xmi#_oZueENxDEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:StoreHaving" appliedTo="_8wwqoNwtEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_pFHmQFqjEeiW1d-qz7Oqsw"/>
+      <storeContainer href="DataSpecification.xmi#_XgFe0tzwEei0faWVWC36dg"/>
+    </stereotypeApplications>
+    <importedProfiles nsURI="http://anonymized/profile/0.1/" location="platform:/plugin/anonymized.profile/profile.emfprofile_diagram"/>
+  </emfprofileapplication:ProfileApplication>
+</xmi:XMI>

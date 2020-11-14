@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataProcessingProfile="http://anonymized/profile/0.1/" xmlns:emfprofileapplication="http://www.modelversioning.org/emfprofile/application/1.1" xmlns:resourceenvironment="http://palladiosimulator.org/PalladioComponentModel/ResourceEnvironment/5.2">
+  <resourceenvironment:ResourceEnvironment entityName="New ResourceEnvironment">
+    <linkingResources__ResourceEnvironment id="_Jf49wNwwEeiXzNImH0otAg" entityName="LinkingResource1" connectedResourceContainers_LinkingResource="_Fvo_QNwwEeiXzNImH0otAg _EFVZkNwwEeiXzNImH0otAg">
+      <communicationLinkResourceSpecifications_LinkingResource id="_Jf5k0NwwEeiXzNImH0otAg">
+        <communicationLinkResourceType_CommunicationLinkResourceSpecification href="pathmap://PCM_MODELS/Palladio.resourcetype#_o3sScH2AEdyH8uerKnHYug"/>
+        <latency_CommunicationLinkResourceSpecification specification="1"/>
+        <throughput_CommunicationLinkResourceSpecification specification="1"/>
+      </communicationLinkResourceSpecifications_LinkingResource>
+    </linkingResources__ResourceEnvironment>
+    <resourceContainer_ResourceEnvironment id="_EFVZkNwwEeiXzNImH0otAg" entityName="Mobile"/>
+    <resourceContainer_ResourceEnvironment id="_Fvo_QNwwEeiXzNImH0otAg" entityName="ExternalService"/>
+  </resourceenvironment:ResourceEnvironment>
+  <emfprofileapplication:ProfileApplication>
+    <stereotypeApplications xsi:type="dataProcessingProfile:Characterizable" appliedTo="_EFVZkNwwEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_JBEa8FqjEeiW1d-qz7Oqsw"/>
+      <characteristicContainer href="DataSpecification.xmi#_Ltpes9xEEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <stereotypeApplications xsi:type="dataProcessingProfile:Characterizable" appliedTo="_Fvo_QNwwEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_JBEa8FqjEeiW1d-qz7Oqsw"/>
+      <characteristicContainer href="DataSpecification.xmi#_O0kzY9xEEeiXzNImH0otAg"/>
+    </stereotypeApplications>
+    <importedProfiles nsURI="http://anonymized/profile/0.1/" location="platform:/plugin/anonymized.profile/profile.emfprofile_diagram"/>
+  </emfprofileapplication:ProfileApplication>
+</xmi:XMI>

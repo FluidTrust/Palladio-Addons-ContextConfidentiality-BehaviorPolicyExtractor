@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:composition="http://palladiosimulator.org/PalladioComponentModel/Core/Composition/5.2" xmlns:dataProcessingProfile="http://anonymized/profile/0.1/" xmlns:emfprofileapplication="http://www.modelversioning.org/emfprofile/application/1.1" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:system="http://palladiosimulator.org/PalladioComponentModel/System/5.2">
+  <system:System id="_itENUNwvEeiXzNImH0otAg" entityName="TrackerSystem">
+    <assemblyContexts__ComposedStructure id="_r5T6cNwvEeiXzNImH0otAg" entityName="Assembly_DistanceTracker">
+      <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_7COsQNwtEeiXzNImH0otAg"/>
+    </assemblyContexts__ComposedStructure>
+    <assemblyContexts__ComposedStructure id="_tO_7ANwvEeiXzNImH0otAg" entityName="Assembly_TrackerService">
+      <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_8wwqoNwtEeiXzNImH0otAg"/>
+    </assemblyContexts__ComposedStructure>
+    <connectors__ComposedStructure xsi:type="composition:ProvidedDelegationConnector" id="_yDOfANwvEeiXzNImH0otAg" entityName="trackerApplicationProvidedDelegator" outerProvidedRole_ProvidedDelegationConnector="_lMNJQNwvEeiXzNImH0otAg" assemblyContext_ProvidedDelegationConnector="_r5T6cNwvEeiXzNImH0otAg">
+      <innerProvidedRole_ProvidedDelegationConnector href="default.repository#_CtSeANwvEeiXzNImH0otAg"/>
+    </connectors__ComposedStructure>
+    <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_7Xh78NwvEeiXzNImH0otAg" entityName="distanceRecorderAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_r5T6cNwvEeiXzNImH0otAg" providingAssemblyContext_AssemblyConnector="_tO_7ANwvEeiXzNImH0otAg">
+      <providedRole_AssemblyConnector href="default.repository#_3MzdYNwuEeiXzNImH0otAg"/>
+      <requiredRole_AssemblyConnector href="default.repository#_4gKisNwuEeiXzNImH0otAg"/>
+    </connectors__ComposedStructure>
+    <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_lMNJQNwvEeiXzNImH0otAg" entityName="TrackerApplicationSystemProvidedRole">
+      <providedInterface__OperationProvidedRole href="default.repository#_Alnm4NwvEeiXzNImH0otAg"/>
+    </providedRoles_InterfaceProvidingEntity>
+  </system:System>
+  <emfprofileapplication:ProfileApplication>
+    <stereotypeApplications xsi:type="dataProcessingProfile:StoreCharacterization" appliedTo="_r5T6cNwvEeiXzNImH0otAg">
+      <extension href="../../../../plugin/anonymized.profile/profile.emfprofile_diagram#_6E0ooFqjEeiW1d-qz7Oqsw"/>
+      <storeCharacteristicContainer href="DataSpecification.xmi#_8f_qstzxEeiFdKhlLt-kUA"/>
+    </stereotypeApplications>
+    <importedProfiles nsURI="http://anonymized/profile/0.1/" location="platform:/plugin/anonymized.profile/profile.emfprofile_diagram"/>
+  </emfprofileapplication:ProfileApplication>
+</xmi:XMI>

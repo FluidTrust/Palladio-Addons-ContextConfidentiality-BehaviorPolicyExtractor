@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<allocation:Allocation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:allocation="http://palladiosimulator.org/PalladioComponentModel/Allocation/5.2" id="_QpVssNwwEeiXzNImH0otAg" entityName="New Allocation">
+  <targetResourceEnvironment_Allocation href="default.resourceenvironment#/"/>
+  <system_Allocation href="default.system#_itENUNwvEeiXzNImH0otAg"/>
+  <allocationContexts_Allocation id="_XYWiYNwwEeiXzNImH0otAg" entityName="Allocation_Assembly_TrackerService">
+    <resourceContainer_AllocationContext href="default.resourceenvironment#_Fvo_QNwwEeiXzNImH0otAg"/>
+    <assemblyContext_AllocationContext href="default.system#_tO_7ANwvEeiXzNImH0otAg"/>
+  </allocationContexts_Allocation>
+  <allocationContexts_Allocation id="_Xwc5UNwwEeiXzNImH0otAg" entityName="Allocation_Assembly_DistanceTracker">
+    <resourceContainer_AllocationContext href="default.resourceenvironment#_EFVZkNwwEeiXzNImH0otAg"/>
+    <assemblyContext_AllocationContext href="default.system#_r5T6cNwvEeiXzNImH0otAg"/>
+  </allocationContexts_Allocation>
+</allocation:Allocation>

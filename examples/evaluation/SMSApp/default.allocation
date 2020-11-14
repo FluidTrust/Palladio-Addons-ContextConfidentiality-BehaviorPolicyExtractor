@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<allocation:Allocation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:allocation="http://palladiosimulator.org/PalladioComponentModel/Allocation/5.2" id="_36CSYN9FEeiymtGzi4643g" entityName="New Allocation">
+  <targetResourceEnvironment_Allocation href="default.resourceenvironment#/"/>
+  <system_Allocation href="default.system#_SIR9YN9FEeiymtGzi4643g"/>
+  <allocationContexts_Allocation id="_BMswkN9GEeiymtGzi4643g" entityName="Allocation_Assembly_SMSProvider">
+    <resourceContainer_AllocationContext href="default.resourceenvironment#_C1kBQN9FEeiymtGzi4643g"/>
+    <assemblyContext_AllocationContext href="default.system#_farAgN9FEeiymtGzi4643g"/>
+  </allocationContexts_Allocation>
+  <allocationContexts_Allocation id="_CBXuwN9GEeiymtGzi4643g" entityName="Allocation_Assembly_SMSApp">
+    <resourceContainer_AllocationContext href="default.resourceenvironment#_BVEe4N9FEeiymtGzi4643g"/>
+    <assemblyContext_AllocationContext href="default.system#_egZwoN9FEeiymtGzi4643g"/>
+  </allocationContexts_Allocation>
+  <allocationContexts_Allocation id="_Cb2EQN9GEeiymtGzi4643g" entityName="Allocation_Assembly_ContactApp">
+    <resourceContainer_AllocationContext href="default.resourceenvironment#_84dwsN9EEeiymtGzi4643g"/>
+    <assemblyContext_AllocationContext href="default.system#_dFWH4N9FEeiymtGzi4643g"/>
+  </allocationContexts_Allocation>
+</allocation:Allocation>

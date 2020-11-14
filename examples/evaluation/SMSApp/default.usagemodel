@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:usagemodel="http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2">
+  <usagemodel:UsageModel>
+    <usageScenario_UsageModel id="_jjHAEN9GEeiymtGzi4643g" entityName="AddContact">
+      <scenarioBehaviour_UsageScenario id="_sd4isN9GEeiymtGzi4643g" entityName="ScenarioBehaviour">
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_sd4isd9GEeiymtGzi4643g" successor="_wcYYkN9GEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_sd4ist9GEeiymtGzi4643g" predecessor="_yqeAwN9GEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Delay" id="_wcYYkN9GEeiymtGzi4643g" entityName="createContact" successor="_yqeAwN9GEeiymtGzi4643g" predecessor="_sd4isd9GEeiymtGzi4643g">
+          <timeSpecification_Delay specification="0.0"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_yqeAwN9GEeiymtGzi4643g" entityName="callContactApp_add" successor="_sd4ist9GEeiymtGzi4643g" predecessor="_wcYYkN9GEeiymtGzi4643g">
+          <providedRole_EntryLevelSystemCall href="default.system#_WOhaAN9FEeiymtGzi4643g"/>
+          <operationSignature__EntryLevelSystemCall href="default.repository#_HptIIN61EeiymtGzi4643g"/>
+        </actions_ScenarioBehaviour>
+      </scenarioBehaviour_UsageScenario>
+      <workload_UsageScenario xsi:type="usagemodel:ClosedWorkload" population="1">
+        <thinkTime_ClosedWorkload specification="0.0"/>
+      </workload_UsageScenario>
+    </usageScenario_UsageModel>
+    <usageScenario_UsageModel id="__0_hUN9GEeiymtGzi4643g" entityName="DeleteContact">
+      <scenarioBehaviour_UsageScenario id="_Cg8xQN9HEeiymtGzi4643g" entityName="ScenarioBehaviour">
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_Cg8xQd9HEeiymtGzi4643g" successor="_yDWg8N9HEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_Cg8xQt9HEeiymtGzi4643g" predecessor="_zc-mUN9HEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Delay" id="_yDWg8N9HEeiymtGzi4643g" entityName="determineContact" successor="_zc-mUN9HEeiymtGzi4643g" predecessor="_Cg8xQd9HEeiymtGzi4643g">
+          <timeSpecification_Delay specification="0.0"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_zc-mUN9HEeiymtGzi4643g" entityName="callContactApp_delete" successor="_Cg8xQt9HEeiymtGzi4643g" predecessor="_yDWg8N9HEeiymtGzi4643g">
+          <providedRole_EntryLevelSystemCall href="default.system#_WOhaAN9FEeiymtGzi4643g"/>
+          <operationSignature__EntryLevelSystemCall href="default.repository#_O7G5MN61EeiymtGzi4643g"/>
+        </actions_ScenarioBehaviour>
+      </scenarioBehaviour_UsageScenario>
+      <workload_UsageScenario xsi:type="usagemodel:ClosedWorkload" population="1">
+        <thinkTime_ClosedWorkload specification="0.0"/>
+      </workload_UsageScenario>
+    </usageScenario_UsageModel>
+    <usageScenario_UsageModel id="_6zL-4N9HEeiymtGzi4643g" entityName="ListContacts">
+      <scenarioBehaviour_UsageScenario id="_-SNDcN9HEeiymtGzi4643g" entityName="ScenarioBehaviour">
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_-SNDcd9HEeiymtGzi4643g" successor="_BuqjQN9IEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_-SNDct9HEeiymtGzi4643g" predecessor="_FmhloN9IEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_BuqjQN9IEeiymtGzi4643g" entityName="callContactApp_list" successor="_FmhloN9IEeiymtGzi4643g" predecessor="_-SNDcd9HEeiymtGzi4643g">
+          <providedRole_EntryLevelSystemCall href="default.system#_WOhaAN9FEeiymtGzi4643g"/>
+          <operationSignature__EntryLevelSystemCall href="default.repository#_UI8QAN61EeiymtGzi4643g"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Delay" id="_FmhloN9IEeiymtGzi4643g" entityName="readContacts" successor="_-SNDct9HEeiymtGzi4643g" predecessor="_BuqjQN9IEeiymtGzi4643g">
+          <timeSpecification_Delay specification="0.0"/>
+        </actions_ScenarioBehaviour>
+      </scenarioBehaviour_UsageScenario>
+      <workload_UsageScenario xsi:type="usagemodel:ClosedWorkload" population="1">
+        <thinkTime_ClosedWorkload specification="0.0"/>
+      </workload_UsageScenario>
+    </usageScenario_UsageModel>
+    <usageScenario_UsageModel id="_Lm6awN9IEeiymtGzi4643g" entityName="UsageScenario">
+      <scenarioBehaviour_UsageScenario id="_Dm4MoN9JEeiymtGzi4643g" entityName="ScenarioBehaviour">
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_Dm4zsN9JEeiymtGzi4643g" successor="_INHX8N9JEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_Dm4zsd9JEeiymtGzi4643g" predecessor="_aw2_8N9JEeiymtGzi4643g"/>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_INHX8N9JEeiymtGzi4643g" entityName="callContactApp_getList" successor="_MxCPEN9JEeiymtGzi4643g" predecessor="_Dm4zsN9JEeiymtGzi4643g">
+          <providedRole_EntryLevelSystemCall href="default.system#_WOhaAN9FEeiymtGzi4643g"/>
+          <operationSignature__EntryLevelSystemCall href="default.repository#_UI8QAN61EeiymtGzi4643g"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Delay" id="_MxCPEN9JEeiymtGzi4643g" entityName="SelectContact" successor="_O6ZIQN9JEeiymtGzi4643g" predecessor="_INHX8N9JEeiymtGzi4643g">
+          <timeSpecification_Delay specification="0.0"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_O6ZIQN9JEeiymtGzi4643g" entityName="callContactApp_getSMSReceiver" successor="_ZdBZgN9JEeiymtGzi4643g" predecessor="_MxCPEN9JEeiymtGzi4643g">
+          <providedRole_EntryLevelSystemCall href="default.system#_WOhaAN9FEeiymtGzi4643g"/>
+          <operationSignature__EntryLevelSystemCall href="default.repository#_E7_vQN62EeiymtGzi4643g"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:Delay" id="_ZdBZgN9JEeiymtGzi4643g" entityName="CreateSMSBody" successor="_aw2_8N9JEeiymtGzi4643g" predecessor="_O6ZIQN9JEeiymtGzi4643g">
+          <timeSpecification_Delay specification="0.0"/>
+        </actions_ScenarioBehaviour>
+        <actions_ScenarioBehaviour xsi:type="usagemodel:EntryLevelSystemCall" id="_aw2_8N9JEeiymtGzi4643g" entityName="callSMSApp_sendSMS" successor="_Dm4zsd9JEeiymtGzi4643g" predecessor="_ZdBZgN9JEeiymtGzi4643g">
+          <providedRole_EntryLevelSystemCall href="default.system#_YArUIN9FEeiymtGzi4643g"/>
+          <operationSignature__EntryLevelSystemCall href="default.repository#_Xb-4oN62EeiymtGzi4643g"/>
+        </actions_ScenarioBehaviour>
+      </scenarioBehaviour_UsageScenario>
+      <workload_UsageScenario xsi:type="usagemodel:ClosedWorkload" population="1">
+        <thinkTime_ClosedWorkload specification="0.0"/>
+      </workload_UsageScenario>
+    </usageScenario_UsageModel>
+  </usagemodel:UsageModel>
+</xmi:XMI>

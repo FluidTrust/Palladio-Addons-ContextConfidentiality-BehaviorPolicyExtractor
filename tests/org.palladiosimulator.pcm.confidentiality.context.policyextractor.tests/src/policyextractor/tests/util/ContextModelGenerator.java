@@ -25,21 +25,12 @@ import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import policyextractor.common.tests.util.TestContextModelAbstraction;
 
 public class ContextModelGenerator {
-    static ConfidentialAccessSpecification model;
-    static TestContextModelAbstraction testContextModelAbs;
-    static Random random = new Random();
+    UsageModelGenerator umg;
+    ConfidentialAccessSpecification model;
+    TestContextModelAbstraction testContextModelAbs;
+    Random random = new Random();
 
-    private static int numTypes = 10;
-    private static int numSingleContext = 10;
-    private static int numHierarchicalContext = 10;
-    private static int numHierarchicalContextDepth = 3;
-    private static int numHierarchicalContextWidth = 3;
-    private static int numContextSets = 50;
-    private static int maxContextSetContexts = 5;
-    private static int numPolicies = 10;
-    private static int maxPolicyPolicies = 1;
-
-    public static ConfidentialAccessSpecification createNewContextModel() {
+    public ConfidentialAccessSpecification createNewContextModel() {
         model = ContextFactory.eINSTANCE.createConfidentialAccessSpecification();
 
         PCMSpecificationContainer specificationContainer = SpecificationFactory.eINSTANCE.createPCMSpecificationContainer();
@@ -50,17 +41,17 @@ public class ContextModelGenerator {
         return model;
     }
 
-    public static void createContexts() {
+    public void createContexts() {
         generateContextTypes();
         generateContexts();
         generateContextSets();
     }
 
-    public static void createPolicies() {
+    public void createPolicies() {
         generatePolicies();
     }
 
-    public static void createSpecifications() {
+    public void createSpecifications() {
         generateSpecifications();
     }
 
@@ -69,13 +60,13 @@ public class ContextModelGenerator {
      * 
      * @param maxTypes
      */
-    private static void generateContextTypes() {
+    private void generateContextTypes() {
         // Create container for types and add to model
         TypeContainer typeContainer = ModelFactory.eINSTANCE.createTypeContainer();
         model.setTypeContainer(typeContainer);
 
         // Create set number of types and add to types container
-        for (int i = 0; i < numTypes; i++) {
+        for (int i = 0; i < GenerationParameters.numTypes; i++) {
             ContextType type = ModelFactory.eINSTANCE.createContextType();
             type.setEntityName(getContextTypeName(i));
             typeContainer.getTypes().add(type);
@@ -86,19 +77,19 @@ public class ContextModelGenerator {
      * @param numSingleContext
      * @param numHierarchicalContext
      */
-    private static void generateContexts() {
+    private void generateContexts() {
         createSingleAttributeContextContainer();
         createHierarchicalContexts();
     }
 
-    private static void createSingleAttributeContextContainer() {
+    private void createSingleAttributeContextContainer() {
         // GenerateSingleContexts
         ContextContainer contextContainer = ModelFactory.eINSTANCE.createContextContainer();
         contextContainer.setEntityName("SingleContextContainer");
         model.getContextContainer().add(contextContainer);
 
         // Create set number of types and add to types container
-        for (int i = 0; i < numSingleContext; i++) {
+        for (int i = 0; i < GenerationParameters.numSingleContext; i++) {
             SingleAttributeContext context = ModelFactory.eINSTANCE.createSingleAttributeContext();
             context.setEntityName(getSingleAttributeContextName(i));
 
@@ -107,9 +98,9 @@ public class ContextModelGenerator {
         }
     }
 
-    private static void createHierarchicalContexts() {
+    private void createHierarchicalContexts() {
         // Create separate Container for each Hierarchical Context Set
-        for (int i = 0; i < numHierarchicalContext; i++) {
+        for (int i = 0; i < GenerationParameters.numHierarchicalContext; i++) {
             ContextContainer contextContainer = ModelFactory.eINSTANCE.createContextContainer();
             contextContainer.setEntityName("HierarchicalContextContainer_" + i);
             model.getContextContainer().add(contextContainer);
@@ -123,10 +114,9 @@ public class ContextModelGenerator {
         }
     }
 
-    private static void createHierarchicalContext(ContextContainer contextContainer, HierarchicalContext parent,
-            int depth) {
-        if (depth < numHierarchicalContextDepth) {
-            for (int width = 0; width < numHierarchicalContextWidth; width++) {
+    private void createHierarchicalContext(ContextContainer contextContainer, HierarchicalContext parent, int depth) {
+        if (depth < GenerationParameters.numHierarchicalContextDepth) {
+            for (int width = 0; width < GenerationParameters.numHierarchicalContextWidth; width++) {
                 String name = parent.getEntityName() + "_" + width;
 
                 HierarchicalContext context = ModelFactory.eINSTANCE.createHierarchicalContext();
@@ -140,7 +130,7 @@ public class ContextModelGenerator {
         }
     }
 
-    private static void generateContextSets() {
+    private void generateContextSets() {
         // Generate context set
         // TODO Only 1 needed?
         ContextSetContainer setContainer = SetFactory.eINSTANCE.createContextSetContainer();
@@ -148,27 +138,26 @@ public class ContextModelGenerator {
         model.getSetContainer().add(setContainer);
 
         // Create set number of types and add to types container
-        for (int i = 0; i < numContextSets; i++) {
+        for (int i = 0; i < GenerationParameters.numContextSets; i++) {
             ContextSet set = SetFactory.eINSTANCE.createContextSet();
             set.setEntityName(getContextSetName(i));
             setContainer.getPolicies().add(set);
 
-            // TODO optimize
-            int numContexts = random.nextInt(maxContextSetContexts);
+            int numContexts = GenerationParameters.numContexts;// random.nextInt(maxContextSetContexts);
             for (int contextIndex = 0; contextIndex <= numContexts; contextIndex++) {
-                boolean isSimple = random.nextBoolean();
+                boolean isSimple = false; // random.nextBoolean();
                 if (isSimple) {
-                    int index = random.nextInt(numSingleContext);
+                    int index = random.nextInt(GenerationParameters.numSingleContext);
                     ContextAttribute context = testContextModelAbs.getContextAttributeByName(
                             getSingleAttributeContextName(index));
                     set.getContexts().add(context);
                 } else {
-                    int index = random.nextInt(numHierarchicalContext);
-                    int numdepth = random.nextInt(numHierarchicalContextDepth);
+                    int index = random.nextInt(GenerationParameters.numHierarchicalContext);
+                    int numdepth = random.nextInt(GenerationParameters.numHierarchicalContextDepth);
 
                     String childString = "0";
                     for (int depth = 0; depth <= numdepth; depth++) {
-                        int numwidth = random.nextInt(numHierarchicalContextWidth);
+                        int numwidth = random.nextInt(GenerationParameters.numHierarchicalContextWidth);
                         childString = childString + "_" + numwidth;
                     }
                     String name = getHierarchicalContextName(index, childString);
@@ -180,16 +169,16 @@ public class ContextModelGenerator {
         }
     }
 
-    private static void generatePolicies() {
+    private void generatePolicies() {
         PCMSpecificationContainer specificationContainer = model.getPcmspecificationcontainer();
 
-        for (int i = 0; i < numPolicies; i++) {
+        for (int i = 0; i < GenerationParameters.numPolicies; i++) {
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
             policy.setEntityName(getPolicyName(i));
 
-            int numPolicies = random.nextInt(maxPolicyPolicies);
+            int numPolicies = random.nextInt(GenerationParameters.maxPolicyPolicies);
             for (int policyIndex = 0; policyIndex <= numPolicies; policyIndex++) {
-                int index = random.nextInt(numContextSets);
+                int index = random.nextInt(GenerationParameters.numContextSets);
                 ContextSet set = testContextModelAbs.getContextSetByName(getContextSetName(index));
                 policy.getPolicy().add(set);
             }
@@ -198,11 +187,11 @@ public class ContextModelGenerator {
         }
     }
 
-    private static void generateSpecifications() {
+    private void generateSpecifications() {
         PCMSpecificationContainer specificationContainer = model.getPcmspecificationcontainer();
 
         for (int indexBehaviour = 0; indexBehaviour < GenerationParameters.numUsageScenarios; indexBehaviour++) {
-            for (int indexInterface = 0; indexInterface < GenerationParameters.numInterfacesIn; indexInterface++) {
+            for (int indexInterface = 0; indexInterface < GenerationParameters.numInterfaces; indexInterface++) {
                 // Call each method
                 for (int indexOperation = 0; indexOperation < GenerationParameters.numOperationPerInterface; indexOperation++) {
                     // Call defined number of times
@@ -212,16 +201,16 @@ public class ContextModelGenerator {
                         specification.setEntityName(
                                 getSpecificationName(indexBehaviour, indexInterface, indexOperation, indexCount));
 
-                        int numPolicies = random.nextInt(maxPolicyPolicies);
+                        int numPolicies = random.nextInt(GenerationParameters.maxPolicyPolicies);
                         for (int policyIndex = 0; policyIndex <= numPolicies; policyIndex++) {
-                            int index = random.nextInt(numContextSets);
+                            int index = random.nextInt(GenerationParameters.numContextSets);
                             ContextSet set = testContextModelAbs.getContextSetByName(getContextSetName(index));
                             specification.setContextset(set);
                         }
 
-                        String systemCallName = UsageModelGenerator.getEntryLevelSystemCallName(indexBehaviour,
-                                indexInterface, indexOperation, indexCount);
-                        EntryLevelSystemCall systemCall = UsageModelGenerator.systemCalls.get(systemCallName);
+                        String systemCallName = umg.getEntryLevelSystemCallName(indexBehaviour, indexInterface,
+                                indexOperation, indexCount);
+                        EntryLevelSystemCall systemCall = umg.systemCalls.get(systemCallName);
                         specification.setEntrylevelsystemcall(systemCall);
 
                         Boolean isMisusage = random.nextBoolean();
@@ -236,29 +225,28 @@ public class ContextModelGenerator {
         }
     }
 
-    private static String getSpecificationName(int indexBehaviour, int indexInterface, int indexOperation,
-            int indexCount) {
+    private String getSpecificationName(int indexBehaviour, int indexInterface, int indexOperation, int indexCount) {
         return "ContextSpecification__" + indexBehaviour + "_" + indexInterface + "_" + indexOperation + "_"
                 + indexCount;
     }
 
-    private static String getPolicyName(int i) {
+    private String getPolicyName(int i) {
         return "Policy_" + i;
     }
 
-    public static String getContextSetName(int i) {
+    public String getContextSetName(int i) {
         return "ContextSet_" + i;
     }
 
-    public static String getContextTypeName(int i) {
+    public String getContextTypeName(int i) {
         return "ContextType_" + i;
     }
 
-    public static String getSingleAttributeContextName(int i) {
+    public String getSingleAttributeContextName(int i) {
         return "SingleAttributeContext_" + i;
     }
 
-    public static String getHierarchicalContextName(int containerIndex, String childString) {
+    public String getHierarchicalContextName(int containerIndex, String childString) {
         return "HierarchicalContext_" + containerIndex + "___" + childString;
     }
 }

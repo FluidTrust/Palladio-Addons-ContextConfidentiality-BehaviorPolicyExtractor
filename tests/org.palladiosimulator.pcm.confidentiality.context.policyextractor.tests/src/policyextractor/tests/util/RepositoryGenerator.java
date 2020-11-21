@@ -18,18 +18,18 @@ import org.palladiosimulator.pcm.seff.StartAction;
 import org.palladiosimulator.pcm.seff.StopAction;
 
 public class RepositoryGenerator {
-    static Repository model;
+    Repository model;
 
-    static HashMap<String, OperationInterface> interfaces = new HashMap<>();
-    static HashMap<String, OperationSignature> operations = new HashMap<>();
-    static HashMap<String, RepositoryComponent> components = new HashMap<>();
+    HashMap<String, OperationInterface> interfaces = new HashMap<>();
+    HashMap<String, OperationSignature> operations = new HashMap<>();
+    HashMap<String, RepositoryComponent> components = new HashMap<>();
 
-    public static Repository createNewRepository() {
+    public Repository createNewRepository() {
         model = RepositoryFactory.eINSTANCE.createRepository();
         return model;
     }
 
-    static void createInterfaces() {
+    void createInterfaces() {
         for (int interfaceIndex = 0; interfaceIndex < GenerationParameters.numInterfaces; interfaceIndex++) {
             OperationInterface operationInterface = RepositoryFactory.eINSTANCE.createOperationInterface();
             operationInterface.setEntityName(getOperationInterfaceName(interfaceIndex));
@@ -47,7 +47,7 @@ public class RepositoryGenerator {
 
     }
 
-    public static RepositoryComponent createComponent(boolean basic) {
+    public RepositoryComponent createComponent(boolean basic) {
         RepositoryComponent component = null;
         String componentName = getComponentName(components.size());
         if (basic) {
@@ -84,7 +84,8 @@ public class RepositoryGenerator {
             if (component instanceof BasicComponent) {
                 for (int operationIndex = 0; operationIndex < GenerationParameters.numOperationPerInterface; operationIndex++) {
                     ResourceDemandingSEFF seff = SeffFactory.eINSTANCE.createResourceDemandingSEFF();
-                    OperationSignature signature = operations.get(getOperationSignatureName(interfaceIndex, operationIndex));
+                    OperationSignature signature = operations.get(
+                            getOperationSignatureName(interfaceIndex, operationIndex));
                     seff.setDescribedService__SEFF(signature);
                     ((BasicComponent) component).getServiceEffectSpecifications__BasicComponent().add(seff);
 
@@ -109,38 +110,15 @@ public class RepositoryGenerator {
         return component;
     }
 
-    private static void createBasicComponents() {
-        for (int i = 0; i < GenerationParameters.numBasicComponents; i++) {
-            BasicComponent basicComponent = RepositoryFactory.eINSTANCE.createBasicComponent();
-            basicComponent.setEntityName(getComponentName(i));
-            model.getComponents__Repository().add(basicComponent);
-
-            for (int interfaceIndex = 0; interfaceIndex < GenerationParameters.numInterfaces; interfaceIndex++) {
-                OperationProvidedRole provideRole = RepositoryFactory.eINSTANCE.createOperationProvidedRole();
-                OperationInterface operationInterface = interfaces.get(getOperationInterfaceName(interfaceIndex));
-                provideRole.setProvidingEntity_ProvidedRole(basicComponent);
-                provideRole.setProvidedInterface__OperationProvidedRole(operationInterface);
-                basicComponent.getProvidedRoles_InterfaceProvidingEntity().add(provideRole);
-
-                for (int operationIndex = 0; operationIndex < GenerationParameters.numOperationPerInterface; operationIndex++) {
-                    ResourceDemandingSEFF seff = SeffFactory.eINSTANCE.createResourceDemandingSEFF();
-                    OperationSignature signature = operations.get(getOperationSignatureName(interfaceIndex, operationIndex));
-                    seff.setDescribedService__SEFF(signature);
-                    basicComponent.getServiceEffectSpecifications__BasicComponent().add(seff);
-                }
-            }
-        }
-    }
-
-    public static String getOperationInterfaceName(int i) {
+    public String getOperationInterfaceName(int i) {
         return "OperationInterface_" + i;
     }
 
-    public static String getOperationSignatureName(int interfaceIndex, int operationIndex) {
+    public String getOperationSignatureName(int interfaceIndex, int operationIndex) {
         return "I" + interfaceIndex + "_Method" + operationIndex;
     }
 
-    public static String getComponentName(int i) {
+    public String getComponentName(int i) {
         return "RepositoryComponent_" + i;
     }
 }

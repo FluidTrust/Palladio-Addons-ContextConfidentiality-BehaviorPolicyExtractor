@@ -1,6 +1,8 @@
 package policyextractor.tests.performance;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -48,7 +50,7 @@ class PerformanceTest {
             deriver.execute();
 
             PolicyReducer reducer = new PolicyReducer(contextModelAbs, new RulesFlag());
-            reducer.execute();
+            // reducer.execute();
 
             long stopTime = java.lang.System.nanoTime();
             Logger.setActive(true);
@@ -57,6 +59,7 @@ class PerformanceTest {
             if (i >= numRuns_ignore) {
                 times.add(time);
             }
+            Logger.info("" + i + " -- " + contextModelAbs.getSEFFs().size());
         }
 
         long mittel = 0;
@@ -69,22 +72,47 @@ class PerformanceTest {
     }
 
     @Test
-    void test2() throws IOException {
-        int numberOfIterationPerParamter = 4;
+    void test1() throws IOException {
+        int numberOfIterationPerParamter = 6;
         int numberOfParamters = 6;
+        double[][] table = new double[numberOfParamters][numberOfIterationPerParamter];
         for (int index = 0; index < numberOfParamters; index++) {
 
             java.lang.System.gc();
             Runtime.getRuntime().gc();
 
             for (int iteration = 0; iteration < numberOfIterationPerParamter; iteration++) {
-                Logger.info("Parameter: " + index + " : " + iteration);
                 GenerationParameters.setParamters(index, iteration);
-                // double time = runTestOnModel();
-                // Logger.info("Parameter: " + index + " : " + iteration + " : " + time);
+                double time = runTestOnModel();
+                double seconds = (double) time / 1_000_000_000.0;
+                Logger.info("Parameter: " + index + " : " + iteration + " : " + seconds);
+                table[index][iteration] = seconds;
             }
         }
-        GenerationParameters.setParamters(3, 3);
-        double time = runTestOnModel();
+
+        // Create formatted output for thesis
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        String parametertable = "";
+        String parametergraph = "";
+        for (int index = 0; index < numberOfParamters; index++) {
+            parametertable = parametertable.concat((index + 1) + " & ");
+            for (int iteration = 0; iteration < numberOfIterationPerParamter; iteration++) {
+                parametertable = parametertable.concat("" + df.format(table[index][iteration]) + " & ");
+                parametergraph = parametergraph.concat(
+                        "(" + iteration + "," + df.format(table[index][iteration]) + ")");
+            }
+            parametertable = parametertable.concat("\n");
+            parametergraph = parametergraph.concat("\n");
+        }
+        Logger.info(parametertable);
+        Logger.info(parametergraph);
+    }
+
+    @Test
+    void test2() throws IOException {
+        GenerationParameters.setTest();
+        PalladioModelGenerator pmg = new PalladioModelGenerator();
+        pmg.saveTestModels();
     }
 }

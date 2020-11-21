@@ -17,11 +17,15 @@ public class PalladioModelGenerator {
     public ConfidentialAccessSpecification contextModel;
 
     public PalladioModelGenerator() {
+        RepositoryGenerator rg = new RepositoryGenerator();
+        AssemblyGenerator ag = new AssemblyGenerator();
+        UsageModelGenerator umg = new UsageModelGenerator();
+        ContextModelGenerator cmg = new ContextModelGenerator();
         // Create models
-        repository = RepositoryGenerator.createNewRepository();
-        system = AssemblyGenerator.createNewAssemblyModel();
-        usageModel = UsageModelGenerator.createNewUsageModel();
-        contextModel = ContextModelGenerator.createNewContextModel();
+        repository = rg.createNewRepository();
+        system = ag.createNewAssemblyModel();
+        usageModel = umg.createNewUsageModel();
+        contextModel = cmg.createNewContextModel();
 
         try {
             saveTestModels();
@@ -30,24 +34,22 @@ public class PalladioModelGenerator {
         }
 
         // Create Interfaces
-        RepositoryGenerator.createInterfaces();
+        rg.createInterfaces();
 
         // Create Roles in System
-        AssemblyGenerator.createInterfaces();
-        AssemblyGenerator.createComponents();
+        ag.rg = rg;
+        ag.createInterfaces();
+        ag.createComponents();
 
         // Create usagemodel last
-        UsageModelGenerator.generateUsageScenarios();
+        umg.rg = rg;
+        umg.ag = ag;
+        umg.generateUsageScenarios();
 
         // Contexts
-        ContextModelGenerator.createContexts();
-        ContextModelGenerator.createSpecifications();
-
-        try {
-            saveTestModels();
-        } catch (IOException e) {
-            Logger.error("Couldn't create TestData");
-        }
+        cmg.umg = umg;
+        cmg.createContexts();
+        cmg.createSpecifications();
     }
 
     public void saveTestModels() throws IOException {

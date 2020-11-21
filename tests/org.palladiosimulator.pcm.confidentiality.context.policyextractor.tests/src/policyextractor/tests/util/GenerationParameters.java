@@ -2,15 +2,14 @@ package policyextractor.tests.util;
 
 public class GenerationParameters {
     // Assembly
-    static int numInterfacesIn = 10;
-    static int numInterfacesOut = numInterfacesIn;
     static int numComposedDepth = 1;
     static int numComposedWidth = 1;
 
-    static int numInterfaces = numInterfacesIn;
     // Repository
+    static int numInterfaces = 10;
     static int numOperationPerInterface = 5;
-    static int numBasicComponents = 10;
+
+    static int numSystemComponents = 10;
 
     // UsageModel
     static int numUsageScenarios = 10;
@@ -18,12 +17,44 @@ public class GenerationParameters {
 
     // TODO negative usagecases
 
+    // Context
+    static int numContexts = 5;
+    static int numTypes = 10;
+    static int numSingleContext = 10;
+    static int numHierarchicalContext = 10;
+    static int numHierarchicalContextDepth = 3;
+    static int numHierarchicalContextWidth = 3;
+    static int numContextSets = 50;
+    static int maxContextSetContexts = 5;
+    static int numPolicies = 10;
+    static int maxPolicyPolicies = 1;
+
     public static int getNumberForIteration(int iteration) {
-        return (int) Math.pow(10, iteration);
+        // return (int) Math.pow(10, iteration);
+        switch (iteration) {
+        case 0:
+            return 1;
+        case 1:
+            return 5;
+        case 2:
+            return 10;
+        case 3:
+            return 25;
+        case 4:
+            return 50;
+        case 5:
+            return 100;
+        case 6:
+            return 500;
+        case 7:
+            return 1000;
+        default:
+            return 0;
+        }
     }
 
     public static void setDefault() {
-        numInterfacesIn = 1;
+        numInterfaces = 1;
         numComposedDepth = 1;
         numComposedWidth = 1;
         numOperationPerInterface = 1;
@@ -35,18 +66,16 @@ public class GenerationParameters {
         setDefault();
         switch (index) {
         case 0:
-            // numInterfacesIn = getNumberForIteration(iteration);
+            numInterfaces = getNumberForIteration(iteration);
             break;
         case 1:
-            numOperationPerInterface = 1;
-            getNumberForIteration(iteration);
+            numOperationPerInterface = getNumberForIteration(iteration);
             break;
         case 2:
-            numComposedDepth = 1;
-            getNumberForIteration(iteration);
+            numComposedDepth = getNumberForIteration(iteration);
             break;
         case 3:
-            numComposedWidth = 30;// getNumberForIteration(iteration);
+            numComposedWidth = getNumberForIteration(iteration);
             break;
         case 4:
             numUsageScenarios = getNumberForIteration(iteration);
@@ -57,5 +86,14 @@ public class GenerationParameters {
         default:
             break;
         }
+    }
+
+    public static void setTest() {
+        numInterfaces = 1;
+        numOperationPerInterface = 1;
+        numComposedDepth = 1;
+        numComposedWidth = 1;
+        numUsageScenarios = 1;
+        numSystemCallsPerInterfaceMethod = 1;
     }
 }

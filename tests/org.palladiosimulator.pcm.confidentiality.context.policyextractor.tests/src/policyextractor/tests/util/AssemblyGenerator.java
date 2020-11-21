@@ -25,18 +25,19 @@ import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.system.SystemFactory;
 
 public class AssemblyGenerator {
-    static System model;
-    static HashMap<String, OperationProvidedRole> interfacesIn = new HashMap<>();
-    static HashMap<String, OperationRequiredRole> interfacesOut = new HashMap<>();
+    RepositoryGenerator rg;
+    System model;
+    HashMap<String, OperationProvidedRole> interfacesIn = new HashMap<>();
+    HashMap<String, OperationRequiredRole> interfacesOut = new HashMap<>();
 
-    public static System createNewAssemblyModel() {
+    public System createNewAssemblyModel() {
         model = SystemFactory.eINSTANCE.createSystem();
         return model;
     }
 
-    public static void createInterfaces() {
+    public void createInterfaces() {
 
-        for (int i = 0; i < GenerationParameters.numInterfacesIn; i++) {
+        for (int i = 0; i < GenerationParameters.numInterfaces; i++) {
             OperationProvidedRole provideRole = RepositoryFactory.eINSTANCE.createOperationProvidedRole();
             provideRole.setProvidingEntity_ProvidedRole(model);
             provideRole.setEntityName(getInterfaceInName(i));
@@ -45,12 +46,11 @@ public class AssemblyGenerator {
             interfacesIn.put(getInterfaceInName(i), provideRole);
 
             // Connect
-            OperationInterface provideInterface = RepositoryGenerator.interfaces.get(
-                    RepositoryGenerator.getOperationInterfaceName(i));
+            OperationInterface provideInterface = rg.interfaces.get(rg.getOperationInterfaceName(i));
             provideRole.setProvidedInterface__OperationProvidedRole(provideInterface);
         }
 
-        for (int i = 0; i < GenerationParameters.numInterfacesOut; i++) {
+        for (int i = 0; i < GenerationParameters.numInterfaces; i++) {
             OperationRequiredRole requireRole = RepositoryFactory.eINSTANCE.createOperationRequiredRole();
             requireRole.setRequiringEntity_RequiredRole(model);
             requireRole.setEntityName(getInterfaceOutName(i));
@@ -59,14 +59,13 @@ public class AssemblyGenerator {
             interfacesOut.put(getInterfaceOutName(i), requireRole);
 
             // Connect
-            OperationInterface provideInterface = RepositoryGenerator.interfaces.get(
-                    RepositoryGenerator.getOperationInterfaceName(i));
+            OperationInterface provideInterface = rg.interfaces.get(rg.getOperationInterfaceName(i));
             requireRole.setRequiredInterface__OperationRequiredRole(provideInterface);
         }
 
     }
 
-    public static void createComponents() {
+    public void createComponents() {
         for (int depth = 0; depth < GenerationParameters.numComposedDepth; depth++) {
             if (depth == 0) {
 
@@ -78,7 +77,7 @@ public class AssemblyGenerator {
         createComponentsWidth(model, 0);
     }
 
-    public static void createComponentsWidth(ComposedStructure parent, int depth) {
+    public void createComponentsWidth(ComposedStructure parent, int depth) {
         boolean basic = true;
 
         if (depth < GenerationParameters.numComposedDepth) {
@@ -89,12 +88,18 @@ public class AssemblyGenerator {
         AssemblyContext current = null;
         AssemblyContext first = null;
 
-        for (int width = 0; width < GenerationParameters.numComposedWidth; width++) {
+        int numComponents = GenerationParameters.numComposedWidth;
+        if (depth == 0) {
+            // Level == 0 equals System, not affected by iteration
+            numComponents = GenerationParameters.numSystemComponents;
+        }
+
+        for (int width = 0; width < numComponents; width++) {
             AssemblyContext assemblyContext = CompositionFactory.eINSTANCE.createAssemblyContext();
             previous = current;
             current = assemblyContext;
 
-            RepositoryComponent component = RepositoryGenerator.createComponent(basic);
+            RepositoryComponent component = rg.createComponent(basic);
             assemblyContext.setEncapsulatedComponent__AssemblyContext(component);
 
             String name = "Assembly_" + component.getEntityName();
@@ -222,15 +227,15 @@ public class AssemblyGenerator {
         }
     }
 
-    public static String getInterfaceInName(int i) {
+    public String getInterfaceInName(int i) {
         return "SystemInterfaceIn_" + i;
     }
 
-    public static String getInterfaceOutName(int i) {
+    public String getInterfaceOutName(int i) {
         return "SystemInterfaceOut_" + i;
     }
 
-    public static String getAssemblyConnectorName(int i) {
+    public String getAssemblyConnectorName(int i) {
         // TODO assemblycontext index
         return "AssemblyConnector_" + i;
     }

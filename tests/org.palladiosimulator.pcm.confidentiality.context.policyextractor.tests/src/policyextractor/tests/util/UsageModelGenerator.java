@@ -14,16 +14,18 @@ import org.palladiosimulator.pcm.usagemodel.UsageScenario;
 import org.palladiosimulator.pcm.usagemodel.UsagemodelFactory;
 
 public class UsageModelGenerator {
-    static UsageModel model;
-    static HashMap<String, EntryLevelSystemCall> systemCalls = new HashMap<>();
-    static HashMap<String, ScenarioBehaviour> behaviours = new HashMap<>();
+    RepositoryGenerator rg;
+    AssemblyGenerator ag;
+    UsageModel model;
+    HashMap<String, EntryLevelSystemCall> systemCalls = new HashMap<>();
+    HashMap<String, ScenarioBehaviour> behaviours = new HashMap<>();
 
-    public static UsageModel createNewUsageModel() {
+    public UsageModel createNewUsageModel() {
         model = UsagemodelFactory.eINSTANCE.createUsageModel();
         return model;
     }
 
-    static void generateUsageScenarios() {
+    void generateUsageScenarios() {
         for (int i = 0; i < GenerationParameters.numUsageScenarios; i++) {
             UsageScenario scenario = UsagemodelFactory.eINSTANCE.createUsageScenario();
             scenario.setEntityName(getUsageScenarioName(i));
@@ -39,14 +41,14 @@ public class UsageModelGenerator {
         }
     }
 
-    private static void generateBehaviourContent(ScenarioBehaviour behaviour, int behaviourIndex) {
+    void generateBehaviourContent(ScenarioBehaviour behaviour, int behaviourIndex) {
         Start start = UsagemodelFactory.eINSTANCE.createStart();
         behaviour.getActions_ScenarioBehaviour().add(start);
 
         AbstractUserAction predecessor = start;
 
         // Iterate all System Interfaces
-        for (int indexInterface = 0; indexInterface < GenerationParameters.numInterfacesIn; indexInterface++) {
+        for (int indexInterface = 0; indexInterface < GenerationParameters.numInterfaces; indexInterface++) {
             // Call each method
             for (int indexOperation = 0; indexOperation < GenerationParameters.numOperationPerInterface; indexOperation++) {
                 // Call defined number of times
@@ -65,12 +67,11 @@ public class UsageModelGenerator {
                     predecessor = systemCall;
 
                     // Connect in Assembly
-                    OperationProvidedRole provideRole = AssemblyGenerator.interfacesIn.get(
-                            AssemblyGenerator.getInterfaceInName(indexInterface));
+                    OperationProvidedRole provideRole = ag.interfacesIn.get(ag.getInterfaceInName(indexInterface));
                     systemCall.setProvidedRole_EntryLevelSystemCall(provideRole);
 
-                    OperationSignature signature = RepositoryGenerator.operations.get(
-                            RepositoryGenerator.getOperationSignatureName(indexInterface, indexOperation));
+                    OperationSignature signature = rg.operations.get(
+                            rg.getOperationSignatureName(indexInterface, indexOperation));
                     systemCall.setOperationSignature__EntryLevelSystemCall(signature);
                 }
             }
@@ -81,16 +82,15 @@ public class UsageModelGenerator {
         behaviour.getActions_ScenarioBehaviour().add(stop);
     }
 
-    public static String getUsageScenarioName(int i) {
+    public String getUsageScenarioName(int i) {
         return "UsageScenario_" + i;
     }
 
-    public static String getScenarioBehaviourName(int i) {
+    public String getScenarioBehaviourName(int i) {
         return "ScenarioBehaviour_" + i;
     }
 
-    public static String getEntryLevelSystemCallName(int behaviour, int indexInterface, int indexOperation,
-            int indexCount) {
+    public String getEntryLevelSystemCallName(int behaviour, int indexInterface, int indexOperation, int indexCount) {
         return "EntryLevelSystemCall__" + behaviour + "_" + indexInterface + "_" + indexOperation + "_" + indexCount;
     }
 }

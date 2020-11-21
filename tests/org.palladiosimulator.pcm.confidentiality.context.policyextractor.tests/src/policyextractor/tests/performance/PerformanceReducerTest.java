@@ -24,10 +24,10 @@ class PerformanceReducerTest {
         int numRuns = 5;
 
         for (int i = 0; i < numRuns; i++) {
-
-            ConfidentialAccessSpecification contextModel = ContextModelGenerator.createNewContextModel();
-            ContextModelGenerator.createContexts();
-            ContextModelGenerator.createPolicies();
+            ContextModelGenerator cmg = new ContextModelGenerator();
+            ConfidentialAccessSpecification contextModel = cmg.createNewContextModel();
+            cmg.createContexts();
+            cmg.createPolicies();
 
             ContextModelAbstraction contextModelAbs = new ContextModelAbstraction(contextModel);
             RulesFlag rules = new RulesFlag();

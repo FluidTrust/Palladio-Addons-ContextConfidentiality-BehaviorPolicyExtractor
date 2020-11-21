@@ -22,7 +22,7 @@ import rules.RulesFlag;
 import settings.Settings;
 import util.Logger;
 
-class EffortTest {
+class Effort_DistanceTracker_Test {
 
     protected TestContextModelAbstraction abs;
     protected ConfidentialAccessSpecification testContextModel;
@@ -32,7 +32,7 @@ class EffortTest {
 
     @Test
     void test1() throws IOException {
-        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "travelplanner";
+        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "distanceTracker";
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         ModelHandler modelloader = new ModelHandler(modelAbs);
 
@@ -72,7 +72,7 @@ class EffortTest {
 
     @Test
     void test2() throws IOException {
-        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "travelplanner";
+        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "distanceTracker";
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         ModelHandler modelloader = new ModelHandler(modelAbs);
 
@@ -111,7 +111,7 @@ class EffortTest {
 
     @Test
     void test3() throws IOException {
-        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "travelplanner";
+        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "distanceTracker";
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         ModelHandler modelloader = new ModelHandler(modelAbs);
 
@@ -150,7 +150,7 @@ class EffortTest {
 
     @Test
     void test4() throws IOException {
-        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "travelplanner";
+        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "distanceTracker";
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         ModelHandler modelloader = new ModelHandler(modelAbs);
 
@@ -189,7 +189,7 @@ class EffortTest {
 
     @Test
     void test5() throws IOException {
-        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "travelplanner";
+        String canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + "distanceTracker";
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         ModelHandler modelloader = new ModelHandler(modelAbs);
 

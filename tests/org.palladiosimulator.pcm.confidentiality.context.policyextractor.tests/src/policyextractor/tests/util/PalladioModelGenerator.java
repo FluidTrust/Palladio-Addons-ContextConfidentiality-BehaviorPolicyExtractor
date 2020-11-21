@@ -42,6 +42,12 @@ public class PalladioModelGenerator {
         // Contexts
         ContextModelGenerator.createContexts();
         ContextModelGenerator.createSpecifications();
+
+        try {
+            saveTestModels();
+        } catch (IOException e) {
+            Logger.error("Couldn't create TestData");
+        }
     }
 
     public void saveTestModels() throws IOException {

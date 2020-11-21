@@ -172,6 +172,8 @@ public class AssemblyGenerator {
 
             OperationProvidedRole opr = (OperationProvidedRole) provideRole;
             OperationProvidedRole matchingRole = null;
+            assertNotNull(opr);
+
             for (ProvidedRole provideRoleInner : first.getEncapsulatedComponent__AssemblyContext().getProvidedRoles_InterfaceProvidingEntity()) {
 
                 // TODO check

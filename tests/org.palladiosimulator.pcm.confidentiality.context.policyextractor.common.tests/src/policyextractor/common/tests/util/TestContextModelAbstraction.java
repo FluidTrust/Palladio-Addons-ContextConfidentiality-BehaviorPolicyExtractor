@@ -58,8 +58,16 @@ public class TestContextModelAbstraction {
 
     public int getNumberOfPolicies() {
         int numPolicies = contextModelAbs.getPolicySpecifications().size();
+        return numPolicies;
+    }
+
+    public int getNumberOfSpecification() {
         int numContext = contextModelAbs.getContextSpecifications().size();
-        return numContext + numPolicies;
+        return numContext;
+    }
+
+    public int getTotalNumberOfPolicies() {
+        return getNumberOfPolicies() + getNumberOfSpecification();
     }
 
     public boolean isPolicyExisting(ServiceEffectSpecification seff) {

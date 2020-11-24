@@ -27,11 +27,11 @@
     <semanticResources>http://www.palladiosimulator.org/pcm/dataspec/usagemodel/0.1/</semanticResources>
     <semanticResources>platform:/resource/org.palladiosimulator.pcm.dataspec.profile/profile.emfprofile_diagram</semanticResources>
     <semanticResources>http://www.palladiosimulator.org/pcm/dataspec/parameter/0.1/</semanticResources>
-    <semanticResources>default.context</semanticResources>
     <semanticResources>default_2.context</semanticResources>
     <semanticResources>default_3.context</semanticResources>
     <semanticResources>default_4.context</semanticResources>
     <semanticResources>default_5.context</semanticResources>
+    <semanticResources>default_1.context</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_caA6QNwrEeeel_96Qa_d5A">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.palladiosimulator.editors.sirius.repository/description/repository.odesign#//@ownedViewpoints[name='Repository']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_cbHGddwrEeeel_96Qa_d5A" name="new Repository Diagram" repPath="#_cbHGcNwrEeeel_96Qa_d5A">

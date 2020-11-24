@@ -96,7 +96,7 @@ class EffortReductionTest {
                 //
                 {},
                 //
-                { "default.context", "default_2.context" },
+                { "default_1.context", "default_2.context" },
                 //
                 {} };
 

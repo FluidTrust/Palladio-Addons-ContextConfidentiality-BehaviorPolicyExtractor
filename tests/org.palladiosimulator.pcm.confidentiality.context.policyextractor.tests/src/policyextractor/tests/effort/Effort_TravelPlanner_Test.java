@@ -36,7 +36,7 @@ class Effort_TravelPlanner_Test {
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         ModelHandler modelloader = new ModelHandler(modelAbs);
 
-        modelAbs.contextName = "default.context";
+        modelAbs.contextName = "default_1.context";
 
         testContextModel = modelloader.loadContextModel();
         testUsageModel = modelloader.loadUsageModel();

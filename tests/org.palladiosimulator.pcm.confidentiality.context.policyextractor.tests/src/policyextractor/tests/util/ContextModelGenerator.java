@@ -2,8 +2,6 @@ package policyextractor.tests.util;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Random;
-
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.ContextFactory;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
@@ -28,8 +26,8 @@ public class ContextModelGenerator {
     UsageModelGenerator umg;
     ConfidentialAccessSpecification model;
     TestContextModelAbstraction testContextModelAbs;
-    Random random = new Random();
 
+    // Random random = new Random();
     public ConfidentialAccessSpecification createNewContextModel() {
         model = ContextFactory.eINSTANCE.createConfidentialAccessSpecification();
 
@@ -53,6 +51,43 @@ public class ContextModelGenerator {
 
     public void createSpecifications() {
         generateSpecifications();
+    }
+
+    private boolean isHierarchical = true;
+    private int contextSetIndex = 0;
+    private int singleContextIndex = 0;
+    private int hierarchicalContextIndex = 0;
+
+    public boolean getIsHierarchical() {
+        isHierarchical = !isHierarchical;
+        return isHierarchical;
+    }
+
+    public int getSingleContext() {
+        int ret = singleContextIndex;
+        singleContextIndex++;
+        if (singleContextIndex >= GenerationParameters.numSingleContext) {
+            singleContextIndex = 0;
+        }
+        return ret;
+    }
+
+    public int getHierarchicalContext() {
+        int ret = hierarchicalContextIndex;
+        hierarchicalContextIndex++;
+        if (hierarchicalContextIndex >= GenerationParameters.numHierarchicalContext) {
+            hierarchicalContextIndex = 0;
+        }
+        return ret;
+    }
+
+    public int getContextSetIndex() {
+        int ret = contextSetIndex;
+        contextSetIndex++;
+        if (contextSetIndex >= GenerationParameters.numContextSets) {
+            contextSetIndex = 0;
+        }
+        return ret;
     }
 
     /**
@@ -143,21 +178,21 @@ public class ContextModelGenerator {
             set.setEntityName(getContextSetName(i));
             setContainer.getPolicies().add(set);
 
-            int numContexts = GenerationParameters.numContexts;// random.nextInt(maxContextSetContexts);
-            for (int contextIndex = 0; contextIndex <= numContexts; contextIndex++) {
-                boolean isSimple = false; // random.nextBoolean();
+            int numContexts = GenerationParameters.numContextSetContexts;// random.nextInt(maxContextSetContexts);
+            for (int contextIndex = 0; contextIndex < numContexts; contextIndex++) {
+                boolean isSimple = getIsHierarchical(); // random.nextBoolean();
                 if (isSimple) {
-                    int index = random.nextInt(GenerationParameters.numSingleContext);
+                    int index = getSingleContext();
                     ContextAttribute context = testContextModelAbs.getContextAttributeByName(
                             getSingleAttributeContextName(index));
                     set.getContexts().add(context);
                 } else {
-                    int index = random.nextInt(GenerationParameters.numHierarchicalContext);
-                    int numdepth = random.nextInt(GenerationParameters.numHierarchicalContextDepth);
+                    int index = getHierarchicalContext();
+                    int numdepth = GenerationParameters.numHierarchicalContextDepth;
 
                     String childString = "0";
-                    for (int depth = 0; depth <= numdepth; depth++) {
-                        int numwidth = random.nextInt(GenerationParameters.numHierarchicalContextWidth);
+                    for (int depth = 0; depth < numdepth; depth++) {
+                        int numwidth = GenerationParameters.numHierarchicalContextWidth - 1;
                         childString = childString + "_" + numwidth;
                     }
                     String name = getHierarchicalContextName(index, childString);
@@ -176,9 +211,9 @@ public class ContextModelGenerator {
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
             policy.setEntityName(getPolicyName(i));
 
-            int numPolicies = random.nextInt(GenerationParameters.maxPolicyPolicies);
-            for (int policyIndex = 0; policyIndex <= numPolicies; policyIndex++) {
-                int index = random.nextInt(GenerationParameters.numContextSets);
+            int numPolicies = GenerationParameters.numPolicyPolicies;
+            for (int policyIndex = 0; policyIndex < numPolicies; policyIndex++) {
+                int index = getContextSetIndex();
                 ContextSet set = testContextModelAbs.getContextSetByName(getContextSetName(index));
                 policy.getPolicy().add(set);
             }
@@ -201,9 +236,9 @@ public class ContextModelGenerator {
                         specification.setEntityName(
                                 getSpecificationName(indexBehaviour, indexInterface, indexOperation, indexCount));
 
-                        int numPolicies = random.nextInt(GenerationParameters.maxPolicyPolicies);
+                        int numPolicies = GenerationParameters.numSpecificationContextSets;
                         for (int policyIndex = 0; policyIndex <= numPolicies; policyIndex++) {
-                            int index = random.nextInt(GenerationParameters.numContextSets);
+                            int index = getContextSetIndex();
                             ContextSet set = testContextModelAbs.getContextSetByName(getContextSetName(index));
                             specification.setContextset(set);
                         }
@@ -213,7 +248,7 @@ public class ContextModelGenerator {
                         EntryLevelSystemCall systemCall = umg.systemCalls.get(systemCallName);
                         specification.setEntrylevelsystemcall(systemCall);
 
-                        Boolean isMisusage = random.nextBoolean();
+                        Boolean isMisusage = false;// random.nextBoolean();
                         specification.setMissageUse(isMisusage);
 
                         specificationContainer.getContextspecification().add(specification);

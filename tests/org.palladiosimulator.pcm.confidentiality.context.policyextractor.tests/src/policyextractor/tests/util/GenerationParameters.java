@@ -142,20 +142,31 @@ public class GenerationParameters {
         numHierarchicalContextWidth = 1;
         numContextSets = 1;
         numContextSetContexts = 1;
+        numPolicies = 10;
+        numPolicyPolicies = 10;
     }
 
     public static void setParamtersContext(int index, int iteration) {
         setDefaultContext();
         switch (index) {
         case 0:
-            numHierarchicalContextDepth = 1;
-            getNumberForIteration(iteration);
-        case 1:
-            numHierarchicalContextWidth = getNumberForIteration(iteration);
-        case 2:
             numContextSets = getNumberForIteration(iteration);
-        case 3:
+            break;
+        case 1:
             numContextSetContexts = getNumberForIteration(iteration);
+            break;
+        case 2:
+            numHierarchicalContextDepth = getNumberForIteration(iteration);
+            break;
+        case 3:
+            numHierarchicalContextWidth = getNumberForIteration(iteration);
+            break;
+        case 4:
+            numPolicies = getNumberForIteration(iteration);
+            break;
+        case 5:
+            numPolicyPolicies = getNumberForIteration(iteration);
+            break;
         default:
             break;
 

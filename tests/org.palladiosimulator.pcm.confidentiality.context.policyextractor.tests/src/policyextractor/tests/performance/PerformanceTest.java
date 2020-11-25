@@ -98,7 +98,7 @@ class PerformanceTest {
             long startTime = java.lang.System.nanoTime();
 
             PolicyReducer reducer = new PolicyReducer(contextModelAbs, new RulesFlag());
-            reducer.execute();
+            int rules = reducer.execute();
 
             long stopTime = java.lang.System.nanoTime();
             Logger.setActive(true);
@@ -107,7 +107,7 @@ class PerformanceTest {
             if (i >= numRuns_ignore) {
                 times.add(time);
             }
-            Logger.info("" + i + " -- " + contextModelAbs.getSEFFs().size() + " : " + time);
+            Logger.info("" + i + " -- " + contextModelAbs.getSEFFs().size() + " : " + time + " -> " + rules);
         }
 
         long mittel = 0;
@@ -160,7 +160,7 @@ class PerformanceTest {
     @Test
     void test_context() throws IOException {
         int numberOfIterationPerParamter = 7;
-        int numberOfParamters = 4;
+        int numberOfParamters = 6;
         double[][] table = new double[numberOfParamters][numberOfIterationPerParamter];
         for (int index = 0; index < numberOfParamters; index++) {
             for (int iteration = 0; iteration < numberOfIterationPerParamter; iteration++) {
@@ -178,7 +178,7 @@ class PerformanceTest {
         String parametertable = "";
         String parametergraph = "";
         for (int index = 0; index < numberOfParamters; index++) {
-            parametertable = parametertable.concat((index + 1) + " & ");
+            parametertable = parametertable.concat((index + 1 + 6) + " & ");
             for (int iteration = 0; iteration < numberOfIterationPerParamter; iteration++) {
                 parametertable = parametertable.concat("" + df.format(table[index][iteration]) + " & ");
                 parametergraph = parametergraph.concat(

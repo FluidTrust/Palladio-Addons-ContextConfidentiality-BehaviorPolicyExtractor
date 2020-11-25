@@ -18,6 +18,8 @@ import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSp
 import org.palladiosimulator.pcm.confidentiality.context.specification.PCMSpecificationContainer;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.SpecificationFactory;
+import org.palladiosimulator.pcm.seff.ResourceDemandingSEFF;
+import org.palladiosimulator.pcm.seff.SeffFactory;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 
 import policyextractor.common.tests.util.TestContextModelAbstraction;
@@ -207,6 +209,8 @@ public class ContextModelGenerator {
     private void generatePolicies() {
         PCMSpecificationContainer specificationContainer = model.getPcmspecificationcontainer();
 
+        ResourceDemandingSEFF seff = SeffFactory.eINSTANCE.createResourceDemandingSEFF();
+
         for (int i = 0; i < GenerationParameters.numPolicies; i++) {
             PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
             policy.setEntityName(getPolicyName(i));
@@ -217,6 +221,9 @@ public class ContextModelGenerator {
                 ContextSet set = testContextModelAbs.getContextSetByName(getContextSetName(index));
                 policy.getPolicy().add(set);
             }
+
+            policy.setId("id" + i);
+            policy.setResourcedemandingbehaviour(seff);
 
             specificationContainer.getPolicyspecification().add(policy);
         }

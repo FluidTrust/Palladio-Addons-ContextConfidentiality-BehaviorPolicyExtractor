@@ -61,18 +61,20 @@ public class PolicyReducer {
      * If the context model is changed during the process, these steps are repeated. Executing a
      * rule can result in an other rule beeing applicable. (Similar: Fixpunktiteration)
      */
-    public void execute() {
+    public int execute() {
         t1();
 
         Logger.infoDetailed("Rules-Start");
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
-        rulesHandling1();
+        int retval = rulesHandling1();
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
         Logger.infoDetailed("Rules-End");
+
+        return retval;
     }
 
     /**
@@ -127,8 +129,9 @@ public class PolicyReducer {
      * 
      * First collect all rules which can be applied, then execute
      */
-    private void rulesHandling1() {
+    private int rulesHandling1() {
 
+        int amount_rules = 0;
         int loopCount = 0;
         while (true) {
             Logger.info("Loop-Start: " + loopCount + " -----------------");
@@ -153,6 +156,9 @@ public class PolicyReducer {
             for (IRulesDefinition rulesDefinition : rulesList) {
                 rulesCount += rulesDefinition.getNumberOfRecords();
             }
+
+            amount_rules += rulesCount;
+
             if (rulesCount == 0) {
                 break;
             }
@@ -186,6 +192,9 @@ public class PolicyReducer {
             for (IRulesDefinition rulesDefinition : rulesList) {
                 rulesCount += rulesDefinition.getNumberOfRecords();
             }
+
+            amount_rules += rulesCount;
+
             if (rulesCount == 0) {
                 break;
             }
@@ -196,5 +205,7 @@ public class PolicyReducer {
         NegativeCleanup cleanup = new NegativeCleanup(contextModelAbs);
         cleanup.applyRuleToModel();
         cleanup.executeRule();
+
+        return amount_rules;
     }
 }

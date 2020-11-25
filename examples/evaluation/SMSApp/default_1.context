@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
+  <setContainer id="_leSHQC9gEeuIPqsiRca7LQ">
+    <policies id="_IJ4joC9hEeuIPqsiRca7LQ" entityName="GUI;declassified" contexts="_EEdmYS9hEeuIPqsiRca7LQ _6G2GsC9gEeuIPqsiRca7LQ"/>
+    <policies id="_cfxesC9hEeuIPqsiRca7LQ" entityName="GUI;complete" contexts="_EEdmYS9hEeuIPqsiRca7LQ _661vcC9gEeuIPqsiRca7LQ"/>
+    <policies id="_h3o7QC9hEeuIPqsiRca7LQ" entityName="User;" contexts="_DOirAS9hEeuIPqsiRca7LQ"/>
+    <policies id="_mCB4EC9hEeuIPqsiRca7LQ" entityName="GUI;" contexts="_EEdmYS9hEeuIPqsiRca7LQ"/>
+  </setContainer>
+  <contextContainer id="_l3AwUS9gEeuIPqsiRca7LQ">
+    <context xsi:type="model:HierarchicalContext" id="_6G2GsC9gEeuIPqsiRca7LQ" entityName="declassified" contexttype="_oEvzMC9gEeuIPqsiRca7LQ" direction="BOTTOM_UP"/>
+    <context xsi:type="model:HierarchicalContext" id="_661vcC9gEeuIPqsiRca7LQ" entityName="complete" contexttype="_oEvzMC9gEeuIPqsiRca7LQ" including="_6G2GsC9gEeuIPqsiRca7LQ" direction="BOTTOM_UP"/>
+  </contextContainer>
+  <contextContainer id="_Cof-sS9hEeuIPqsiRca7LQ" entityName="Actor">
+    <context xsi:type="model:SingleAttributeContext" id="_DOirAS9hEeuIPqsiRca7LQ" entityName="User" contexttype="_mcs3UC9gEeuIPqsiRca7LQ"/>
+    <context xsi:type="model:SingleAttributeContext" id="_EEdmYS9hEeuIPqsiRca7LQ" entityName="GUI" contexttype="_mcs3UC9gEeuIPqsiRca7LQ"/>
+  </contextContainer>
+  <typeContainer>
+    <types id="_mcs3UC9gEeuIPqsiRca7LQ" entityName="Actor"/>
+    <types id="_oEvzMC9gEeuIPqsiRca7LQ" entityName="Contact Information"/>
+  </typeContainer>
+  <pcmspecificationcontainer id="_UjaPoi9iEeuIPqsiRca7LQ">
+    <contextspecification id="_XpBVsi9iEeuIPqsiRca7LQ" entityName="AddContact" contextset="_h3o7QC9hEeuIPqsiRca7LQ">
+      <entrylevelsystemcall href="default.usagemodel#_yqeAwN9GEeiymtGzi4643g"/>
+    </contextspecification>
+    <contextspecification id="_c6uf4i9iEeuIPqsiRca7LQ" entityName="DeleteContact" contextset="_h3o7QC9hEeuIPqsiRca7LQ">
+      <entrylevelsystemcall href="default.usagemodel#_zc-mUN9HEeiymtGzi4643g"/>
+    </contextspecification>
+    <contextspecification id="_hpAz8i9iEeuIPqsiRca7LQ" entityName="ListContacts" contextset="_h3o7QC9hEeuIPqsiRca7LQ">
+      <entrylevelsystemcall href="default.usagemodel#_BuqjQN9IEeiymtGzi4643g"/>
+    </contextspecification>
+    <contextspecification id="_ApRnAi9jEeuIPqsiRca7LQ" entityName="sendSMS" contextset="_IJ4joC9hEeuIPqsiRca7LQ">
+      <usagescenario href="default.usagemodel#_Lm6awN9IEeiymtGzi4643g"/>
+    </contextspecification>
+  </pcmspecificationcontainer>
+</context:ConfidentialAccessSpecification>

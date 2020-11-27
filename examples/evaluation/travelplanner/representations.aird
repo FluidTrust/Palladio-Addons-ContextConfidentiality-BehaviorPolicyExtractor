@@ -32,6 +32,9 @@
     <semanticResources>default_4.context</semanticResources>
     <semanticResources>default_5.context</semanticResources>
     <semanticResources>default_1.context</semanticResources>
+    <semanticResources>_gen/deriver.context</semanticResources>
+    <semanticResources>_gen/final.context</semanticResources>
+    <semanticResources>_gen/reducer.context</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_caA6QNwrEeeel_96Qa_d5A">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.palladiosimulator.editors.sirius.repository/description/repository.odesign#//@ownedViewpoints[name='Repository']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_cbHGddwrEeeel_96Qa_d5A" name="new Repository Diagram" repPath="#_cbHGcNwrEeeel_96Qa_d5A">

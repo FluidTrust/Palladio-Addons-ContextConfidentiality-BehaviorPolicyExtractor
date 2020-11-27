@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import org.junit.jupiter.api.Test;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
@@ -21,6 +23,7 @@ import policyreducer.PolicyReducer;
 import rules.RulesFlag;
 import settings.Settings;
 import util.Logger;
+import util.PolicyCleaner;
 
 class EffortReductionTest {
     protected String caseStudyName;
@@ -76,6 +79,9 @@ class EffortReductionTest {
         PolicyReducer reducer = new PolicyReducer(contextModelAbs, rulesflag);
         reducer.execute();
 
+        PolicyCleaner cleaner = new PolicyCleaner(contextModelAbs);
+        cleaner.execute();
+
         Logger.setActive(true);
         int numberAfter = abs.getNumberOfPolicies();
         Logger.info("Policies: " + numberAfter);
@@ -92,7 +98,7 @@ class EffortReductionTest {
         String[] casestudies = { "SMSApp", "distanceTracker", "travelplanner", "decisionPoint" };
         String[][] scenarios = {
                 //
-                {},
+                { "default_1.context", "default_2.context" },
                 //
                 {},
                 //
@@ -118,16 +124,19 @@ class EffortReductionTest {
         String parametertable = "";
         String parametertable_with = "";
 
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+
         for (int index = 0; index < casestudies.length; index++) {
-            String cs = "CS" + index + " & ";
+            String cs = "CS" + (index + 1) + " & ";
             parametertable = parametertable.concat(cs);
             parametertable_with = parametertable_with.concat(cs);
 
-            if (index == 2) {
-                String with = "" + results[index][0].x + " & " + results[index][0].y + " & " + results[index][0].p
-                        + " \\\\";
-                String without = "" + results[index][1].x + " & " + results[index][1].y + " & " + results[index][1].p
-                        + "  \\\\";
+            if (index == 2 || index == 0) {
+                String with = "" + results[index][0].x + " & " + results[index][0].y + " & "
+                        + df.format(results[index][0].p) + " \\\\";
+                String without = "" + results[index][1].x + " & " + results[index][1].y + " & "
+                        + df.format(results[index][1].p) + "  \\\\";
 
                 parametertable = parametertable.concat(with);
                 parametertable_with = parametertable_with.concat(without);

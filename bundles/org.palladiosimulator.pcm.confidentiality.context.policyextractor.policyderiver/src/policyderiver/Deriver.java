@@ -129,6 +129,15 @@ public class Deriver {
                     ContextSet set = contextModelAbs.getContextSet(spec);
                     Boolean negative = spec.isMissageUse();
                     list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+
+                    // In case of misusage, still use behaviour
+                    if (negative) {
+                        for (ContextSpecification spec2 : listScenario) {
+                            ContextSet set2 = contextModelAbs.getContextSet(spec2);
+                            Boolean negative2 = spec2.isMissageUse();
+                            list.add(new DeriverRecord(set2, negative2, systemCall, scenarioBehaviour));
+                        }
+                    }
                 }
             }
 

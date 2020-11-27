@@ -23,6 +23,9 @@ import util.Logger;
 
 class PerformanceTest {
 
+    // disable for CI;
+    static boolean skip = true;
+
     public long runTestOnModel(boolean onlyPCM) throws IOException {
         ArrayList<Long> times = new ArrayList<>();
 
@@ -121,6 +124,9 @@ class PerformanceTest {
 
     @Test
     void test_pcm() throws IOException {
+        if (skip)
+            return;
+
         int numberOfIterationPerParamter = 7;
         int numberOfParamters = 6;
         double[][] table = new double[numberOfParamters][numberOfIterationPerParamter];
@@ -159,6 +165,9 @@ class PerformanceTest {
 
     @Test
     void test_context() throws IOException {
+        if (skip)
+            return;
+
         int numberOfIterationPerParamter = 7;
         int numberOfParamters = 6;
         double[][] table = new double[numberOfParamters][numberOfIterationPerParamter];

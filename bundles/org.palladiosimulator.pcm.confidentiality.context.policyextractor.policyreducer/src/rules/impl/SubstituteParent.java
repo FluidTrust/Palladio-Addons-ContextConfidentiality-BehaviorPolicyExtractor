@@ -1,9 +1,9 @@
 package rules.impl;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
+import org.palladiosimulator.pcm.confidentiality.context.model.IncludeDirection;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.SetFactory;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
@@ -40,7 +40,6 @@ public class SubstituteParent extends AbstractRule {
                     if (parent != null) {
 
                         boolean containedOuter = true;
-                        EList<ContextSet> removeListInner = new BasicEList<>();
 
                         for (ContextAttribute child : parent.getIncluding()) {
                             // Replace context with child and check if
@@ -66,11 +65,6 @@ public class SubstituteParent extends AbstractRule {
 
                                 if (hierarchicalContextAbs.containsAllHierarchical(set2, newSet)) {
                                     containedInner = true;
-                                    removeListInner.add(set2);
-
-                                    // TODO optimization ? currently left in for symmetric, better
-                                    // review
-                                    // break;
                                 }
                             }
 
@@ -80,7 +74,17 @@ public class SubstituteParent extends AbstractRule {
                             }
                         }
 
+                        if (parent.getIncluding().size() == 1) {
+                            if (((HierarchicalContext) context).getDirection().equals(IncludeDirection.BOTTOM_UP)) {
+                                // Skip auto include for single bottum up hierarchical contexts
+                                containedOuter = false;
+                            } else {
+                                // Skip substitute in this case? setting? TODO
+                            }
+                        }
+
                         if (containedOuter) {
+
                             // Logger.info("MATCH:" + context.getEntityName() + " - " +
                             // parent.getEntityName() + " - " + seff.getId());
 

@@ -138,6 +138,18 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
 
         double p = 0; // ((double) record.x / (double) (record.x + record.y)) * 100;
         double r = 0; // ((double) record.x / (double) (record.x + record.z)) * 100;
+
+        if (record.x == 0) {
+            if (record.y == 0) {
+                p = 100;
+            }
+            if (record.z == 0) {
+                r = 100;
+            }
+        } else {
+            p = ((double) record.x / (double) (record.x + record.y)) * 100;
+            r = ((double) record.x / (double) (record.x + record.z)) * 100;
+        }
         Logger.info("S" + " & " + record.x + " & " + record.y + " & " + record.z + " & " + df.format(p) + " & "
                 + df.format(r) + "\\\\");
     }

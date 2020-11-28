@@ -16,6 +16,7 @@ import rules.impl.NegativeRuleParentChild;
 import rules.impl.NegativeRuleSame;
 import rules.impl.ParentChild;
 import rules.impl.SamePolicy;
+import rules.impl.MergeSEFF;
 import rules.impl.SimplerPolicy;
 import rules.impl.SubstituteParent;
 import util.ContextModelPrinter;
@@ -202,10 +203,20 @@ public class PolicyReducer {
         }
 
         // Remove negative contexts from model
-        NegativeCleanup cleanup = new NegativeCleanup(contextModelAbs);
-        cleanup.applyRuleToModel();
-        cleanup.executeRule();
-        amount_rules += cleanup.getNumberOfRecords();
+        if (rules.isRuleEnabled(RulesType.NegativeCleanup)) {
+            NegativeCleanup cleanup = new NegativeCleanup(contextModelAbs);
+            cleanup.applyRuleToModel();
+            cleanup.executeRule();
+            amount_rules += cleanup.getNumberOfRecords();
+        }
+
+        // Merge same seffs
+        if (rules.isRuleEnabled(RulesType.SameSEFF)) {
+            MergeSEFF sameSeff = new MergeSEFF(contextModelAbs);
+            sameSeff.applyRuleToModel();
+            sameSeff.executeRule();
+            amount_rules += sameSeff.getNumberOfRecords();
+        }
 
         return amount_rules;
     }

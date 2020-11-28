@@ -128,14 +128,20 @@ public class Deriver {
                     }
                 }
             } else {
+                boolean onlyNegative = true;
                 // Only use systemCall
                 for (ContextSpecification spec : listSystemCall) {
                     ContextSet set = contextModelAbs.getContextSet(spec);
                     Boolean negative = spec.isMissageUse();
-                    list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                    if (!negative) {
+                        onlyNegative = false;
+                    }
 
-                    // In case of misusage, still use behaviour
-                    if (negative) {
+                    list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                }
+                // In case of misusage, still use behaviour
+                if (onlyNegative) {
+                    if (true) {
                         for (ContextSpecification spec2 : listScenario) {
                             ContextSet set2 = contextModelAbs.getContextSet(spec2);
                             Boolean negative2 = spec2.isMissageUse();

@@ -15,12 +15,57 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         caseStudyName = "SMSApp";
         scenarioName = "default_1.context";
 
-        String[] seffs = {};
+        String[] seffs = { "_1goYAN62EeiymtGzi4643g", "_1hFrAN62EeiymtGzi4643g", "_1hZ0EN62EeiymtGzi4643g",
+                "_1hy1oN62EeiymtGzi4643g", "_l4zukN62EeiymtGzi4643g", "_vdwPkN62EeiymtGzi4643g" };
         this.reducer_seffs = seffs;
-        String[][] policies = {};
+        String[][] policies = {
+                //
+                { "__ContactApp_addContact" },
+                //
+                { "__ContactApp_deleteContact" },
+                //
+                { "__ContactApp_listContacts" },
+                //
+                { "__ContactApp_getSMSReceiver" },
+                //
+                { "__SMSApp_sendSMS" },
+                //
+                { "__SMSProvider_sendSMS" },
+
+        };
         this.reducer_policies = policies;
-        String[][][] contextsets = {};
+        String[][][] contextsets = {
+                //
+                { { "User;" } },
+                //
+                { { "User;" } },
+                //
+                { { "User;", "GUI;declassified" } },
+                //
+                { { "GUI;declassified" } },
+                //
+                { { "GUI;declassified" } },
+                //
+                { { "GUI;declassified" } },
+
+        };
         this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
 
         ResultsRecord record = executeMeasurement_reducer();
         printResult(record);
@@ -31,24 +76,57 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         caseStudyName = "SMSApp";
         scenarioName = "default_2.context";
 
-        String[] seffs = { "_vdwPkN62EeiymtGzi4643g", "_l4zukN62EeiymtGzi4643g", "_1hZ0EN62EeiymtGzi4643g" };
+        String[] seffs = { "_1goYAN62EeiymtGzi4643g", "_1hFrAN62EeiymtGzi4643g", "_1hZ0EN62EeiymtGzi4643g",
+                "_1hy1oN62EeiymtGzi4643g", "_l4zukN62EeiymtGzi4643g", "_vdwPkN62EeiymtGzi4643g" };
         this.reducer_seffs = seffs;
         String[][] policies = {
                 //
-                { "____sendSMS_callSMSApp_sendSMS_ScenarioBehaviour" },
+                { "__ContactApp_addContact" },
                 //
-                { "____sendSMS_callSMSApp_sendSMS_ScenarioBehaviour" },
+                { "__ContactApp_deleteContact" },
                 //
-                { "____listContacts_callContactApp_getList_ScenarioBehaviour" } };
+                { "__ContactApp_listContacts" },
+                //
+                { "__ContactApp_getSMSReceiver" },
+                //
+                { "__SMSApp_sendSMS" },
+                //
+                { "__SMSProvider_sendSMS" },
+
+        };
         this.reducer_policies = policies;
         String[][][] contextsets = {
                 //
-                { { "GUI;complete" } },
+                { { "User;" } },
                 //
-                { { "GUI;complete" } },
+                { { "User;" } },
                 //
-                { { "GUI;complete" } } };
+                { { "User;", "GUI;declassified" } },
+                //
+                { { "GUI;declassified" } },
+                //
+                { { "GUI;declassified" } },
+                //
+                { { "GUI;declassified" } },
+
+        };
         this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "GUI;complete" } },
+                //
+                { {} },
+                //
+                { { "GUI;complete" } },
+                //
+                { { "GUI;complete" } },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
 
         ResultsRecord record = executeMeasurement_reducer();
         printResult(record);
@@ -59,12 +137,57 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         caseStudyName = "distanceTracker";
         scenarioName = "default_1.context";
 
-        String[] seffs = {};
+        String[] seffs = { "_nPwZYDIoEeuq0dUl3-elfg", "_jk54QDIoEeuq0dUl3-elfg", "_JTl-cNxBEeiXzNImH0otAg",
+                "_Kykd4NxBEeiXzNImH0otAg", "_Llw1YNxBEeiXzNImH0otAg", "_3M_DkNwuEeiXzNImH0otAg", };
         this.reducer_seffs = seffs;
-        String[][] policies = {};
+        String[][] policies = {
+                //
+                { "__DistanceTracker_startTracking" },
+                //
+                { "__DistanceTracker_stopTracking" },
+                //
+                { "__DistanceTracker_getDistance" },
+                //
+                { "__DistanceTracker_declassifyDistance" },
+                //
+                { "__DistanceTracker_submitDistance" },
+                //
+                { "__TrackerService_recordDistance" },
+
+        };
         this.reducer_policies = policies;
-        String[][][] contextsets = {};
+        String[][][] contextsets = {
+                //
+                { { "User;raw" } },
+                //
+                { { "User;raw" } },
+                //
+                { { "User;raw" } },
+                //
+                { { "calculated;" } },
+                //
+                { { "App;declassified" } },
+                //
+                { { "App;declassified" } },
+
+        };
         this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
 
         ResultsRecord record = executeMeasurement_reducer();
         printResult(record);
@@ -75,25 +198,57 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         caseStudyName = "distanceTracker";
         scenarioName = "default_2.context";
 
-        String[] seffs = { "_Llw1YNxBEeiXzNImH0otAg", "_3M_DkNwuEeiXzNImH0otAg", "_Kykd4NxBEeiXzNImH0otAg" };
+        String[] seffs = { "_nPwZYDIoEeuq0dUl3-elfg", "_jk54QDIoEeuq0dUl3-elfg", "_JTl-cNxBEeiXzNImH0otAg",
+                "_Kykd4NxBEeiXzNImH0otAg", "_Llw1YNxBEeiXzNImH0otAg", "_3M_DkNwuEeiXzNImH0otAg", };
         this.reducer_seffs = seffs;
         String[][] policies = {
                 //
-                { "____submitDistance_submit_ScenarioBehaviour" },
+                { "__DistanceTracker_startTracking" },
                 //
-                { "____recordDistance_submit_ScenarioBehaviour" },
+                { "__DistanceTracker_stopTracking" },
                 //
-                { "____declassifyDistance_declassify_ScenarioBehaviour" } };
-        this.reducer_policies = policies;
+                { "__DistanceTracker_getDistance" },
+                //
+                { "__DistanceTracker_declassifyDistance" },
+                //
+                { "__DistanceTracker_submitDistance" },
+                //
+                { "__TrackerService_recordDistance" },
 
+        };
+        this.reducer_policies = policies;
         String[][][] contextsets = {
                 //
-                { { "calculated;" } },
+                { { "User;raw" } },
+                //
+                { { "User;raw" } },
+                //
+                { { "User;raw" } },
                 //
                 { { "calculated;" } },
                 //
-                { { "calculated;" } } };
+                { { "App;declassified" } },
+                //
+                { { "App;declassified" } },
+
+        };
         this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "raw" } },
+                //
+                { { "calculated;" } },
+                //
+                { { "calculated;" } },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
 
         ResultsRecord record = executeMeasurement_reducer();
 
@@ -105,12 +260,70 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         caseStudyName = "travelplanner";
         scenarioName = "default_1.context";
 
-        String[] seffs = {};
+        String[] seffs = { "_YtkKYN5fEeeel_96Qa_d5A", "_Jo_X8N5fEeeel_96Qa_d5A", "_brO1YN5fEeeel_96Qa_d5A",
+                "_z-Ul0N5fEeeel_96Qa_d5A", "_LFOscN5fEeeel_96Qa_d5A", "_1NGIAMOAEeWst9mTsticNA",
+                "_nUbBQNT3Eee-_bZGhm8PwA", "_ZdekYN5fEeeel_96Qa_d5A", };
         this.reducer_seffs = seffs;
-        String[][] policies = {};
+        String[][] policies = {
+                //
+                { "__CreditCardCenter_releaseCCD" },
+                //
+                { "__TravelPlanner_getFlightOffers" },
+                //
+                { "__TravelAgency_getFlightOffers" },
+                //
+                { "__Airline_getFlightOffers" },
+                //
+                { "__TravelPlanner_bookSelected" },
+                //
+                { "__Airline_bookFlight" },
+                //
+                { "__TravelPlanner_confirmBooking" },
+                //
+                { "__CreditCardCenter_declassifyCCDForAirline" },
+
+        };
         this.reducer_policies = policies;
-        String[][][] contextsets = {};
+        String[][][] contextsets = {
+                //
+                { { "User;initial" } },
+                //
+                { { "User;initial" } },
+                //
+                { { "User;initial" } },
+                //
+                { { "User;initial" } },
+                //
+                { { "User;declassified" } },
+                //
+                { { "User;declassified" } },
+                //
+                { { "User;declassified" } },
+                //
+                { { "User;authorized" } },
+
+        };
         this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
 
         ResultsRecord record = executeMeasurement_reducer();
         printResult(record);
@@ -121,12 +334,70 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         caseStudyName = "travelplanner";
         scenarioName = "default_2.context";
 
-        String[] seffs = {};
+        String[] seffs = { "_YtkKYN5fEeeel_96Qa_d5A", "_Jo_X8N5fEeeel_96Qa_d5A", "_brO1YN5fEeeel_96Qa_d5A",
+                "_z-Ul0N5fEeeel_96Qa_d5A", "_LFOscN5fEeeel_96Qa_d5A", "_1NGIAMOAEeWst9mTsticNA",
+                "_nUbBQNT3Eee-_bZGhm8PwA", "_ZdekYN5fEeeel_96Qa_d5A", };
         this.reducer_seffs = seffs;
-        String[][] policies = {};
+        String[][] policies = {
+                //
+                { "__CreditCardCenter_releaseCCD" },
+                //
+                { "__TravelPlanner_getFlightOffers" },
+                //
+                { "__TravelAgency_getFlightOffers" },
+                //
+                { "__Airline_getFlightOffers" },
+                //
+                { "__TravelPlanner_bookSelected" },
+                //
+                { "__Airline_bookFlight" },
+                //
+                { "__TravelPlanner_confirmBooking" },
+                //
+                { "__CreditCardCenter_declassifyCCDForAirline" },
+
+        };
         this.reducer_policies = policies;
-        String[][][] contextsets = {};
+        String[][][] contextsets = {
+                //
+                { { "User;initial" } },
+                //
+                { { "User;initial" } },
+                //
+                { { "User;initial" } },
+                //
+                { { "User;initial" } },
+                //
+                { { "User;declassified" } },
+                //
+                { { "User;declassified" } },
+                //
+                { { "User;declassified" } },
+                //
+                { { "User;authorized" } },
+
+        };
         this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "User;authorized" } },
+                //
+                { { "User;authorized" } },
+                //
+                { { "User;authorized" } },
+                //
+                { { "User;initial" } },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
 
         ResultsRecord record = executeMeasurement_reducer();
         printResult(record);

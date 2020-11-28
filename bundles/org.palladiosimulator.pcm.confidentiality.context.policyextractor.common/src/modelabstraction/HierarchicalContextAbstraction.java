@@ -67,8 +67,15 @@ public class HierarchicalContextAbstraction {
         return b;
     }
 
-    public boolean containsAllSimple(ContextSet set2, ContextSet set1) {
-        return set2.getContexts().containsAll(set1.getContexts());
+    /**
+     * true means first set is included in second set (or equal)
+     * 
+     * @param first
+     * @param second
+     * @return true if set first contains all contexts of the second
+     */
+    public boolean containsAllSimple(ContextSet first, ContextSet second) {
+        return first.getContexts().containsAll(second.getContexts());
     }
 
     public HierarchicalContext getParent(HierarchicalContext context) {

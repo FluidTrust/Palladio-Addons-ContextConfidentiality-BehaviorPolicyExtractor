@@ -18,13 +18,13 @@ import util.Logger;
  *
  */
 public abstract class AbstractRule implements IRulesDefinition {
+    protected EList<ErrorRule> errorList = new BasicEList<>();
     protected EList<RulesRecord> appliedList = new BasicEList<>();
     protected ContextModelAbstraction contextModelAbs;
     protected HierarchicalContextAbstraction hierarchicalContextAbs;
     protected ContextSetRecordCompare recordCompare;
 
     public AbstractRule(ContextModelAbstraction contextModelAbs) {
-        super();
         this.contextModelAbs = contextModelAbs;
         this.hierarchicalContextAbs = new HierarchicalContextAbstraction(contextModelAbs);
         this.recordCompare = new ContextSetRecordCompare(hierarchicalContextAbs);

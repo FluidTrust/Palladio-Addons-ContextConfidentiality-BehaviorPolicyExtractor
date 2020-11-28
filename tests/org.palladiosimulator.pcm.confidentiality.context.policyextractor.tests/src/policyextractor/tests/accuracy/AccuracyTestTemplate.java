@@ -58,8 +58,7 @@ class AccuracyTestTemplate {
     protected String[] reducer_seffs = null;
     protected String[][] reducer_policies = null;
     protected String[][][] reducer_contextsets = null;
-
-    private int test = 0;
+    protected String[][][] reducer_contextsets_removed;
 
     protected class ResultsRecord {
         final int x;
@@ -154,6 +153,18 @@ class AccuracyTestTemplate {
         return new ResultsRecord(TP, FP, FN);
     }
 
+    protected class ReducerResult {
+        String policy;
+        String set;
+        String seff;
+
+        public ReducerResult(String policy, String contextSet, String seff) {
+            this.policy = policy;
+            this.set = contextSet;
+            this.seff = seff;
+        }
+    }
+
     ResultsRecord executeMeasurement_reducer() throws IOException {
         canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + caseStudyName;
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
@@ -167,11 +178,26 @@ class AccuracyTestTemplate {
 
         execute_deriver();
 
-        int contextSetsBefore = getNumberOfContextSetsInPolicies();
+        EList<ReducerResult> listBefore = new BasicEList<ReducerResult>();
+        EList<ReducerResult> listExpected = new BasicEList<ReducerResult>();
+        EList<ReducerResult> listRemoved = new BasicEList<ReducerResult>();
+        EList<ReducerResult> listAfter = new BasicEList<ReducerResult>();
+
+        for (PolicySpecification policy : abs.getPolicySpecifications()) {
+            for (ContextSet contextset : policy.getPolicy()) {
+                listBefore.add(new ReducerResult(policy.getEntityName(), contextset.getEntityName(),
+                        policy.getResourcedemandingbehaviour().getId()));
+            }
+        }
 
         execute_reducer();
 
-        int contextSetsAfter = getNumberOfContextSetsInPolicies();
+        for (PolicySpecification policy : abs.getPolicySpecifications()) {
+            for (ContextSet contextset : policy.getPolicy()) {
+                listAfter.add(new ReducerResult(policy.getEntityName(), contextset.getEntityName(),
+                        policy.getResourcedemandingbehaviour().getId()));
+            }
+        }
 
         Logger.setActive(true);
 
@@ -193,26 +219,117 @@ class AccuracyTestTemplate {
                     for (ContextSet contextSet : policy.getPolicy()) {
                         if (contextSet.getEntityName().equals(contextSetName)) {
                             contained = true;
+                            listExpected.add(new ReducerResult(policyName, contextSetName, seffIdName));
                             break;
                         }
                     }
 
+                    // Not contained means should exist but isn't -> FN
+                    if (contained) {
+                        TP++;
+                    } else {
+                        FN++;
+                    }
+                }
+
+                // ContextSets which have been removed by rules
+                for (int contextsetindex = 0; contextsetindex < reducer_contextsets_removed[index][call].length; contextsetindex++) {
+                    String contextSetName = reducer_contextsets_removed[index][call][contextsetindex];
+
+                    boolean contained = false;
+                    for (ContextSet contextSet : policy.getPolicy()) {
+                        if (contextSet.getEntityName().equals(contextSetName)) {
+                            contained = true;
+                            break;
+                        }
+                    }
+
+                    // Contained means exist, but shouldn't --> Fn
                     if (contained) {
                         FN++;
                     } else {
                         TP++;
+                        listRemoved.add(new ReducerResult(policyName, contextSetName, seffIdName));
                     }
                 }
             }
         }
 
-        FP = contextSetsBefore - contextSetsAfter - TP;
+        for (ResourceDemandingBehaviour seff : testAbs.contextModelAbs.getSEFFs()) {
+            // Logger.info("\"" + seff.getId() + "\"");
+        }
 
-        Logger.info("" + test);
-        Logger.info("" + contextSetsBefore + "-" + contextSetsAfter);
-        Logger.info("" + TP + "-" + FP + "-" + FN);
+        // Calculate FP
+        for (ReducerResult after : listAfter) {
+            // Logger.info("Policy:" + after.policy + " " + after.set);
+            boolean same = false;
+            for (ReducerResult before : listBefore) {
+                if (after.policy.equals(before.policy)) {
+                    if (after.set.equals(before.set)) {
+                        same = true;
+                    }
+                }
+            }
+
+            if (same)
+                continue;
+
+            boolean contained = false;
+            for (ReducerResult result : listExpected) {
+                if (result.policy.equals(after.policy)) {
+                    if (result.set.equals(after.set)) {
+                        contained = true;
+                    }
+                }
+            }
+            if (!contained) {
+                Logger.info("Missing:" + after.policy + " - " + after.set);
+                FP++;
+            }
+        }
+
+        for (ReducerResult before : listBefore) {
+
+            boolean same = false;
+            for (ReducerResult after : listAfter) {
+                if (after.seff.equals(before.seff)) {
+                    if (after.set.equals(before.set)) {
+                        same = true;
+                    }
+                }
+            }
+            if (same)
+                continue;
+
+            boolean contained = false;
+            for (ReducerResult result : listRemoved) {
+                if (result.seff.equals(before.seff)) {
+                    if (result.set.equals(before.set)) {
+                        contained = true;
+                    }
+                }
+            }
+            if (!contained) {
+                Logger.info("Missing:" + before.seff + " - " + before.set);
+                FP++;
+            }
+        }
+
+        // Logger.info("" + listBefore.size() + "-" + listAfter.size() + "-" + listExpected.size());
+        // Logger.info("" + TP + "-" + FP + "-" + FN);
 
         return new ResultsRecord(TP, FP, FN);
+    }
+
+    private boolean areResultsTheSame(ReducerResult result1, ReducerResult result2) {
+        if (result1.policy.equals(result2.policy)) {
+            if (result1.set.equals(result2.set)) {
+                if (result1.seff.equals(result2.set)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private int getNumberOfContextSetsInPolicies() {
@@ -233,7 +350,7 @@ class AccuracyTestTemplate {
 
         RulesFlag rulesflag = new RulesFlag();
         PolicyReducer reducer = new PolicyReducer(abs, rulesflag);
-        test = reducer.execute();
+        reducer.execute();
 
     }
 

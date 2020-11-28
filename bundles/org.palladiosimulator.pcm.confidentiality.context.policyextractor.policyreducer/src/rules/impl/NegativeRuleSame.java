@@ -7,6 +7,8 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import modelabstraction.ContextModelAbstraction;
 import modelabstraction.ContextSetRecord;
 import rules.AbstractRule;
+import rules.ErrorRule;
+import rules.RulesRecord;
 
 public class NegativeRuleSame extends AbstractRule {
 
@@ -32,9 +34,13 @@ public class NegativeRuleSame extends AbstractRule {
 
                         if (hierarchicalContextAbs.containsAllSimple(set2, set1)
                                 && hierarchicalContextAbs.containsAllSimple(set1, set2)) {
-                            // TODO create Error-Class
+                            RulesRecord record = createRecord(seff, set1, null, false);
+
+                            // Create Error
+                            errorList.add(new ErrorRule(record, 0));
+
                             // Remove set1 because of set2
-                            appliedList.add(createRecord(seff, set1, set2, false));
+                            appliedList.add(record);
                             applied = true;
                         }
                     }

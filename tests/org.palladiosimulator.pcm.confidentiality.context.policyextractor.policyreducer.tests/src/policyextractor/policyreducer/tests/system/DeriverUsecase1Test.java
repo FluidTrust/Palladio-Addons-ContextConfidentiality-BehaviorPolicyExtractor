@@ -59,6 +59,7 @@ class DeriverUsecase1Test extends ReducerSystemTestTemplate {
 
         assertBefore();
 
+        rulesflag.disableRule(RulesType.SameSEFF);
         execute(new Settings(canonicalPath, true));
 
         assertAfter();

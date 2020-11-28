@@ -40,8 +40,8 @@ public class PolicyCleaner {
 
         Logger.info("\nCleanup-Start");
 
-        // Merge PolicySpecifications of the same seff
-        mergePolicySpecificationsOfSameSeff();
+        // Merge PolicySpecifications of the same seff -> moved in separate rule
+        // mergePolicySpecificationsOfSameSeff();
 
         if (removeContextSpecification) {
             removeContextSpecifications();

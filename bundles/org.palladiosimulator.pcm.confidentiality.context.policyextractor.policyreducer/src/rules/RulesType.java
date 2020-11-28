@@ -7,5 +7,22 @@ package rules;
  *
  */
 public enum RulesType {
-    SamePolicy, SimplerPolicy, ParentChild, SubstituteParent, NegavativeSame, NegativeSimple, NegativeParentChild
+    //
+    SamePolicy,
+    //
+    SameSEFF,
+    //
+    SimplerPolicy,
+    //
+    ParentChild,
+    //
+    SubstituteParent,
+    //
+    NegavativeSame,
+    //
+    NegativeSimple,
+    //
+    NegativeParentChild,
+    //
+    NegativeCleanup
 }

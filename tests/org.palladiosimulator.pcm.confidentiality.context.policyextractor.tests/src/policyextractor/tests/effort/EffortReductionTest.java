@@ -86,7 +86,7 @@ class EffortReductionTest {
         int numberAfter = abs.getNumberOfPolicies();
         Logger.info("Policies: " + numberAfter);
 
-        double p = (double) numberBefore / (double) numberAfter;
+        double p = ((double) numberBefore / (double) numberAfter) * 100;
         Logger.info("P: " + p);
 
         return new IntPair(numberBefore, numberAfter, p);
@@ -100,7 +100,7 @@ class EffortReductionTest {
                 //
                 { "default_1.context", "default_2.context" },
                 //
-                {},
+                { "default_1.context", "default_2.context" },
                 //
                 { "default_1.context", "default_2.context" },
                 //
@@ -124,7 +124,7 @@ class EffortReductionTest {
         String parametertable = "";
         String parametertable_with = "";
 
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
 
         for (int index = 0; index < casestudies.length; index++) {
@@ -132,7 +132,7 @@ class EffortReductionTest {
             parametertable = parametertable.concat(cs);
             parametertable_with = parametertable_with.concat(cs);
 
-            if (index == 2 || index == 0) {
+            if (index != 3) {
                 String with = "" + results[index][0].x + " & " + results[index][0].y + " & "
                         + df.format(results[index][0].p) + " \\\\";
                 String without = "" + results[index][1].x + " & " + results[index][1].y + " & "

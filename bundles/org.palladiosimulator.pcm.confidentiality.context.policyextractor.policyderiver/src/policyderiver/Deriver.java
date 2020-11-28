@@ -63,6 +63,10 @@ public class Deriver {
      */
     private void applyContextSetToSEFF(ResourceDemandingSEFF seff, DeriverRecord record) {
         Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
+        Logger.infoDetailed("RecordBehaviour: " + record.getScenarioBehaviour().getEntityName());
+        Logger.infoDetailed("RecordCall: " + record.getSystemCall().getEntityName());
+        Logger.infoDetailed("RecordNegative: " + record.isNegative());
+        Logger.infoDetailed("RecordSet: " + record.getSetToApply().getEntityName());
         PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
         policy.setEntityName(
                 DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName(),

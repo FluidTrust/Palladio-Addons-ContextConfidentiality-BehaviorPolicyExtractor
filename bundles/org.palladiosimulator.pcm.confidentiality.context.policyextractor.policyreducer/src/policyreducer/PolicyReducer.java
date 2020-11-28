@@ -205,6 +205,7 @@ public class PolicyReducer {
         NegativeCleanup cleanup = new NegativeCleanup(contextModelAbs);
         cleanup.applyRuleToModel();
         cleanup.executeRule();
+        amount_rules += cleanup.getNumberOfRecords();
 
         return amount_rules;
     }

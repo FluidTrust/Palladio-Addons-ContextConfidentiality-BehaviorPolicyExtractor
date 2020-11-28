@@ -6,6 +6,7 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
 import rules.AbstractRule;
+import util.Logger;
 
 /**
  * Ruleset for parent child in hierarchical context
@@ -36,6 +37,8 @@ public class ParentChild extends AbstractRule {
 
                         appliedList.add(createRecord(seff, set2, set1, false));
                         applied = true;
+
+                        Logger.info(set1.getEntityName() + "- " + set2.getEntityName());
                     }
                 }
             }

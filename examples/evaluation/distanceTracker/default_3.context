@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
+  <setContainer id="_6dhyoDIkEeuq0dUl3-elfg">
+    <policies id="_NmPokDIoEeuq0dUl3-elfg" entityName="User;raw" contexts="_d2P24DIpEeuq0dUl3-elfg _nzcKsTInEeuq0dUl3-elfg"/>
+    <policies id="_kRXgMDIpEeuq0dUl3-elfg" entityName="App;declassified" contexts="_Qd0dMDIpEeuq0dUl3-elfg _oaPE8TInEeuq0dUl3-elfg"/>
+    <policies id="_uXc_YDIpEeuq0dUl3-elfg" entityName="calculated;" contexts="_TMBI0DIpEeuq0dUl3-elfg"/>
+    <policies id="_NNOOADFLEeuvDKAyMe0mfQ" entityName="raw" contexts="_d2P24DIpEeuq0dUl3-elfg"/>
+    <policies id="_Pk0XgDFLEeuvDKAyMe0mfQ"/>
+  </setContainer>
+  <contextContainer id="_621qgTIkEeuq0dUl3-elfg" entityName="Actor">
+    <context xsi:type="model:SingleAttributeContext" id="_nzcKsTInEeuq0dUl3-elfg" entityName="User" contexttype="_lS2dQDInEeuq0dUl3-elfg"/>
+    <context xsi:type="model:SingleAttributeContext" id="_oaPE8TInEeuq0dUl3-elfg" entityName="App" contexttype="_lS2dQDInEeuq0dUl3-elfg"/>
+  </contextContainer>
+  <contextContainer id="_S-vXQTIoEeuq0dUl3-elfg" entityName="Distance">
+    <context xsi:type="model:HierarchicalContext" id="_Qd0dMDIpEeuq0dUl3-elfg" entityName="declassified" contexttype="_lpKrgDInEeuq0dUl3-elfg" including="_TMBI0DIpEeuq0dUl3-elfg"/>
+    <context xsi:type="model:HierarchicalContext" id="_TMBI0DIpEeuq0dUl3-elfg" entityName="calculated" contexttype="_lpKrgDInEeuq0dUl3-elfg" including="_d2P24DIpEeuq0dUl3-elfg"/>
+    <context xsi:type="model:HierarchicalContext" id="_d2P24DIpEeuq0dUl3-elfg" entityName="raw" contexttype="_lpKrgDInEeuq0dUl3-elfg"/>
+  </contextContainer>
+  <typeContainer>
+    <types id="_lS2dQDInEeuq0dUl3-elfg" entityName="Actor"/>
+    <types id="_lpKrgDInEeuq0dUl3-elfg" entityName="Distance"/>
+  </typeContainer>
+  <pcmspecificationcontainer id="_y9EHUDIjEeuq0dUl3-elfg">
+    <contextspecification id="_zmIScjIjEeuq0dUl3-elfg" entityName="User-scenario" contextset="_NNOOADFLEeuvDKAyMe0mfQ">
+      <usagescenario href="default.usagemodel#_3PqSMNwwEeiXzNImH0otAg"/>
+    </contextspecification>
+    <contextspecification id="_HdV6EjFLEeuvDKAyMe0mfQ" entityName="e_submit" contextset="_uXc_YDIpEeuq0dUl3-elfg" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_YIvBANwxEeiXzNImH0otAg"/>
+    </contextspecification>
+  </pcmspecificationcontainer>
+</context:ConfidentialAccessSpecification>

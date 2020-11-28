@@ -2,6 +2,7 @@ package modelabstraction;
 
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.HierarchicalContext;
+import org.palladiosimulator.pcm.confidentiality.context.model.IncludeDirection;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 
 public class HierarchicalContextAbstraction {
@@ -36,8 +37,10 @@ public class HierarchicalContextAbstraction {
         for (ContextAttribute context2 : set2.getContexts()) {
             if (context2 instanceof HierarchicalContext) {
                 if (context2.getContexttype() == parent.getContexttype()) {
-                    if (isParentChild(parent, (HierarchicalContext) context2)) {
-                        return true;
+                    if (((HierarchicalContext) context2).getDirection().equals(IncludeDirection.TOP_DOWN)) {
+                        if (isParentChild(parent, (HierarchicalContext) context2)) {
+                            return true;
+                        }
                     }
                 }
             }

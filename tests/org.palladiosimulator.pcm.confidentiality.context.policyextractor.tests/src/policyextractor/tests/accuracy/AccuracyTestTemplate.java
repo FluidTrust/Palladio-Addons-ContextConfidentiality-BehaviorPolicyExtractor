@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
@@ -48,9 +49,17 @@ class AccuracyTestTemplate {
     protected String caseStudyName;
     protected String scenarioName;
 
+    // Deriver
     protected String[] usageScenarios = null;
     protected String[][] systemCalls = null;
     protected String[][][] seffs = null;
+
+    // Reducer
+    protected String[] reducer_seffs = null;
+    protected String[][] reducer_policies = null;
+    protected String[][][] reducer_contextsets = null;
+
+    private int test = 0;
 
     protected class ResultsRecord {
         final int x;
@@ -85,7 +94,7 @@ class AccuracyTestTemplate {
         assemblyAbs = new AssemblyAbstraction(testSystem);
     }
 
-    ResultsRecord executeMeasurement() throws IOException {
+    ResultsRecord executeMeasurement_deriver() throws IOException {
         canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + caseStudyName;
         EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
         modelloader = new ModelHandler(modelAbs);
@@ -137,12 +146,81 @@ class AccuracyTestTemplate {
             if (testAbs.isPolicyExisting((ServiceEffectSpecification) seff)) {
                 if (!listSeffs.contains(seff)) {
                     FP = FP + 1;
-                    Logger.info(seff.getId());
+                    Logger.info("FP: " + seff.getId());
                 }
             }
         }
 
         return new ResultsRecord(TP, FP, FN);
+    }
+
+    ResultsRecord executeMeasurement_reducer() throws IOException {
+        canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + caseStudyName;
+        EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
+        modelloader = new ModelHandler(modelAbs);
+        modelAbs.contextName = scenarioName;
+
+        init();
+
+        Logger.info("CS: " + caseStudyName);
+        Logger.setActive(false);
+
+        execute_deriver();
+
+        int contextSetsBefore = getNumberOfContextSetsInPolicies();
+
+        execute_reducer();
+
+        int contextSetsAfter = getNumberOfContextSetsInPolicies();
+
+        Logger.setActive(true);
+
+        int TP = 0;
+        int FP = 0;
+        int FN = 0;
+
+        for (int index = 0; index < reducer_seffs.length; index++) {
+            String seffIdName = reducer_seffs[index];
+            ResourceDemandingBehaviour rp = getSeffById(seffIdName);
+            for (int call = 0; call < reducer_policies[index].length; call++) {
+                String policyName = reducer_policies[index][call];
+                PolicySpecification policy = getPolicyByName(policyName, rp);
+
+                for (int contextsetindex = 0; contextsetindex < reducer_contextsets[index][call].length; contextsetindex++) {
+                    String contextSetName = reducer_contextsets[index][call][contextsetindex];
+
+                    boolean contained = false;
+                    for (ContextSet contextSet : policy.getPolicy()) {
+                        if (contextSet.getEntityName().equals(contextSetName)) {
+                            contained = true;
+                            break;
+                        }
+                    }
+
+                    if (contained) {
+                        FN++;
+                    } else {
+                        TP++;
+                    }
+                }
+            }
+        }
+
+        FP = contextSetsBefore - contextSetsAfter - TP;
+
+        Logger.info("" + test);
+        Logger.info("" + contextSetsBefore + "-" + contextSetsAfter);
+        Logger.info("" + TP + "-" + FP + "-" + FN);
+
+        return new ResultsRecord(TP, FP, FN);
+    }
+
+    private int getNumberOfContextSetsInPolicies() {
+        int count = 0;
+        for (PolicySpecification policySpecification : abs.getPolicySpecifications()) {
+            count += policySpecification.getPolicy().size();
+        }
+        return count;
     }
 
     protected void execute_deriver() {
@@ -155,7 +233,7 @@ class AccuracyTestTemplate {
 
         RulesFlag rulesflag = new RulesFlag();
         PolicyReducer reducer = new PolicyReducer(abs, rulesflag);
-        reducer.execute();
+        test = reducer.execute();
 
     }
 
@@ -198,6 +276,18 @@ class AccuracyTestTemplate {
                     ret = sc;
                     break;
                 }
+            }
+        }
+        assertNotNull(ret);
+        return ret;
+    }
+
+    private PolicySpecification getPolicyByName(String name, ResourceDemandingBehaviour rp) {
+        PolicySpecification ret = null;
+        for (PolicySpecification policySpecification : abs.getPolicySpecifications()) {
+            if (policySpecification.getEntityName().equals(name)) {
+                if (policySpecification.getResourcedemandingbehaviour().equals(rp))
+                    ret = policySpecification;
             }
         }
         assertNotNull(ret);

@@ -48,7 +48,7 @@
       <thinkTime_ClosedWorkload specification="0.0"/>
     </workload_UsageScenario>
   </usageScenario_UsageModel>
-  <usageScenario_UsageModel id="_Lm6awN9IEeiymtGzi4643g" entityName="UsageScenario">
+  <usageScenario_UsageModel id="_Lm6awN9IEeiymtGzi4643g" entityName="sendSMS">
     <scenarioBehaviour_UsageScenario id="_Dm4MoN9JEeiymtGzi4643g" entityName="ScenarioBehaviour">
       <actions_ScenarioBehaviour xsi:type="usagemodel:Start" id="_Dm4zsN9JEeiymtGzi4643g" successor="_INHX8N9JEeiymtGzi4643g"/>
       <actions_ScenarioBehaviour xsi:type="usagemodel:Stop" id="_Dm4zsd9JEeiymtGzi4643g" predecessor="_aw2_8N9JEeiymtGzi4643g"/>

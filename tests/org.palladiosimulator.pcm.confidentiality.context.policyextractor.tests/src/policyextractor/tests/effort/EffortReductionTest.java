@@ -123,6 +123,8 @@ class EffortReductionTest {
         // Format for thesis
         String parametertable = "";
         String parametertable_with = "";
+        String parametertable_g = "";
+        String parametertable_g_with = "";
 
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -140,6 +142,9 @@ class EffortReductionTest {
 
                 parametertable = parametertable.concat(with);
                 parametertable_with = parametertable_with.concat(without);
+
+                parametertable_g = parametertable_g.concat("(" + df.format(results[index][0].p) + ",)");
+                parametertable_g_with = parametertable_g_with.concat("(" + df.format(results[index][1].p) + ",)");
             }
 
             parametertable = parametertable.concat("\n");
@@ -147,5 +152,7 @@ class EffortReductionTest {
         }
         Logger.info(parametertable);
         Logger.info(parametertable_with);
+        Logger.info(parametertable_g);
+        Logger.info(parametertable_g_with);
     }
 }

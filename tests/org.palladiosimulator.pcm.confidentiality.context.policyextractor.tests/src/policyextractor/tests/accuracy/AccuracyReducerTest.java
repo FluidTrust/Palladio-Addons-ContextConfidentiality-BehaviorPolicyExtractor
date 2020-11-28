@@ -241,7 +241,7 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
                 //
                 { {} },
                 //
-                { { "raw" } },
+                { { "raw", "declassified" } },
                 //
                 { { "calculated;" } },
                 //
@@ -286,21 +286,21 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         this.reducer_policies = policies;
         String[][][] contextsets = {
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;declassified" } },
+                { { "declassified" } },
                 //
-                { { "User;declassified" } },
+                { { "declassified" } },
                 //
-                { { "User;declassified" } },
+                { { "declassified" } },
                 //
-                { { "User;authorized" } },
+                { { "authorized" } },
 
         };
         this.reducer_contextsets = contextsets;
@@ -360,21 +360,21 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         this.reducer_policies = policies;
         String[][][] contextsets = {
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
                 //
-                { { "User;declassified" } },
+                { { "declassified" } },
                 //
-                { { "User;declassified" } },
+                { { "declassified" } },
                 //
-                { { "User;declassified" } },
+                { { "declassified" } },
                 //
-                { { "User;authorized" } },
+                { { "authorized" } },
 
         };
         this.reducer_contextsets = contextsets;
@@ -388,13 +388,13 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
                 //
                 { {} },
                 //
-                { { "User;authorized" } },
+                { { "authorized" } },
                 //
-                { { "User;authorized" } },
+                { { "authorized" } },
                 //
-                { { "User;authorized" } },
+                { { "authorized" } },
                 //
-                { { "User;initial" } },
+                { { "initial" } },
 
         };
         this.reducer_contextsets_removed = contextsets_removed;

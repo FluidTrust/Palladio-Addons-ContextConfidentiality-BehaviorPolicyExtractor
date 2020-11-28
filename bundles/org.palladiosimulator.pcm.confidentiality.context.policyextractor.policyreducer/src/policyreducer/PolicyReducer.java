@@ -3,20 +3,19 @@ package policyreducer;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
-import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
-import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
+import rules.ErrorRecord;
 import rules.IRulesDefinition;
 import rules.RulesFlag;
 import rules.RulesType;
+import rules.impl.MergeSEFF;
 import rules.impl.NegativeCleanup;
 import rules.impl.NegativeRule;
 import rules.impl.NegativeRuleParentChild;
 import rules.impl.NegativeRuleSame;
 import rules.impl.ParentChild;
 import rules.impl.SamePolicy;
-import rules.impl.MergeSEFF;
 import rules.impl.SimplerPolicy;
 import rules.impl.SubstituteParent;
 import util.ContextModelPrinter;
@@ -32,25 +31,11 @@ public class PolicyReducer {
     private final ContextModelAbstraction contextModelAbs;
     private final RulesFlag rules;
     private EList<IRulesDefinition> rulesList = new BasicEList<>();
+    private EList<ErrorRecord> errorList = new BasicEList<>();
 
     public PolicyReducer(ContextModelAbstraction contextModelAbs, RulesFlag rules) {
         this.contextModelAbs = contextModelAbs;
         this.rules = rules;
-    }
-
-    public int t1() {
-        int seffs = 0;
-        int pspecs = 0;
-        int sets = 0;
-        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
-            seffs++;
-            pspecs = pspecs + contextModelAbs.getPolicySpecifications(seff).size();
-            for (PolicySpecification policySpecification : contextModelAbs.getPolicySpecifications(seff)) {
-                sets = sets + policySpecification.getPolicy().size();
-            }
-        }
-        Logger.info("" + seffs + " : " + pspecs + " : " + sets);
-        return sets;
     }
 
     /**
@@ -63,13 +48,11 @@ public class PolicyReducer {
      * rule can result in an other rule beeing applicable. (Similar: Fixpunktiteration)
      */
     public int execute() {
-        t1();
-
         Logger.infoDetailed("Rules-Start");
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
-        int retval = rulesHandling1();
+        int retval = rulesHandling();
 
         new ContextModelPrinter().print(contextModelAbs.getContextModel(), true);
 
@@ -126,11 +109,21 @@ public class PolicyReducer {
     }
 
     /**
-     * Implementation 1
+     * Returns the errorlist for the last run
+     * 
+     * @return
+     */
+    public EList<ErrorRecord> getErrorList() {
+        return errorList;
+    }
+
+    /**
+     * Implementation
      * 
      * First collect all rules which can be applied, then execute
      */
-    private int rulesHandling1() {
+    private int rulesHandling() {
+        errorList.clear();
 
         int amount_rules = 0;
         int loopCount = 0;
@@ -143,16 +136,12 @@ public class PolicyReducer {
                 rulesDefinition.applyRuleToModel();
             }
 
-            Logger.info("\n");
-            // TODO crossverify records for conflicts?
-
             for (IRulesDefinition rulesDefinition : rulesList) {
                 rulesDefinition.executeRule();
             }
 
             Logger.info("Loop-End: " + loopCount + " -----------------");
 
-            // TODO better condition
             int rulesCount = 0;
             for (IRulesDefinition rulesDefinition : rulesList) {
                 rulesCount += rulesDefinition.getNumberOfRecords();
@@ -165,8 +154,8 @@ public class PolicyReducer {
             }
 
             loopCount++;
-            // TODO exit loop for now, prevent endless
-            if (loopCount == 10) {
+
+            if (loopCount == 100) {
                 Logger.error("\nEndless Loop in PolicyReducer!");
                 break;
             }
@@ -188,10 +177,10 @@ public class PolicyReducer {
 
             Logger.info("Loop-Negative-End: " + loopCount + " -----------------");
 
-            // TODO better condition
             int rulesCount = 0;
             for (IRulesDefinition rulesDefinition : rulesList) {
                 rulesCount += rulesDefinition.getNumberOfRecords();
+                errorList.addAll(rulesDefinition.getErrors());
             }
 
             amount_rules += rulesCount;

@@ -1,5 +1,7 @@
 package rules;
 
+import java.util.Collection;
+
 /**
  * Interface for rulesets
  * 
@@ -14,4 +16,6 @@ public interface IRulesDefinition {
     public boolean executeRule();
 
     public int getNumberOfRecords();
+
+    public Collection<? extends ErrorRecord> getErrors();
 }

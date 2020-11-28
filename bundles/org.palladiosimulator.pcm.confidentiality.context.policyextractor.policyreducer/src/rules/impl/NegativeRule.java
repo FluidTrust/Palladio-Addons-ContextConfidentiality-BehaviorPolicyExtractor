@@ -7,8 +7,10 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import modelabstraction.ContextModelAbstraction;
 import modelabstraction.ContextSetRecord;
 import rules.AbstractRule;
-import rules.ErrorRule;
+import rules.ErrorRecord;
+import rules.ErrorType;
 import rules.RulesRecord;
+import util.Logger;
 
 public class NegativeRule extends AbstractRule {
 
@@ -44,7 +46,12 @@ public class NegativeRule extends AbstractRule {
                             RulesRecord record = createRecord(seff, set1, null, false);
 
                             // Create Error
-                            errorList.add(new ErrorRule(record, 0));
+                            errorList.add(new ErrorRecord(record, ErrorType.MoreSpecific, 0));
+
+                            Logger.info("" + record2.getPolicySpecification().getEntityName() + " - "
+                                    + record2.getContextSet().getEntityName());
+                            Logger.info("" + record1.getPolicySpecification().getEntityName() + " - "
+                                    + record1.getContextSet().getEntityName());
 
                             // Remove set1 because of set2
                             appliedList.add(record);

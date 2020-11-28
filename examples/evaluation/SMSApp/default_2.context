@@ -7,8 +7,8 @@
     <policies id="_mCB4EC9hEeuIPqsiRca7LQ" entityName="GUI;" contexts="_EEdmYS9hEeuIPqsiRca7LQ"/>
   </setContainer>
   <contextContainer id="_l3AwUS9gEeuIPqsiRca7LQ" entityName="Contact Information">
-    <context xsi:type="model:HierarchicalContext" id="_6G2GsC9gEeuIPqsiRca7LQ" entityName="declassified" contexttype="_oEvzMC9gEeuIPqsiRca7LQ" direction="BOTTOM_UP"/>
-    <context xsi:type="model:HierarchicalContext" id="_661vcC9gEeuIPqsiRca7LQ" entityName="complete" contexttype="_oEvzMC9gEeuIPqsiRca7LQ" including="_6G2GsC9gEeuIPqsiRca7LQ" direction="BOTTOM_UP"/>
+    <context xsi:type="model:HierarchicalContext" id="_6G2GsC9gEeuIPqsiRca7LQ" entityName="declassified" contexttype="_oEvzMC9gEeuIPqsiRca7LQ"/>
+    <context xsi:type="model:HierarchicalContext" id="_661vcC9gEeuIPqsiRca7LQ" entityName="complete" contexttype="_oEvzMC9gEeuIPqsiRca7LQ" including="_6G2GsC9gEeuIPqsiRca7LQ"/>
   </contextContainer>
   <contextContainer id="_Cof-sS9hEeuIPqsiRca7LQ" entityName="Actor">
     <context xsi:type="model:SingleAttributeContext" id="_DOirAS9hEeuIPqsiRca7LQ" entityName="User" contexttype="_mcs3UC9gEeuIPqsiRca7LQ"/>

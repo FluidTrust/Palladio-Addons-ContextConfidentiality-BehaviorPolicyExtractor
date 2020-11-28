@@ -49,13 +49,32 @@ public class HierarchicalContextAbstraction {
         return b;
     }
 
+    public boolean containsHierarchicalParent(ContextSet compareSet, HierarchicalContext child) {
+        boolean b = false;
+        for (ContextAttribute context : compareSet.getContexts()) {
+            if (context instanceof HierarchicalContext) {
+                if (context.getContexttype() == child.getContexttype()) {
+                    if (((HierarchicalContext) context).getDirection().equals(IncludeDirection.BOTTOM_UP)) {
+                        if (isParentChild((HierarchicalContext) context, child)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return b;
+    }
+
     public boolean containsAllHierarchical(ContextSet set2, ContextSet set1) {
         boolean b = true;
         for (ContextAttribute context : set1.getContexts()) {
             if (set2.getContexts().contains(context)) {
             } else if (context instanceof HierarchicalContext) {
                 if (containsHierarchicalChild(set2, (HierarchicalContext) context)) {
-
+                    // Nothing to do
+                } else if (containsHierarchicalParent(set2, (HierarchicalContext) context)) {
+                    // Nothing to do
                 } else {
                     b = false;
                 }

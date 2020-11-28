@@ -15,6 +15,9 @@ public class RulesFlag {
         for (RulesType type : RulesType.values()) {
             flags.put(type, true);
         }
+
+        // Rules which are off by default
+        disableRule(RulesType.SubstituteParent);
     }
 
     public boolean isRuleEnabled(RulesType rulesType) {

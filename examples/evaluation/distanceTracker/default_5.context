@@ -5,7 +5,7 @@
     <policies id="_kRXgMDIpEeuq0dUl3-elfg" entityName="App;declassified" contexts="_Qd0dMDIpEeuq0dUl3-elfg _oaPE8TInEeuq0dUl3-elfg"/>
     <policies id="_uXc_YDIpEeuq0dUl3-elfg" entityName="calculated;" contexts="_TMBI0DIpEeuq0dUl3-elfg"/>
     <policies id="_NNOOADFLEeuvDKAyMe0mfQ" entityName="raw" contexts="_d2P24DIpEeuq0dUl3-elfg"/>
-    <policies id="_Pk0XgDFLEeuvDKAyMe0mfQ"/>
+    <policies id="_Pk0XgDFLEeuvDKAyMe0mfQ" entityName="declassified" contexts="_Qd0dMDIpEeuq0dUl3-elfg"/>
   </setContainer>
   <contextContainer id="_621qgTIkEeuq0dUl3-elfg" entityName="Actor">
     <context xsi:type="model:SingleAttributeContext" id="_nzcKsTInEeuq0dUl3-elfg" entityName="User" contexttype="_lS2dQDInEeuq0dUl3-elfg"/>

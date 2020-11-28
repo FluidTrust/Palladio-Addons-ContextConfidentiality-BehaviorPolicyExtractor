@@ -24,7 +24,7 @@ import util.Logger;
 class PerformanceTest {
 
     // disable for CI;
-    static boolean skip = false;
+    static boolean skip = true;
 
     public long runTestOnModel(boolean onlyPCM) throws IOException {
         ArrayList<Long> times = new ArrayList<>();

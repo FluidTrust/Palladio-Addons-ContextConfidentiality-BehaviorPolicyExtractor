@@ -1,5 +1,7 @@
 package rules;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
@@ -18,7 +20,7 @@ import util.Logger;
  *
  */
 public abstract class AbstractRule implements IRulesDefinition {
-    protected EList<ErrorRule> errorList = new BasicEList<>();
+    protected EList<ErrorRecord> errorList = new BasicEList<>();
     protected EList<RulesRecord> appliedList = new BasicEList<>();
     protected ContextModelAbstraction contextModelAbs;
     protected HierarchicalContextAbstraction hierarchicalContextAbs;
@@ -38,8 +40,14 @@ public abstract class AbstractRule implements IRulesDefinition {
      */
     public abstract boolean applyRule(ResourceDemandingBehaviour seff);
 
+    @Override
     public int getNumberOfRecords() {
         return appliedList.size();
+    }
+
+    @Override
+    public Collection<? extends ErrorRecord> getErrors() {
+        return errorList;
     }
 
     /**

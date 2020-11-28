@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
-  <setContainer id="_kXQP0CTCEeuH1ukusQtjeg">
-    <policies id="_tSvusCTDEeuH1ukusQtjeg" entityName="User;initial" contexts="_UEEfwCTDEeuH1ukusQtjeg"/>
-    <policies id="_yfVIUCTDEeuH1ukusQtjeg" entityName="User;requested" contexts="_WHRtoSTDEeuH1ukusQtjeg _UEEfwCTDEeuH1ukusQtjeg"/>
-    <policies id="_1P6ZkCTDEeuH1ukusQtjeg" entityName="User;authorized" contexts="_WHRtoSTDEeuH1ukusQtjeg _i8cCMCTDEeuH1ukusQtjeg"/>
-    <policies id="_73qJoCTDEeuH1ukusQtjeg" entityName="User;declassified" contexts="_qPFJYSTDEeuH1ukusQtjeg _WHRtoSTDEeuH1ukusQtjeg"/>
-    <policies id="_E2RDYCTEEeuH1ukusQtjeg" entityName="User;confirmed" contexts="_eO24wSTDEeuH1ukusQtjeg _i8cCMCTDEeuH1ukusQtjeg"/>
+  <setContainer id="_7sQ8oDHiEeuLsZd0j25Liw">
+    <policies id="_8TvzYDHiEeuLsZd0j25Liw" entityName="initial" contexts="_r3w-kDHhEeuLsZd0j25Liw _UEEfwCTDEeuH1ukusQtjeg"/>
+    <policies id="_KOi6UDHjEeuLsZd0j25Liw" entityName="authorized" contexts="_i8cCMCTDEeuH1ukusQtjeg _r3w-kDHhEeuLsZd0j25Liw"/>
+    <policies id="_P3h8EDHjEeuLsZd0j25Liw" entityName="declassified" contexts="_i8cCMCTDEeuH1ukusQtjeg _syWXgDHhEeuLsZd0j25Liw"/>
   </setContainer>
   <contextContainer id="_j_NjQSTCEeuH1ukusQtjeg" entityName="CreditCardStatus">
     <context xsi:type="model:HierarchicalContext" id="_UEEfwCTDEeuH1ukusQtjeg" entityName="non authorized" contexttype="_IiPbUCTDEeuH1ukusQtjeg" direction="BOTTOM_UP"/>
@@ -14,9 +12,11 @@
   <contextContainer id="_UxIaESTDEeuH1ukusQtjeg" entityName="TravelStatus">
     <context xsi:type="model:SingleAttributeContext" id="_WHRtoSTDEeuH1ukusQtjeg" entityName="requested" contexttype="_LFCIMCTDEeuH1ukusQtjeg"/>
     <context xsi:type="model:SingleAttributeContext" id="_eO24wSTDEeuH1ukusQtjeg" entityName="confirmed" contexttype="_LFCIMCTDEeuH1ukusQtjeg"/>
+    <context xsi:type="model:SingleAttributeContext" id="_aT0KMTHiEeuLsZd0j25Liw" entityName="not requested" contexttype="_LFCIMCTDEeuH1ukusQtjeg"/>
   </contextContainer>
   <contextContainer id="_Zc0tISTDEeuH1ukusQtjeg" entityName="Travel CC Status">
-    <context xsi:type="model:SingleAttributeContext" id="_qPFJYSTDEeuH1ukusQtjeg" entityName="declassified" contexttype="_NaFUACTDEeuH1ukusQtjeg"/>
+    <context xsi:type="model:HierarchicalContext" id="_r3w-kDHhEeuLsZd0j25Liw" entityName="locked" contexttype="_NaFUACTDEeuH1ukusQtjeg" including="_syWXgDHhEeuLsZd0j25Liw"/>
+    <context xsi:type="model:HierarchicalContext" id="_syWXgDHhEeuLsZd0j25Liw" entityName="declassified" contexttype="_NaFUACTDEeuH1ukusQtjeg"/>
   </contextContainer>
   <typeContainer>
     <types id="_IiPbUCTDEeuH1ukusQtjeg" entityName="CreditCardStatus" unique="true"/>
@@ -24,10 +24,10 @@
     <types id="_NaFUACTDEeuH1ukusQtjeg" entityName="TravelCreditCardStatus" unique="true"/>
   </typeContainer>
   <pcmspecificationcontainer id="_jHkwoCTCEeuH1ukusQtjeg">
-    <contextspecification id="_SshokiTEEeuH1ukusQtjeg" entityName="declassify" contextset="_1P6ZkCTDEeuH1ukusQtjeg">
+    <contextspecification id="_k2lI4jHjEeuLsZd0j25Liw" entityName="e_declassify" contextset="_P3h8EDHjEeuLsZd0j25Liw" missageUse="true">
       <entrylevelsystemcall href="default.usagemodel#_uA4ooHZsEeaE4tGRMtTb7A"/>
     </contextspecification>
-    <contextspecification id="__kWBUiTEEeuH1ukusQtjeg" entityName="E_declassify" contextset="_tSvusCTDEeuH1ukusQtjeg" missageUse="true">
+    <contextspecification id="_v4iIgjHlEeuLsZd0j25Liw" entityName="declassify" contextset="_KOi6UDHjEeuLsZd0j25Liw">
       <entrylevelsystemcall href="default.usagemodel#_uA4ooHZsEeaE4tGRMtTb7A"/>
     </contextspecification>
   </pcmspecificationcontainer>

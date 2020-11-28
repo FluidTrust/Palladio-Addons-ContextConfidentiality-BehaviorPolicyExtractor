@@ -5,7 +5,7 @@
     <policies id="_kRXgMDIpEeuq0dUl3-elfg" entityName="App;declassified" contexts="_Qd0dMDIpEeuq0dUl3-elfg _oaPE8TInEeuq0dUl3-elfg"/>
     <policies id="_uXc_YDIpEeuq0dUl3-elfg" entityName="calculated;" contexts="_TMBI0DIpEeuq0dUl3-elfg"/>
     <policies id="_NNOOADFLEeuvDKAyMe0mfQ" entityName="raw" contexts="_d2P24DIpEeuq0dUl3-elfg"/>
-    <policies id="_Pk0XgDFLEeuvDKAyMe0mfQ"/>
+    <policies id="_Pk0XgDFLEeuvDKAyMe0mfQ" entityName="declassified" contexts="_Qd0dMDIpEeuq0dUl3-elfg"/>
   </setContainer>
   <contextContainer id="_621qgTIkEeuq0dUl3-elfg" entityName="Actor">
     <context xsi:type="model:SingleAttributeContext" id="_nzcKsTInEeuq0dUl3-elfg" entityName="User" contexttype="_lS2dQDInEeuq0dUl3-elfg"/>
@@ -21,11 +21,11 @@
     <types id="_lpKrgDInEeuq0dUl3-elfg" entityName="Distance"/>
   </typeContainer>
   <pcmspecificationcontainer id="_y9EHUDIjEeuq0dUl3-elfg">
-    <contextspecification id="_zmIScjIjEeuq0dUl3-elfg" entityName="User-scenario" contextset="_NNOOADFLEeuvDKAyMe0mfQ">
+    <contextspecification id="_zmIScjIjEeuq0dUl3-elfg" entityName="User-scenario" contextset="_Pk0XgDFLEeuvDKAyMe0mfQ">
       <usagescenario href="default.usagemodel#_3PqSMNwwEeiXzNImH0otAg"/>
     </contextspecification>
-    <contextspecification id="_HdV6EjFLEeuvDKAyMe0mfQ" entityName="e_submit" contextset="_uXc_YDIpEeuq0dUl3-elfg" missageUse="true">
-      <entrylevelsystemcall href="default.usagemodel#_YIvBANwxEeiXzNImH0otAg"/>
+    <contextspecification id="_HdV6EjFLEeuvDKAyMe0mfQ" entityName="e_declassify" contextset="_kRXgMDIpEeuq0dUl3-elfg" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_VUFvINwxEeiXzNImH0otAg"/>
     </contextspecification>
   </pcmspecificationcontainer>
 </context:ConfidentialAccessSpecification>

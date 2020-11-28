@@ -128,26 +128,59 @@ public class Deriver {
                     }
                 }
             } else {
-                boolean onlyNegative = true;
-                // Only use systemCall
-                for (ContextSpecification spec : listSystemCall) {
-                    ContextSet set = contextModelAbs.getContextSet(spec);
-                    Boolean negative = spec.isMissageUse();
-                    if (!negative) {
-                        onlyNegative = false;
-                    }
+                // TODO move to global setting. true == default
+                boolean override = true;
 
-                    list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
-                }
-                // In case of misusage, still use behaviour
-                if (onlyNegative) {
-                    if (true) {
-                        for (ContextSpecification spec2 : listScenario) {
-                            ContextSet set2 = contextModelAbs.getContextSet(spec2);
-                            Boolean negative2 = spec2.isMissageUse();
-                            list.add(new DeriverRecord(set2, negative2, systemCall, scenarioBehaviour));
+                if (override) {
+                    boolean onlyNegative = true;
+                    // Only use systemCall
+                    for (ContextSpecification spec : listSystemCall) {
+                        ContextSet set = contextModelAbs.getContextSet(spec);
+                        Boolean negative = spec.isMissageUse();
+                        if (!negative) {
+                            onlyNegative = false;
+                        }
+
+                        list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                    }
+                    // In case of misusage, still use behaviour
+                    if (onlyNegative) {
+                        // TODO move to global setting
+                        if (true) {
+                            for (ContextSpecification spec : listScenario) {
+                                ContextSet set = contextModelAbs.getContextSet(spec);
+                                Boolean negative = spec.isMissageUse();
+                                // avoid negative added twice, since added further down as well
+                                if (!negative) {
+                                    list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                                }
+                            }
                         }
                     }
+
+                    // Add negative cases from scenario still
+                    for (ContextSpecification spec : listScenario) {
+                        ContextSet set = contextModelAbs.getContextSet(spec);
+                        Boolean negative = spec.isMissageUse();
+                        if (negative) {
+                            list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                        }
+                    }
+
+                } else {
+                    // Add both
+                    for (ContextSpecification spec : listSystemCall) {
+                        ContextSet set = contextModelAbs.getContextSet(spec);
+                        Boolean negative = spec.isMissageUse();
+                        list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                    }
+
+                    for (ContextSpecification spec : listScenario) {
+                        ContextSet set = contextModelAbs.getContextSet(spec);
+                        Boolean negative = spec.isMissageUse();
+                        list.add(new DeriverRecord(set, negative, systemCall, scenarioBehaviour));
+                    }
+
                 }
             }
 

@@ -7,7 +7,8 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import modelabstraction.ContextModelAbstraction;
 import modelabstraction.ContextSetRecord;
 import rules.AbstractRule;
-import rules.ErrorRule;
+import rules.ErrorRecord;
+import rules.ErrorType;
 import rules.RulesRecord;
 
 public class NegativeRuleSame extends AbstractRule {
@@ -37,7 +38,7 @@ public class NegativeRuleSame extends AbstractRule {
                             RulesRecord record = createRecord(seff, set1, null, false);
 
                             // Create Error
-                            errorList.add(new ErrorRule(record, 0));
+                            errorList.add(new ErrorRecord(record, ErrorType.Same, 0));
 
                             // Remove set1 because of set2
                             appliedList.add(record);

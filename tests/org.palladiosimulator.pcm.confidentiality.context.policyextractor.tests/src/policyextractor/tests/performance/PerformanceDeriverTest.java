@@ -56,7 +56,6 @@ class PerformanceDeriverTest {
 
             PolicyReducer reducer = new PolicyReducer(contextModelAbs, new RulesFlag());
             Logger.setActive(true);
-            reducer.t1();
             Logger.setActive(false);
             reducer.execute();
 

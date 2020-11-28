@@ -10,7 +10,6 @@ import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
-import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
@@ -28,7 +27,10 @@ import policyextractor.common.tests.util.TestContextModelAbstraction;
 import policyextractor.common.tests.util.TestUtil;
 import policyextractor.tests.util.EvaluationModelAbstraction;
 import policyreducer.PolicyReducer;
+import rules.ErrorRecord;
+import rules.ErrorType;
 import rules.RulesFlag;
+import rules.RulesType;
 import settings.Settings;
 import util.Logger;
 
@@ -59,6 +61,10 @@ class AccuracyTestTemplate {
     protected String[][] reducer_policies = null;
     protected String[][][] reducer_contextsets = null;
     protected String[][][] reducer_contextsets_removed;
+
+    // Error
+    private EList<ErrorRecord> errorList;
+    protected EList<ErrorExpected> errorExpected;
 
     protected class ResultsRecord {
         final int x;
@@ -321,23 +327,76 @@ class AccuracyTestTemplate {
         return new ResultsRecord(TP, FP, FN);
     }
 
-    private boolean areResultsTheSame(ReducerResult result1, ReducerResult result2) {
-        if (result1.policy.equals(result2.policy)) {
-            if (result1.set.equals(result2.set)) {
-                if (result1.seff.equals(result2.set)) {
-                    return true;
-                }
-            }
+    protected class ErrorExpected {
+        String seff;
+        ErrorType type;
+
+        public ErrorExpected(String string, ErrorType type) {
+            this.seff = string;
+            this.type = type;
         }
-        return false;
     }
 
-    private int getNumberOfContextSetsInPolicies() {
-        int count = 0;
-        for (PolicySpecification policySpecification : abs.getPolicySpecifications()) {
-            count += policySpecification.getPolicy().size();
+    protected ResultsRecord executeMeasurement_error() throws IOException {
+        canonicalPath = TestUtil.getTestDataPath() + "evaluation" + File.separator + caseStudyName;
+        EvaluationModelAbstraction modelAbs = new EvaluationModelAbstraction(canonicalPath);
+        modelloader = new ModelHandler(modelAbs);
+        modelAbs.contextName = scenarioName;
+
+        init();
+
+        Logger.info("CS: " + caseStudyName);
+        Logger.setActive(false);
+
+        execute_deriver();
+        execute_reducer();
+
+        Logger.setActive(true);
+
+        for (ErrorRecord error : errorList) {
+            // Logger.info("E: " + error.getRecord().getRule().getClass().getSimpleName());
+            // Logger.info("E: " + error.getRecord().getSeff().getId());
+            // Logger.info("E: " + error.getType().toString());
         }
-        return count;
+
+        int TP = 0;
+        int FP = 0;
+        int FN = 0;
+
+        for (ErrorRecord error : errorList) {
+            boolean contained = false;
+            for (ErrorExpected expected : errorExpected) {
+                if (error.getType().equals(expected.type)) {
+                    if (error.getRecord().getSeff().getId().equals(expected.seff)) {
+                        contained = true;
+                    }
+                }
+            }
+            if (contained) {
+                // Predicted error
+                TP++;
+            } else {
+                // Error present even tough it shouldnt be
+                FP++;
+            }
+        }
+
+        for (ErrorExpected expected : errorExpected) {
+            boolean contained = false;
+            for (ErrorRecord error : errorList) {
+                if (error.getType().equals(expected.type)) {
+                    if (error.getRecord().getSeff().getId().equals(expected.seff)) {
+                        contained = true;
+                    }
+                }
+            }
+            // Error not present even though it should have been
+            if (!contained) {
+                FN++;
+            }
+        }
+
+        return new ResultsRecord(TP, FP, FN);
     }
 
     protected void execute_deriver() {
@@ -349,28 +408,17 @@ class AccuracyTestTemplate {
     protected void execute_reducer() {
 
         RulesFlag rulesflag = new RulesFlag();
+        rulesflag.disableRule(RulesType.SubstituteParent);
         PolicyReducer reducer = new PolicyReducer(abs, rulesflag);
         reducer.execute();
 
+        this.errorList = reducer.getErrorList();
     }
 
     protected void execute_all() {
         // TODO mainhandler?
         execute_deriver();
         execute_reducer();
-    }
-
-    // TODO move
-    private AssemblyContext getAssemblyContextByName(String name) {
-        AssemblyContext ret = null;
-        for (AssemblyContext ac : testSystem.getAssemblyContexts__ComposedStructure()) {
-            if (ac.getEntityName().equals(name)) {
-                ret = ac;
-                break;
-            }
-        }
-        assertNotNull(ret);
-        return ret;
     }
 
     private ResourceDemandingBehaviour getSeffById(String id) {

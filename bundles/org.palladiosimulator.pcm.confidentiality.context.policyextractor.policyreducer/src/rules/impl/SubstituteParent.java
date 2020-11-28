@@ -33,8 +33,11 @@ public class SubstituteParent extends AbstractRule {
 
         for (ContextSet set1 : list) {
             for (ContextAttribute context : set1.getContexts()) {
-                // TODO Richtung?
                 if (context instanceof HierarchicalContext) {
+                    // only do TopDown
+                    if (!((HierarchicalContext) context).getDirection().equals(IncludeDirection.TOP_DOWN)) {
+                        continue;
+                    }
 
                     HierarchicalContext parent = hierarchicalContextAbs.getParent((HierarchicalContext) context);
                     if (parent != null) {
@@ -71,15 +74,6 @@ public class SubstituteParent extends AbstractRule {
                             if (!containedInner) {
                                 containedOuter = false;
                                 break;
-                            }
-                        }
-
-                        if (parent.getIncluding().size() == 1) {
-                            if (((HierarchicalContext) context).getDirection().equals(IncludeDirection.BOTTOM_UP)) {
-                                // Skip auto include for single bottum up hierarchical contexts
-                                containedOuter = false;
-                            } else {
-                                // Skip substitute in this case? setting? TODO
                             }
                         }
 

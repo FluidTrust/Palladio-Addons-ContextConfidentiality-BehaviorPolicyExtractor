@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context:ConfidentialAccessSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.palladiosimulator.org/pcm/confidentiality/0.1/" xmlns:model="http://www.palladiosimulator.org/pcm/confidentiality/context/model/0.1/">
+  <setContainer id="_LyrSsDOoEeuIDKo9cE6OeA">
+    <policies id="_MHhSkDOuEeuIDKo9cE6OeA" entityName="Periodic" contexts="_3ngH8TOpEeuIDKo9cE6OeA"/>
+    <policies id="_VVQtIDOxEeuZvsJs2UNuIw" entityName="externalExpert" contexts="_Mpt9gDOqEeuIDKo9cE6OeA _z1VBYDOqEeuIDKo9cE6OeA _UYSEUDOtEeuIDKo9cE6OeA"/>
+    <policies id="_ZoWS8DOxEeuZvsJs2UNuIw" entityName="internalWorker" contexts="_4GJWUDOqEeuIDKo9cE6OeA _Uvx-UDOtEeuIDKo9cE6OeA _NRS64DOqEeuIDKo9cE6OeA"/>
+    <policies id="_d8MGsDOxEeuZvsJs2UNuIw" entityName="internalExpert" contexts="_UYSEUDOtEeuIDKo9cE6OeA _4GJWUDOqEeuIDKo9cE6OeA _NRS64DOqEeuIDKo9cE6OeA"/>
+    <policies id="_6NiccDOxEeuZvsJs2UNuIw" entityName="Manuel" contexts="_4P6LwTOpEeuIDKo9cE6OeA"/>
+    <policies id="_HRW4EDOyEeuZvsJs2UNuIw" entityName="external" contexts="_z1VBYDOqEeuIDKo9cE6OeA"/>
+  </setContainer>
+  <contextContainer id="_LZaeITOoEeuIDKo9cE6OeA" entityName="Location">
+    <context xsi:type="model:HierarchicalContext" id="_Mpt9gDOqEeuIDKo9cE6OeA" entityName="Remote" contexttype="_JpIhYDOqEeuIDKo9cE6OeA" including="_NRS64DOqEeuIDKo9cE6OeA"/>
+    <context xsi:type="model:HierarchicalContext" id="_NRS64DOqEeuIDKo9cE6OeA" entityName="On Site" contexttype="_JpIhYDOqEeuIDKo9cE6OeA"/>
+  </contextContainer>
+  <contextContainer id="_20_F4TOpEeuIDKo9cE6OeA" entityName="Method">
+    <context xsi:type="model:SingleAttributeContext" id="_3ngH8TOpEeuIDKo9cE6OeA" entityName="Periodic" contexttype="_jQOiQDOoEeuIDKo9cE6OeA"/>
+    <context xsi:type="model:SingleAttributeContext" id="_4P6LwTOpEeuIDKo9cE6OeA" entityName="Manual"/>
+  </contextContainer>
+  <contextContainer id="_zmAzATOqEeuIDKo9cE6OeA" entityName="Employment">
+    <context xsi:type="model:HierarchicalContext" id="_z1VBYDOqEeuIDKo9cE6OeA" entityName="External" contexttype="_AWLIQDOqEeuIDKo9cE6OeA" direction="BOTTOM_UP"/>
+    <context xsi:type="model:HierarchicalContext" id="_4GJWUDOqEeuIDKo9cE6OeA" entityName="Internal" contexttype="_AWLIQDOqEeuIDKo9cE6OeA" including="_z1VBYDOqEeuIDKo9cE6OeA" direction="BOTTOM_UP"/>
+  </contextContainer>
+  <contextContainer id="_TBhFsTOtEeuIDKo9cE6OeA" entityName="Role">
+    <context xsi:type="model:HierarchicalContext" id="_UYSEUDOtEeuIDKo9cE6OeA" entityName="expert" contexttype="_RK0p0DOtEeuIDKo9cE6OeA" including="_Uvx-UDOtEeuIDKo9cE6OeA" direction="BOTTOM_UP"/>
+    <context xsi:type="model:HierarchicalContext" id="_Uvx-UDOtEeuIDKo9cE6OeA" entityName="normal" contexttype="_RK0p0DOtEeuIDKo9cE6OeA" direction="BOTTOM_UP"/>
+  </contextContainer>
+  <typeContainer>
+    <types id="_jQOiQDOoEeuIDKo9cE6OeA" entityName="Reading method" unique="true"/>
+    <types id="_AWLIQDOqEeuIDKo9cE6OeA" entityName="Employment Status" unique="true"/>
+    <types id="_JpIhYDOqEeuIDKo9cE6OeA" entityName="Location" unique="true"/>
+    <types id="_RK0p0DOtEeuIDKo9cE6OeA" entityName="Role"/>
+  </typeContainer>
+  <pcmspecificationcontainer id="_KdGm4TOoEeuIDKo9cE6OeA">
+    <contextspecification id="_MjSQQjOoEeuIDKo9cE6OeA" entityName="pSensor" contextset="_MHhSkDOuEeuIDKo9cE6OeA">
+      <usagescenario href="default.usagemodel#_mIky8JnaEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_BQs6AjOuEeuIDKo9cE6OeA" entityName="pEnerchar" contextset="_MHhSkDOuEeuIDKo9cE6OeA">
+      <usagescenario href="default.usagemodel#_xQFS4JnaEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_Bs9_QjOuEeuIDKo9cE6OeA" entityName="pTrust" contextset="_MHhSkDOuEeuIDKo9cE6OeA">
+      <usagescenario href="default.usagemodel#_6f2OEJnaEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_T1Ko0jOwEeuatplDJs6-xw" entityName="Energiebeauftragter" contextset="_d8MGsDOxEeuZvsJs2UNuIw">
+      <usagescenario href="default.usagemodel#_DCfkkJnbEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_UUu5sjOwEeuatplDJs6-xw" entityName="Interne Abrechnung" contextset="_ZoWS8DOxEeuZvsJs2UNuIw">
+      <usagescenario href="default.usagemodel#_6CVEQJndEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_U2m3sjOwEeuatplDJs6-xw" entityName="Wartungstechniker" contextset="_VVQtIDOxEeuZvsJs2UNuIw">
+      <usagescenario href="default.usagemodel#_Du2M4JneEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_y5K28jOxEeuZvsJs2UNuIw" entityName="e_periodic" contextset="_6NiccDOxEeuZvsJs2UNuIw" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_-CM6gJnaEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_ET5BYjOyEeuZvsJs2UNuIw" entityName="e_monthly" contextset="_HRW4EDOyEeuZvsJs2UNuIw" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_-nHeEJndEeqbD7MI1AForg"/>
+    </contextspecification>
+    <contextspecification id="_Lj32IjOyEeuZvsJs2UNuIw" entityName="e_finegrained" contextset="_HRW4EDOyEeuZvsJs2UNuIw" missageUse="true">
+      <entrylevelsystemcall href="default.usagemodel#_GU8scJneEeqbD7MI1AForg"/>
+    </contextspecification>
+  </pcmspecificationcontainer>
+</context:ConfidentialAccessSpecification>

@@ -45,6 +45,11 @@ public class SamePolicy extends AbstractRule {
                 ContextSet set1 = record1.getContextSet();
                 ContextSet set2 = record2.getContextSet();
 
+                // Only check for contextset which have the same contexts, ignore
+                if (set1.getId().equals(set2.getId())) {
+                    continue;
+                }
+
                 if (hierarchicalContextAbs.containsAllSimple(set2, set1)
                         && hierarchicalContextAbs.containsAllSimple(set1, set2)) {
                     // set2 is the same as set1

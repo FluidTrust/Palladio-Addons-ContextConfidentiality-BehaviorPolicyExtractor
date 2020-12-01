@@ -403,6 +403,194 @@ class AccuracyReducerTest extends AccuracyTestTemplate {
         printResult(record);
     }
 
+    @Test
+    void test_energy_s1() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_1.context";
+
+        String[] seffs = { "_wt6JAJnREeqbD7MI1AForg", "_k_W3MJnREeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg",
+                "_yW78UJnREeqbD7MI1AForg", "_9UTeQJnQEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg",
+                "_fzNF8JnSEeqbD7MI1AForg", "_B37lAJnSEeqbD7MI1AForg", "_fzh2EJnSEeqbD7MI1AForg",
+                "_3MDw0JnUEeqbD7MI1AForg", "_3MX54JnUEeqbD7MI1AForg", };
+
+        this.reducer_seffs = seffs;
+        String[][] policies = {
+                //
+                { "__PushingSensor_execute" },
+                //
+                { "__EnerChartLogic_receiveReading" },
+                //
+                { "__TimeSeriesDB_store" },
+                //
+                { "__EnerChartLogic_execute" },
+                //
+                { "__PullingSensor_pullData" },
+                //
+                { "__TimeSeriesDB_read" },
+                //
+                { "__OPCUAServer_receiveData" },
+                //
+                { "__Trust40_execute" },
+                //
+                { "__OPCUAServer_sendData" },
+                //
+                { "__Trust40_getFineGrainedData" },
+                //
+                { "__Trust40_getMonthlyData" },
+
+        };
+        this.reducer_policies = policies;
+        String[][][] contextsets = {
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic", "externalExpert", "internalWorker" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "externalExpert" } },
+                //
+                { { "internalWorker" } },
+
+        };
+        this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "internalExpert" } },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "internalExpert" } },
+                //
+                { {} },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
+
+        ResultsRecord record = executeMeasurement_reducer();
+        printResult(record);
+    }
+
+    @Test
+    void test_energy_s2() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_2.context";
+
+        String[] seffs = { "_wt6JAJnREeqbD7MI1AForg", "_k_W3MJnREeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg",
+                "_yW78UJnREeqbD7MI1AForg", "_9UTeQJnQEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg",
+                "_fzNF8JnSEeqbD7MI1AForg", "_B37lAJnSEeqbD7MI1AForg", "_fzh2EJnSEeqbD7MI1AForg",
+                "_3MDw0JnUEeqbD7MI1AForg", "_3MX54JnUEeqbD7MI1AForg", };
+
+        this.reducer_seffs = seffs;
+        String[][] policies = {
+                //
+                { "__PushingSensor_execute" },
+                //
+                { "__EnerChartLogic_receiveReading" },
+                //
+                { "__TimeSeriesDB_store" },
+                //
+                { "__EnerChartLogic_execute" },
+                //
+                { "__PullingSensor_pullData" },
+                //
+                { "__TimeSeriesDB_read" },
+                //
+                { "__OPCUAServer_receiveData" },
+                //
+                { "__Trust40_execute" },
+                //
+                { "__OPCUAServer_sendData" },
+                //
+                { "__Trust40_getFineGrainedData" },
+                //
+                { "__Trust40_getMonthlyData" },
+
+        };
+        this.reducer_policies = policies;
+        String[][][] contextsets = {
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic", "externalExpert", "internalWorker" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "Periodic" } },
+                //
+                { { "externalExpert" } },
+                //
+                { { "internalWorker" } },
+
+        };
+        this.reducer_contextsets = contextsets;
+        String[][][] contextsets_removed = {
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "Manuel" } },
+                //
+                { {} },
+                //
+                { {} },
+                //
+                { { "internalExpert", "Manuel", "external" } },
+                //
+                { {} },
+                //
+                { { "Manuel" } },
+                //
+                { { "Manuel" } },
+                //
+                { { "internalExpert", "external" } },
+                //
+                { { "external" } },
+
+        };
+        this.reducer_contextsets_removed = contextsets_removed;
+
+        ResultsRecord record = executeMeasurement_reducer();
+        printResult(record);
+    }
+
     void printResult(ResultsRecord record) {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);

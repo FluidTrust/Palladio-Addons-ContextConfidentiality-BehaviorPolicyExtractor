@@ -160,6 +160,101 @@ class AccuracyDeriverTest extends AccuracyTestTemplate {
         printResult(record);
     }
 
+    @Test
+    void test_energy_s1() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_1.context";
+
+        String[] usageScenarios = { "PeriodicSensorPushing", "PeriodicEnerchart", "PeriodicTrust40",
+                "Energiebeauftragter", "Interne Abrechnung", "Wartungstechniker" };
+        this.usageScenarios = usageScenarios;
+
+        String[][] systemCalls = {
+                //
+                { "runPeriodic" },
+                //
+                { "runPeriodic" },
+                //
+                { "runPeriodic" },
+                //
+                { "getFineGrainedData" },
+                //
+                { "getMonthlyData" },
+                //
+                { "getFineGrainedData" }, };
+        this.systemCalls = systemCalls;
+
+        String[][][] seffs = {
+                // execute : send : store
+                { { "_wt6JAJnREeqbD7MI1AForg", "_fzh2EJnSEeqbD7MI1AForg", "_k_W3MJnREeqbD7MI1AForg" } },
+                // execute : get, store, read, send : store
+                { { "_yW78UJnREeqbD7MI1AForg", "_9UTeQJnQEeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg",
+                        "_n2vsUJnXEeqbD7MI1AForg", "_fzNF8JnSEeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg" } },
+                // execute : get, store : read
+                { { "_B37lAJnSEeqbD7MI1AForg", "_fzh2EJnSEeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg",
+                        "_n2vsUJnXEeqbD7MI1AForg" } },
+                // finegrained, read
+                { { "_3MDw0JnUEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg" } },
+                // monthly, read
+                { { "_3MX54JnUEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg" } },
+                // finegrained, read
+                { { "_3MDw0JnUEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg" } },
+
+        };
+        this.seffs = seffs;
+
+        ResultsRecord record = executeMeasurement_deriver();
+
+        printResult(record);
+    }
+
+    @Test
+    void test_energy_s2() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_2.context";
+
+        String[] usageScenarios = { "PeriodicSensorPushing", "PeriodicEnerchart", "PeriodicTrust40",
+                "Energiebeauftragter", "Interne Abrechnung", "Wartungstechniker" };
+        this.usageScenarios = usageScenarios;
+
+        String[][] systemCalls = {
+                //
+                { "runPeriodic" },
+                //
+                { "runPeriodic" },
+                //
+                { "runPeriodic" },
+                //
+                { "getFineGrainedData" },
+                //
+                { "getMonthlyData" },
+                //
+                { "getFineGrainedData" }, };
+        this.systemCalls = systemCalls;
+
+        String[][][] seffs = {
+                // execute : send : store
+                { { "_wt6JAJnREeqbD7MI1AForg", "_fzh2EJnSEeqbD7MI1AForg", "_k_W3MJnREeqbD7MI1AForg" } },
+                // execute : get, store, read, send : store
+                { { "_yW78UJnREeqbD7MI1AForg", "_9UTeQJnQEeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg",
+                        "_n2vsUJnXEeqbD7MI1AForg", "_fzNF8JnSEeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg" } },
+                // execute : get, store : read
+                { { "_B37lAJnSEeqbD7MI1AForg", "_fzh2EJnSEeqbD7MI1AForg", "_n2BTkJnXEeqbD7MI1AForg",
+                        "_n2vsUJnXEeqbD7MI1AForg" } },
+                // finegrained, read
+                { { "_3MDw0JnUEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg" } },
+                // monthly, read
+                { { "_3MX54JnUEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg" } },
+                // finegrained, read
+                { { "_3MDw0JnUEeqbD7MI1AForg", "_n2vsUJnXEeqbD7MI1AForg" } },
+
+        };
+        this.seffs = seffs;
+
+        ResultsRecord record = executeMeasurement_deriver();
+        printResult(record);
+    }
+
     void printResult(ResultsRecord record) {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ASCII"?>
+<system:System xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:composition="http://palladiosimulator.org/PalladioComponentModel/Core/Composition/5.2" xmlns:repository="http://palladiosimulator.org/PalladioComponentModel/Repository/5.2" xmlns:system="http://palladiosimulator.org/PalladioComponentModel/System/5.2" id="_SNdhoJnVEeqbD7MI1AForg" entityName="New System">
+  <assemblyContexts__ComposedStructure id="_ktGFsJnVEeqbD7MI1AForg" entityName="Assembly_PullingSensor">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_7QFjwJnQEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_nZ8GcJnVEeqbD7MI1AForg" entityName="Assembly_PushingSensor">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_RF-ucJnQEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_BMW6YJqAEeqbD7MI1AForg" entityName="Assembly_EnerChartLogic">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_DBqpsJnREeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_CBw4YJqAEeqbD7MI1AForg" entityName="Assembly_TimeSeriesDB_Enerchart">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_gxLX0JnXEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_RiL5UJqAEeqbD7MI1AForg" entityName="Assembly_TimeSeriesDB_OPCUA">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_gxLX0JnXEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_TDwZwJqAEeqbD7MI1AForg" entityName="Assembly_OPCUAServer">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_dECxAJnSEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_bnVkYJqAEeqbD7MI1AForg" entityName="Assembly_Trust40">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_AWPIwJnSEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <assemblyContexts__ComposedStructure id="_okCEUJqAEeqbD7MI1AForg" entityName="Assembly_TimeSeriesDB_Trust40">
+    <encapsulatedComponent__AssemblyContext xsi:type="repository:BasicComponent" href="default.repository#_gxLX0JnXEeqbD7MI1AForg"/>
+  </assemblyContexts__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:ProvidedDelegationConnector" id="_pxKcgJnVEeqbD7MI1AForg" entityName="newProvidedDelegationConnector" outerProvidedRole_ProvidedDelegationConnector="_amAg8JnVEeqbD7MI1AForg" assemblyContext_ProvidedDelegationConnector="_nZ8GcJnVEeqbD7MI1AForg">
+    <innerProvidedRole_ProvidedDelegationConnector href="default.repository#_wt3FsJnREeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_HqPj0JqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_BMW6YJqAEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_ktGFsJnVEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_9UENsJnQEeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_i9hiUJnREeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:ProvidedDelegationConnector" id="_I2DPoJqAEeqbD7MI1AForg" entityName="newProvidedDelegationConnector" outerProvidedRole_ProvidedDelegationConnector="_dS8oUJnVEeqbD7MI1AForg" assemblyContext_ProvidedDelegationConnector="_BMW6YJqAEeqbD7MI1AForg">
+    <innerProvidedRole_ProvidedDelegationConnector href="default.repository#_yW7VQJnREeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_M9XqUJqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_BMW6YJqAEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_CBw4YJqAEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_n11GUJnXEeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_q2ASwJnXEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_OOCoAJqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_nZ8GcJnVEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_BMW6YJqAEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_k_VpEJnREeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_ot3wUJnREeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_XOyPwJqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_BMW6YJqAEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_TDwZwJqAEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_fzMe4JnSEeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_gU0lQJnSEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_YFfOQJqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_TDwZwJqAEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_RiL5UJqAEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_n11GUJnXEeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_tQuBsJnXEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:ProvidedDelegationConnector" id="_jz7yYJqAEeqbD7MI1AForg" entityName="newProvidedDelegationConnector" outerProvidedRole_ProvidedDelegationConnector="_I9ofkJnWEeqbD7MI1AForg" assemblyContext_ProvidedDelegationConnector="_bnVkYJqAEeqbD7MI1AForg">
+    <innerProvidedRole_ProvidedDelegationConnector href="default.repository#_3MBUkJnUEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:ProvidedDelegationConnector" id="_looDIJqAEeqbD7MI1AForg" entityName="newProvidedDelegationConnector" outerProvidedRole_ProvidedDelegationConnector="_gj2_cJnVEeqbD7MI1AForg" assemblyContext_ProvidedDelegationConnector="_bnVkYJqAEeqbD7MI1AForg">
+    <innerProvidedRole_ProvidedDelegationConnector href="default.repository#_B36W4JnSEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_mvY24JqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_bnVkYJqAEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_TDwZwJqAEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_fzMe4JnSEeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_h6_44JnSEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <connectors__ComposedStructure xsi:type="composition:AssemblyConnector" id="_puGDsJqAEeqbD7MI1AForg" entityName="newAssemblyConnector" requiringAssemblyContext_AssemblyConnector="_bnVkYJqAEeqbD7MI1AForg" providingAssemblyContext_AssemblyConnector="_okCEUJqAEeqbD7MI1AForg">
+    <providedRole_AssemblyConnector href="default.repository#_n11GUJnXEeqbD7MI1AForg"/>
+    <requiredRole_AssemblyConnector href="default.repository#_vPUcYJnXEeqbD7MI1AForg"/>
+  </connectors__ComposedStructure>
+  <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_amAg8JnVEeqbD7MI1AForg" entityName="PushingSensorExecutor">
+    <providedInterface__OperationProvidedRole href="default.repository#_tO3PQJnREeqbD7MI1AForg"/>
+  </providedRoles_InterfaceProvidingEntity>
+  <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_dS8oUJnVEeqbD7MI1AForg" entityName="EnerChartPullExecutor">
+    <providedInterface__OperationProvidedRole href="default.repository#_tO3PQJnREeqbD7MI1AForg"/>
+  </providedRoles_InterfaceProvidingEntity>
+  <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_gj2_cJnVEeqbD7MI1AForg" entityName="Trust40PullExecutor">
+    <providedInterface__OperationProvidedRole href="default.repository#_tO3PQJnREeqbD7MI1AForg"/>
+  </providedRoles_InterfaceProvidingEntity>
+  <providedRoles_InterfaceProvidingEntity xsi:type="repository:OperationProvidedRole" id="_I9ofkJnWEeqbD7MI1AForg" entityName="Trust40DataAccessProvidedRole">
+    <providedInterface__OperationProvidedRole href="default.repository#_8WFQkJnSEeqbD7MI1AForg"/>
+  </providedRoles_InterfaceProvidingEntity>
+</system:System>

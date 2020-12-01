@@ -193,6 +193,75 @@ class AccuracyErrorTest extends AccuracyTestTemplate {
         printResult(record);
     }
 
+    @Test
+    void test_energy_s1() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_1.context";
+
+        errorExpected = new BasicEList<>();
+
+        ResultsRecord record = executeMeasurement_error();
+
+        printResult(record);
+    }
+
+    @Test
+    void test_energy_s2() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_2.context";
+
+        errorExpected = new BasicEList<>();
+
+        ResultsRecord record = executeMeasurement_error();
+
+        printResult(record);
+    }
+
+    @Test
+    void test_energy_s3() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_3.context";
+
+        errorExpected = new BasicEList<>();
+        errorExpected.add(new ErrorExpected("_n2BTkJnXEeqbD7MI1AForg", ErrorType.Same));
+        errorExpected.add(new ErrorExpected("_n2vsUJnXEeqbD7MI1AForg", ErrorType.Same));
+        errorExpected.add(new ErrorExpected("_B37lAJnSEeqbD7MI1AForg", ErrorType.Same));
+        errorExpected.add(new ErrorExpected("_fzh2EJnSEeqbD7MI1AForg", ErrorType.Same));
+
+        ResultsRecord record = executeMeasurement_error();
+
+        printResult(record);
+    }
+
+    @Test
+    void test_energy_s4() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_4.context";
+
+        errorExpected = new BasicEList<>();
+        errorExpected.add(new ErrorExpected("_3MX54JnUEeqbD7MI1AForg", ErrorType.MoreSpecific));
+        errorExpected.add(new ErrorExpected("_n2vsUJnXEeqbD7MI1AForg", ErrorType.MoreSpecific));
+
+        ResultsRecord record = executeMeasurement_error();
+
+        printResult(record);
+    }
+
+    @Test
+    void test_energy_s5() throws IOException {
+        caseStudyName = "decisionPoint";
+        scenarioName = "default_5.context";
+
+        errorExpected = new BasicEList<>();
+        errorExpected.add(new ErrorExpected("_3MX54JnUEeqbD7MI1AForg", ErrorType.Same));
+        errorExpected.add(new ErrorExpected("_n2vsUJnXEeqbD7MI1AForg", ErrorType.MoreSpecific));
+        errorExpected.add(new ErrorExpected("_3MDw0JnUEeqbD7MI1AForg", ErrorType.MoreSpecific));
+
+        ResultsRecord record = executeMeasurement_error();
+
+        printResult(record);
+    }
+
     void printResult(ResultsRecord record) {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);

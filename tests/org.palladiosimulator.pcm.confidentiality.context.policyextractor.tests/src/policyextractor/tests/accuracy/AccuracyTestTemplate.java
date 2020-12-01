@@ -135,12 +135,16 @@ class AccuracyTestTemplate {
                     String seffIdName = seffs[index][call][seffId];
                     ResourceDemandingBehaviour rp = getSeffById(seffIdName);
 
-                    // TODO compare context set?
+                    boolean exists = false;
 
                     if (testAbs.isPolicyExisting((ServiceEffectSpecification) rp)) {
                         TP = TP + 1;
+                        exists = true;
                         listSeffs.add(rp);
-                    } else {
+                    }
+
+                    if (!exists) {
+                        Logger.info("FN: " + seffIdName);
                         FN = FN + 1;
                     }
                 }
@@ -216,6 +220,7 @@ class AccuracyTestTemplate {
             ResourceDemandingBehaviour rp = getSeffById(seffIdName);
             for (int call = 0; call < reducer_policies[index].length; call++) {
                 String policyName = reducer_policies[index][call];
+                // Logger.info(policyName + "---" + seffIdName);
                 PolicySpecification policy = getPolicyByName(policyName, rp);
 
                 for (int contextsetindex = 0; contextsetindex < reducer_contextsets[index][call].length; contextsetindex++) {
@@ -235,6 +240,7 @@ class AccuracyTestTemplate {
                         TP++;
                     } else {
                         FN++;
+                        Logger.info(policyName);
                     }
                 }
 

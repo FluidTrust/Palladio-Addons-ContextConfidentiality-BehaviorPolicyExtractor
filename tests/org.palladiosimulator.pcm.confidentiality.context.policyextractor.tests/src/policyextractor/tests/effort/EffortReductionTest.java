@@ -104,7 +104,7 @@ class EffortReductionTest {
                 //
                 { "default_1.context", "default_2.context" },
                 //
-                {} };
+                { "default_1.context", "default_2.context" } };
 
         IntPair[][] results = new IntPair[casestudies.length][5];
 
@@ -134,18 +134,16 @@ class EffortReductionTest {
             parametertable = parametertable.concat(cs);
             parametertable_with = parametertable_with.concat(cs);
 
-            if (index != 3) {
-                String with = "" + results[index][0].x + " & " + results[index][0].y + " & "
-                        + df.format(results[index][0].p) + " \\\\";
-                String without = "" + results[index][1].x + " & " + results[index][1].y + " & "
-                        + df.format(results[index][1].p) + "  \\\\";
+            String with = "" + results[index][0].x + " & " + results[index][0].y + " & "
+                    + df.format(results[index][0].p) + " \\\\";
+            String without = "" + results[index][1].x + " & " + results[index][1].y + " & "
+                    + df.format(results[index][1].p) + "  \\\\";
 
-                parametertable = parametertable.concat(with);
-                parametertable_with = parametertable_with.concat(without);
+            parametertable = parametertable.concat(with);
+            parametertable_with = parametertable_with.concat(without);
 
-                parametertable_g = parametertable_g.concat("(" + df.format(results[index][0].p) + ",)");
-                parametertable_g_with = parametertable_g_with.concat("(" + df.format(results[index][1].p) + ",)");
-            }
+            parametertable_g = parametertable_g.concat("(" + df.format(results[index][0].p) + ",)");
+            parametertable_g_with = parametertable_g_with.concat("(" + df.format(results[index][1].p) + ",)");
 
             parametertable = parametertable.concat("\n");
             parametertable_with = parametertable_with.concat("\n");

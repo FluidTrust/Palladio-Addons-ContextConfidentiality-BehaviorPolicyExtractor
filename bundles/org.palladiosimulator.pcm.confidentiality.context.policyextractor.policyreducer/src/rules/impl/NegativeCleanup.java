@@ -36,4 +36,8 @@ public class NegativeCleanup extends AbstractRule {
         return applicable;
     }
 
+    @Override
+    protected boolean isRemoveNegative() {
+        return true;
+    }
 }

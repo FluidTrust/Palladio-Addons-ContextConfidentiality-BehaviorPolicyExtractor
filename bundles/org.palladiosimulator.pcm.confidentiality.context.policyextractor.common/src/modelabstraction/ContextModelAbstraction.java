@@ -50,8 +50,8 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             UsageScenario usageScenario = contextSpecification.getUsagescenario();
             if (usageScenario != null) {
-                if (usageScenario.getScenarioBehaviour_UsageScenario().getId()
-                        .equalsIgnoreCase(scenarioBehaviour.getId())) {
+                if (usageScenario.getScenarioBehaviour_UsageScenario().getId().equalsIgnoreCase(
+                        scenarioBehaviour.getId())) {
                     list.add(contextSpecification);
                 }
             }
@@ -174,12 +174,23 @@ public class ContextModelAbstraction {
         return list;
     }
 
-    public void removeContextSet(ResourceDemandingBehaviour seff, ContextSet set) {
+    public void removeContextSet(ResourceDemandingBehaviour seff, ContextSet set, boolean removeNegative) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
             // Don't remove context set from negative specs
             if (!isNegative(policySpecification)) {
                 policySpecification.getPolicy().remove(set);
+            } else {
+                // If parameter true, still remvoe
+                if (removeNegative) {
+                    policySpecification.getPolicy().remove(set);
+                }
             }
+        }
+    }
+
+    public void removeContextSetNegative(ResourceDemandingBehaviour seff, ContextSet set) {
+        for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
+            policySpecification.getPolicy().remove(set);
         }
     }
 

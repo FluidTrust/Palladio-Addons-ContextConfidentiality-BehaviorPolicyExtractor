@@ -82,9 +82,20 @@ public abstract class AbstractRule implements IRulesDefinition {
                 contextModelAbs.addContextSet(record.getSeff(), record.getReplacedBy());
             }
 
-            contextModelAbs.removeContextSet(record.getSeff(), record.getRemove());
+            boolean removeNegative = isRemoveNegative();
+            contextModelAbs.removeContextSet(record.getSeff(), record.getRemove(), removeNegative);
         }
         return true;
+    }
+
+    /**
+     * Should only be true for negativeCleanup
+     * 
+     * @return true if the rule also removes context sets from negative policies
+     *
+     */
+    protected boolean isRemoveNegative() {
+        return false;
     }
 
     /**

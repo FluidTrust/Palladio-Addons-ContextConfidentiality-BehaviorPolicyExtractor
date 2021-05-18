@@ -7,6 +7,7 @@ import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
 
@@ -70,9 +71,8 @@ public class TestContextModelAbstraction {
         return getNumberOfPolicies() + getNumberOfSpecification();
     }
 
-    public boolean isPolicyExisting(ServiceEffectSpecification seff) {
-        assertTrue(seff instanceof ResourceDemandingBehaviour);
-        int numPolicies = contextModelAbs.getPolicySpecifications((ResourceDemandingBehaviour) seff).size();
+    public boolean isPolicyExisting(MethodSpecification seff) {
+        int numPolicies = contextModelAbs.getPolicySpecifications(seff).size();
         return (numPolicies > 0);
     }
 }

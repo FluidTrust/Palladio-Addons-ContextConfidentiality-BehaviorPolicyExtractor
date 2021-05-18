@@ -1,15 +1,20 @@
 package policyextractor.tests.accuracy;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.ocl.util.Tuple;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
@@ -118,7 +123,7 @@ class AccuracyTestTemplate {
         int FP = 0;
         int FN = 0;
 
-        EList<ResourceDemandingBehaviour> listSeffs = new BasicEList<>();
+        EList<MethodSpecification> listSeffs = new BasicEList<>();
 
         for (int index = 0; index < usageScenarios.length; index++) {
             for (int call = 0; call < systemCalls[index].length; call++) {
@@ -133,11 +138,12 @@ class AccuracyTestTemplate {
 
                 for (int seffId = 0; seffId < seffs[index][call].length; seffId++) {
                     String seffIdName = seffs[index][call][seffId];
-                    ResourceDemandingBehaviour rp = getSeffById(seffIdName);
+                    //TODO fix
+                    var rp = getSeffById(null);
 
                     boolean exists = false;
 
-                    if (testAbs.isPolicyExisting((ServiceEffectSpecification) rp)) {
+                    if (testAbs.isPolicyExisting(rp)) {
                         TP = TP + 1;
                         exists = true;
                         listSeffs.add(rp);
@@ -151,11 +157,11 @@ class AccuracyTestTemplate {
             }
         }
 
-        for (ResourceDemandingBehaviour seff : testAbs.contextModelAbs.getSEFFs()) {
-            if (testAbs.isPolicyExisting((ServiceEffectSpecification) seff)) {
+        for (var seff : testAbs.contextModelAbs.getSEFFs()) {
+            if (testAbs.isPolicyExisting(seff)) {
                 if (!listSeffs.contains(seff)) {
                     FP = FP + 1;
-                    Logger.info("FP: " + seff.getId());
+                    Logger.info("FP: " + seff.getSignature().getId());
                 }
             }
         }
@@ -217,7 +223,7 @@ class AccuracyTestTemplate {
 
         for (int index = 0; index < reducer_seffs.length; index++) {
             String seffIdName = reducer_seffs[index];
-            ResourceDemandingBehaviour rp = getSeffById(seffIdName);
+            var rp = getSeffById(null);//TODO Fix
             for (int call = 0; call < reducer_policies[index].length; call++) {
                 String policyName = reducer_policies[index][call];
                 // Logger.info(policyName + "---" + seffIdName);
@@ -267,7 +273,7 @@ class AccuracyTestTemplate {
             }
         }
 
-        for (ResourceDemandingBehaviour seff : testAbs.contextModelAbs.getSEFFs()) {
+        for (var seff : testAbs.contextModelAbs.getSEFFs()) {
             // Logger.info("\"" + seff.getId() + "\"");
         }
 
@@ -373,7 +379,7 @@ class AccuracyTestTemplate {
             boolean contained = false;
             for (ErrorExpected expected : errorExpected) {
                 if (error.getType().equals(expected.type)) {
-                    if (error.getRecord().getSeff().getId().equals(expected.seff)) {
+                    if (error.getRecord().getSeff().getSignature().equals(expected.seff)) { //TODO fix
                         contained = true;
                     }
                 }
@@ -391,7 +397,7 @@ class AccuracyTestTemplate {
             boolean contained = false;
             for (ErrorRecord error : errorList) {
                 if (error.getType().equals(expected.type)) {
-                    if (error.getRecord().getSeff().getId().equals(expected.seff)) {
+                    if (error.getRecord().getSeff().getSignature().equals(expected.seff)) { //TODO fix
                         contained = true;
                     }
                 }
@@ -427,16 +433,14 @@ class AccuracyTestTemplate {
         execute_reducer();
     }
 
-    private ResourceDemandingBehaviour getSeffById(String id) {
-        ResourceDemandingBehaviour ret = null;
-        for (ResourceDemandingBehaviour rdb : testAbs.contextModelAbs.getSEFFs()) {
-            if (rdb.getId().equals(id)) {
-                ret = rdb;
-                break;
-            }
-        }
-        assertNotNull(ret);
-        return ret;
+    private MethodSpecification getSeffById(Pair<String, String> id) {
+        var spec = testAbs.contextModelAbs.getSEFFs().stream()
+                .filter(specification -> specification.getSignature().getId().equals(id.getLeft())
+                        && specification.getConnector().getId().equals(id.getRight()))
+                .findAny();
+        if (spec.isEmpty())
+            fail();
+        return spec.get();
     }
 
     private EntryLevelSystemCall getSystemCallByName(String name) {

@@ -8,6 +8,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.junit,
  org.junit.jupiter.api,
  org.palladiosimulator.pcm.confidentiality.context,
- org.palladiosimulator.pcm.confidentiality.context.policyextractor.common;bundle-version="1.0.0",
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor.common,
  org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer,
  org.palladiosimulator.pcm.confidentiality.context.policyextractor.common.tests

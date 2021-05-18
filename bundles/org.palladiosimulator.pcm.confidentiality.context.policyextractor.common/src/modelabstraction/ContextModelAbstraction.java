@@ -1,7 +1,11 @@
 package modelabstraction;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextAttribute;
 import org.palladiosimulator.pcm.confidentiality.context.model.ContextContainer;
@@ -11,6 +15,8 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer
 import org.palladiosimulator.pcm.confidentiality.context.set.SetFactory;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.SystemPolicySpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
@@ -50,8 +56,8 @@ public class ContextModelAbstraction {
         for (ContextSpecification contextSpecification : getContextSpecifications()) {
             UsageScenario usageScenario = contextSpecification.getUsagescenario();
             if (usageScenario != null) {
-                if (usageScenario.getScenarioBehaviour_UsageScenario().getId().equalsIgnoreCase(
-                        scenarioBehaviour.getId())) {
+                if (usageScenario.getScenarioBehaviour_UsageScenario().getId()
+                        .equalsIgnoreCase(scenarioBehaviour.getId())) {
                     list.add(contextSpecification);
                 }
             }
@@ -106,38 +112,20 @@ public class ContextModelAbstraction {
         }
     }
 
-    public EList<PolicySpecification> getPolicySpecifications(ResourceDemandingBehaviour seff) {
-        EList<PolicySpecification> list = new BasicEList<>();
+    public List<PolicySpecification> getPolicySpecifications(MethodSpecification seff) {
 
-        for (PolicySpecification policySpecification : getPolicySpecifications()) {
-            ResourceDemandingBehaviour rdb = policySpecification.getResourcedemandingbehaviour();
-            if (rdb != null) {
-                if (rdb == seff) {
-                    list.add(policySpecification);
-                }
-            }
-        }
-
-        return list;
+        return getPolicySpecifications().stream().filter(SystemPolicySpecification.class::isInstance)
+                .map(SystemPolicySpecification.class::cast)
+                .filter(policy -> EcoreUtil.equals(policy.getMethodspecification(), seff)).collect(Collectors.toList());
     }
 
-    public EList<ResourceDemandingBehaviour> getSEFFs() {
-        EList<ResourceDemandingBehaviour> list = new BasicEList<>();
-
-        for (PolicySpecification policySpecification : getPolicySpecifications()) {
-            ResourceDemandingBehaviour rdb = policySpecification.getResourcedemandingbehaviour();
-            if (rdb != null) {
-                if (!list.contains(rdb)) {
-                    list.add(rdb);
-                }
-            }
-        }
-
-        return list;
-
+    public List<MethodSpecification> getSEFFs() {
+        return getPolicySpecifications().stream().filter(SystemPolicySpecification.class::isInstance)
+                .map(SystemPolicySpecification.class::cast).filter(policy -> policy.getMethodspecification() != null)
+                .map(SystemPolicySpecification::getMethodspecification).collect(Collectors.toList());
     }
 
-    public EList<ContextSet> getContextSet(ResourceDemandingBehaviour seff) {
+    public EList<ContextSet> getContextSet(MethodSpecification seff) {
         EList<ContextSet> list = new BasicEList<>();
 
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
@@ -148,7 +136,7 @@ public class ContextModelAbstraction {
     }
 
     // TODO remove logic from here, instead use records and move logic to external caller
-    public EList<ContextSet> getContextSetFiltered(ResourceDemandingBehaviour seff) {
+    public EList<ContextSet> getContextSetFiltered(MethodSpecification seff) {
         EList<ContextSet> list = new BasicEList<>();
 
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
@@ -162,7 +150,7 @@ public class ContextModelAbstraction {
         return list;
     }
 
-    public EList<ContextSetRecord> getContextSetRecords(ResourceDemandingBehaviour seff) {
+    public EList<ContextSetRecord> getContextSetRecords(MethodSpecification seff) {
         EList<ContextSetRecord> list = new BasicEList<>();
 
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
@@ -174,7 +162,7 @@ public class ContextModelAbstraction {
         return list;
     }
 
-    public void removeContextSet(ResourceDemandingBehaviour seff, ContextSet set, boolean removeNegative) {
+    public void removeContextSet(MethodSpecification seff, ContextSet set, boolean removeNegative) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
             // Don't remove context set from negative specs
             if (!isNegative(policySpecification)) {
@@ -188,13 +176,13 @@ public class ContextModelAbstraction {
         }
     }
 
-    public void removeContextSetNegative(ResourceDemandingBehaviour seff, ContextSet set) {
+    public void removeContextSetNegative(MethodSpecification seff, ContextSet set) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
             policySpecification.getPolicy().remove(set);
         }
     }
 
-    public void addContextSet(ResourceDemandingBehaviour seff, ContextSet newSet) {
+    public void addContextSet(MethodSpecification seff, ContextSet newSet) {
         for (PolicySpecification policySpecification : getPolicySpecifications(seff)) {
             policySpecification.getPolicy().add(newSet);
             // TODO Correct like this? If one seff has multiple policies containers, only needed in

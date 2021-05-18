@@ -2,10 +2,18 @@ package policyderiver;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.SpecificationFactory;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.AssemblyFactory;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.SystemPolicySpecification;
+import org.palladiosimulator.pcm.core.composition.AssemblyConnector;
+import org.palladiosimulator.pcm.core.composition.AssemblyContext;
+import org.palladiosimulator.pcm.core.composition.Connector;
+import org.palladiosimulator.pcm.core.composition.ProvidedDelegationConnector;
+import org.palladiosimulator.pcm.core.composition.util.CompositionSwitch;
 import org.palladiosimulator.pcm.seff.ResourceDemandingSEFF;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
@@ -43,12 +51,13 @@ public class Deriver {
         for (ScenarioBehaviour scenarioBehaviour : palladioAbs.getUsageModelAbs().getListofScenarioBehaviour()) {
             Logger.infoDetailed("ScenarioBehaviour: " + scenarioBehaviour.getEntityName());
 
-            for (EntryLevelSystemCall systemCall : palladioAbs.getUsageModelAbs().getListOfEntryLevelSystemCalls(
-                    scenarioBehaviour)) {
+            for (EntryLevelSystemCall systemCall : palladioAbs.getUsageModelAbs()
+                    .getListOfEntryLevelSystemCalls(scenarioBehaviour)) {
                 Logger.infoDetailed("SystemCall: " + systemCall.getEntityName());
-                for (ResourceDemandingSEFF seff : palladioAbs.getAffectedSEFFs(systemCall)) {
+                var seffMap = palladioAbs.getAffectedSEFFs(systemCall);
+                for (ResourceDemandingSEFF seff : seffMap.keySet()) {
                     for (DeriverRecord record : getContextSetsToApply(scenarioBehaviour, systemCall)) {
-                        applyContextSetToSEFF(seff, record);
+                        applyContextSetToSEFF(seff, seffMap.get(seff), record);
                     }
                 }
             }
@@ -61,16 +70,53 @@ public class Deriver {
      * @param seff
      * @param record
      */
-    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, DeriverRecord record) {
+    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, AssemblyContext context, DeriverRecord record) {
         Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
         Logger.infoDetailed("RecordBehaviour: " + record.getScenarioBehaviour().getEntityName());
         Logger.infoDetailed("RecordCall: " + record.getSystemCall().getEntityName());
         Logger.infoDetailed("RecordNegative: " + record.isNegative());
         Logger.infoDetailed("RecordSet: " + record.getSetToApply().getEntityName());
-        PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
+        PolicySpecification policy = AssemblyFactory.eINSTANCE.createSystemPolicySpecification();
         policy.setEntityName(
                 DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName(),
                         record.getSystemCall().getEntityName(), record.getScenarioBehaviour().getEntityName()));
+        var methodSpecification = AssemblyFactory.eINSTANCE.createMethodSpecification();
+        methodSpecification.setSignature(seff.getDescribedService__SEFF());
+        var connectors = context.getParentStructure__AssemblyContext().getConnectors__ComposedStructure();
+
+        var conSwitcher = new CompositionSwitch<Connector>() {
+            @Override
+            public Connector caseAssemblyConnector(AssemblyConnector object) {
+                if (!EcoreUtil.equals(object.getProvidingAssemblyContext_AssemblyConnector(), context))
+                    return null;
+                var signature = seff.getDescribedService__SEFF();
+                if (object.getProvidedRole_AssemblyConnector().getProvidedInterface__OperationProvidedRole()
+                        .getSignatures__OperationInterface().stream()
+                        .noneMatch(own -> EcoreUtil.equals(own, signature)))
+                    return null;
+                return object;
+            }
+            @Override
+            public Connector caseProvidedDelegationConnector(ProvidedDelegationConnector object)
+            {
+                if (!EcoreUtil.equals(object.getAssemblyContext_ProvidedDelegationConnector(), context))
+                    return null;
+                var signature = seff.getDescribedService__SEFF();
+                if (object.getInnerProvidedRole_ProvidedDelegationConnector().getProvidedInterface__OperationProvidedRole()
+                        .getSignatures__OperationInterface().stream()
+                        .noneMatch(own -> EcoreUtil.equals(own, signature)))
+                    return null;
+                return object;
+            }
+            
+        };
+        for (var connector : connectors) {
+            if(conSwitcher.doSwitch(connector)!=null) {
+                methodSpecification.setConnector(connector);
+                break;
+            }
+        }
+
         policy.setResourcedemandingbehaviour(seff);
         policy.getPolicy().add(record.getSetToApply());
         contextModelAbs.getPolicySpecifications().add(policy);

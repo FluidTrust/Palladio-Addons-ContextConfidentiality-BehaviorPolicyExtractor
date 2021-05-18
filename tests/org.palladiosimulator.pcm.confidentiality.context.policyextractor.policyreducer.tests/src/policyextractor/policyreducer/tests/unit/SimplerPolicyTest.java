@@ -25,8 +25,8 @@ class SimplerPolicyTest {
         ConfidentialAccessSpecification contextModel = modelloader.loadContextModel();
         ContextModelAbstraction contextModelAbs = new ContextModelAbstraction(contextModel);
 
-        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
-            Logger.infoDetailed("SEFF:" + seff.getId());
+        for (var seff : contextModelAbs.getSEFFs()) {
+            Logger.infoDetailed("SEFF:" + seff.getSignature().getId());
 
             new ContextModelPrinter().printSEFF(contextModel, seff);
             new SimplerPolicy(contextModelAbs).applyRule(seff);

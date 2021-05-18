@@ -6,6 +6,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
@@ -16,7 +17,7 @@ import util.Logger;
 /**
  * Implements basic functionality for a Rule, leaving application of rule abstract
  * 
- * @author Thomas Lieb
+ * @author Thomas Lieb, Maximilian Walter
  *
  */
 public abstract class AbstractRule implements IRulesDefinition {
@@ -38,7 +39,7 @@ public abstract class AbstractRule implements IRulesDefinition {
      * @param seff
      * @return
      */
-    public abstract boolean applyRule(ResourceDemandingBehaviour seff);
+    public abstract boolean applyRule(MethodSpecification seff);
 
     @Override
     public int getNumberOfRecords() {
@@ -57,7 +58,7 @@ public abstract class AbstractRule implements IRulesDefinition {
      */
     public void applyRuleToModel() {
         boolean appliable = false;
-        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
+        for (var seff : contextModelAbs.getSEFFs()) {
             boolean ret = applyRule(seff);
             appliable = ret || appliable;
         }
@@ -74,7 +75,7 @@ public abstract class AbstractRule implements IRulesDefinition {
         for (RulesRecord record : appliedList) {
             String replacedByString = record.getReplacedBy() == null ? "-" : record.getReplacedBy().getEntityName();
             Logger.infoDetailed("\tRemove: " + record.getRemove().getEntityName() + " : " + replacedByString
-                    + " : SEFF(" + record.getSeff().getId() + ")");
+                    + " : SEFF(" + record.getSeff().getSignature() + ")");
 
             if (record.isCreated()) {
                 ContextSetContainer container = contextModelAbs.getContextSetContainer(record.getRemove());
@@ -107,7 +108,7 @@ public abstract class AbstractRule implements IRulesDefinition {
      * @param created
      * @return
      */
-    protected RulesRecord createRecord(ResourceDemandingBehaviour seff, ContextSet remove, ContextSet replacedBy,
+    protected RulesRecord createRecord(MethodSpecification seff, ContextSet remove, ContextSet replacedBy,
             boolean created) {
         IRulesDefinition rule = this;
         return new RulesRecord(rule, seff, remove, replacedBy, created);

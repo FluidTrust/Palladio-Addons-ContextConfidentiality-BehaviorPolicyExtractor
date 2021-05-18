@@ -63,25 +63,6 @@ public class PolicyCleaner {
         Logger.info("Cleanup-End");
     }
 
-    private void mergePolicySpecificationsOfSameSeff() {
-
-        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
-            EList<PolicySpecification> list = new BasicEList<>();
-
-            PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-            policy.setEntityName(seff.getId());
-            policy.setResourcedemandingbehaviour(seff);
-
-            for (PolicySpecification specification : contextModelAbs.getPolicySpecifications(seff)) {
-                policy.getPolicy().addAll(specification.getPolicy());
-                list.add(specification);
-            }
-
-            contextModelAbs.getContextModel().getPcmspecificationcontainer().getPolicyspecification().add(policy);
-            contextModelAbs.getContextModel().getPcmspecificationcontainer().getPolicyspecification().removeAll(list);
-        }
-    }
-
     private void removeContextSpecifications() {
         contextModelAbs.getContextModel().getPcmspecificationcontainer().getContextspecification().clear();
     }

@@ -10,6 +10,8 @@ import org.palladiosimulator.pcm.confidentiality.context.set.ContextSetContainer
 import org.palladiosimulator.pcm.confidentiality.context.specification.ContextSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PCMSpecificationContainer;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.SystemPolicySpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 import modelabstraction.ContextModelAbstraction;
@@ -52,14 +54,14 @@ public class ContextModelPrinter {
 
         PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
-        for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {
+        for (var specification : pcmContainer.getPolicyspecification()) {
             Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
-                    + abs.getContextSet(specification.getResourcedemandingbehaviour()).size());
+                    + abs.getContextSet(((SystemPolicySpecification)specification).getMethodspecification()).size());
         }
         Logger.infoDetailed("\n");
     }
 
-    public void printSEFF(ConfidentialAccessSpecification model, ResourceDemandingBehaviour seff) {
+    public void printSEFF(ConfidentialAccessSpecification model, MethodSpecification seff) {
         PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
 
         for (PolicySpecification specification : pcmContainer.getPolicyspecification()) {

@@ -6,11 +6,11 @@ Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: gui
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.core.commands,
- org.eclipse.core.runtime;bundle-version="3.18.0",
- org.eclipse.ui;bundle-version="3.117.0",
- org.palladiosimulator.pcm.confidentiality.context;bundle-version="0.1.0",
- org.palladiosimulator.pcm.confidentiality.context.policyextractor.common;bundle-version="1.0.0",
- org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer;bundle-version="1.0.0",
- org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyderiver;bundle-version="1.0.0"
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.palladiosimulator.pcm.confidentiality.context,
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor.common,
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyreducer,
+ org.palladiosimulator.pcm.confidentiality.context.policyextractor.policyderiver
 Export-Package: gui,
  main

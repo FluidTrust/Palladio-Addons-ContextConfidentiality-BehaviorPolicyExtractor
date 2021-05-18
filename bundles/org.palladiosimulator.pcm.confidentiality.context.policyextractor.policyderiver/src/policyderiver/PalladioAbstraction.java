@@ -1,5 +1,8 @@
 package policyderiver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.core.composition.AssemblyConnector;
@@ -38,7 +41,7 @@ public class PalladioAbstraction {
     private final Repository repo; // not used anymore -> remove?
     private final AssemblyAbstraction assemblyAbs;
 
-    private EList<ResourceDemandingSEFF> seffs;
+    private Map<ResourceDemandingSEFF, AssemblyContext> seffs;
 
     public PalladioAbstraction(final UsageModel usageModel, final Repository repo, final System system) {
         this.usageModelAbs = new UsageModelAbstraction(usageModel);
@@ -52,8 +55,8 @@ public class PalladioAbstraction {
      * @param entryLevelSystemCall
      * @return
      */
-    public EList<ResourceDemandingSEFF> getAffectedSEFFs(EntryLevelSystemCall entryLevelSystemCall) {
-        seffs = new BasicEList<ResourceDemandingSEFF>();
+    public Map<ResourceDemandingSEFF, AssemblyContext>  getAffectedSEFFs(EntryLevelSystemCall entryLevelSystemCall) {
+        seffs = new HashMap<>();
 
         entryPointSystemCall(entryLevelSystemCall);
 
@@ -179,7 +182,7 @@ public class PalladioAbstraction {
      * @param hierarchy
      */
     private void handleResourceDemandingSEFF(ResourceDemandingSEFF rdSeff, EList<AssemblyContext> hierarchy) {
-        seffs.add(rdSeff);
+        seffs.put(rdSeff,hierarchy.get(hierarchy.size()-1));
 
         // Get all external actions, and apply context as well
         for (AbstractAction action : rdSeff.getSteps_Behaviour()) {

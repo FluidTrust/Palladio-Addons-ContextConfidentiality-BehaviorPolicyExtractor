@@ -2,7 +2,7 @@ package rules.impl;
 
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
-import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
 
 import modelabstraction.ContextModelAbstraction;
 import modelabstraction.ContextSetRecord;
@@ -23,7 +23,7 @@ public class SamePolicy extends AbstractRule {
     }
 
     @Override
-    public boolean applyRule(ResourceDemandingBehaviour seff) {
+    public boolean applyRule(MethodSpecification seff) {
         boolean applied = false;
 
         EList<ContextSetRecord> list = contextModelAbs.getContextSetRecords(seff);

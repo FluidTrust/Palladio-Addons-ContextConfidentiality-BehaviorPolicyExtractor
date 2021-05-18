@@ -2,9 +2,10 @@ package rules.impl;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
-import org.palladiosimulator.pcm.confidentiality.context.specification.SpecificationFactory;
-import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.AssemblyFactory;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
 import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
 
 import modelabstraction.ContextModelAbstraction;
@@ -18,7 +19,7 @@ import util.Logger;
  * 
  * (all children in hierarchical context --> replace with parent)
  * 
- * @author Thomas Lieb
+ * @author Thomas Lieb, Maximilian Walter
  *
  */
 public class MergeSEFF extends AbstractRule {
@@ -29,7 +30,7 @@ public class MergeSEFF extends AbstractRule {
     }
 
     @Override
-    public boolean applyRule(ResourceDemandingBehaviour seff) {
+    public boolean applyRule(MethodSpecification seff) {
         boolean applied = false;
 
         if (contextModelAbs.getPolicySpecifications(seff).size() > 1) {
@@ -49,10 +50,10 @@ public class MergeSEFF extends AbstractRule {
 
     @Override
     public boolean executeRule() {
-        for (ResourceDemandingBehaviour seff : contextModelAbs.getSEFFs()) {
+        for (var methodSpecification : contextModelAbs.getSEFFs()) {
             boolean merge = false;
             for (RulesRecord record : appliedList) {
-                if (seff.equals(record.getSeff())) {
+                if (EcoreUtil.equals(methodSpecification, record.getSeff())) {
                     merge = true;
                 }
             }
@@ -61,16 +62,17 @@ public class MergeSEFF extends AbstractRule {
                 continue;
             }
 
-            PolicySpecification policy = SpecificationFactory.eINSTANCE.createPolicySpecification();
-            String name = ReducerUtil.createNewPolicySpecificationName((ServiceEffectSpecification) seff);
+            var policy = AssemblyFactory.eINSTANCE.createSystemPolicySpecification();
+            String name = ReducerUtil
+                    .createNewPolicySpecificationName((ServiceEffectSpecification) methodSpecification);
 
             policy.setEntityName(name);
-            policy.setResourcedemandingbehaviour(seff);
+            policy.setMethodspecification(methodSpecification);
             Logger.infoDetailed("\tCreated: " + policy.getEntityName());
 
             EList<PolicySpecification> list = new BasicEList<>();
 
-            for (PolicySpecification specification : contextModelAbs.getPolicySpecifications(seff)) {
+            for (PolicySpecification specification : contextModelAbs.getPolicySpecifications(methodSpecification)) {
                 policy.getPolicy().addAll(specification.getPolicy());
                 list.add(specification);
                 Logger.infoDetailed("\tRemove for same SEFF: " + specification.getEntityName());

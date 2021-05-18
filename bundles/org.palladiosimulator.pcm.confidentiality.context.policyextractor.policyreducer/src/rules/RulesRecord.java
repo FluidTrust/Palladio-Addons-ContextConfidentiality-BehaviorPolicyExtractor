@@ -1,6 +1,7 @@
 package rules;
 
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
 import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
 
 /**
@@ -15,12 +16,12 @@ import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
  */
 public class RulesRecord {
     private IRulesDefinition rule;
-    private ResourceDemandingBehaviour seff; // == DataElement
+    private MethodSpecification seff; // == DataElement
     private ContextSet remove;
     private ContextSet replacedBy;
     private boolean created;
 
-    public RulesRecord(IRulesDefinition rule, ResourceDemandingBehaviour seff, ContextSet remove, ContextSet replacedBy,
+    public RulesRecord(IRulesDefinition rule, MethodSpecification seff, ContextSet remove, ContextSet replacedBy,
             boolean created) {
         super();
         this.rule = rule;
@@ -33,8 +34,8 @@ public class RulesRecord {
     public IRulesDefinition getRule() {
         return rule;
     }
-
-    public ResourceDemandingBehaviour getSeff() {
+    //TODO: check Name
+    public MethodSpecification getSeff() {
         return seff;
     }
 

@@ -55,9 +55,9 @@ public class Deriver {
                     .getListOfEntryLevelSystemCalls(scenarioBehaviour)) {
                 Logger.infoDetailed("SystemCall: " + systemCall.getEntityName());
                 var seffMap = palladioAbs.getAffectedSEFFs(systemCall);
-                for (ResourceDemandingSEFF seff : seffMap.keySet()) {
+                for (var seffPair : seffMap) {
                     for (DeriverRecord record : getContextSetsToApply(scenarioBehaviour, systemCall)) {
-                        applyContextSetToSEFF(seff, seffMap.get(seff), record);
+                        applyContextSetToSEFF(seffPair.getLeft(), seffPair.getRight(), record);
                     }
                 }
             }
@@ -70,54 +70,54 @@ public class Deriver {
      * @param seff
      * @param record
      */
-    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, AssemblyContext context, DeriverRecord record) {
+    private void applyContextSetToSEFF(ResourceDemandingSEFF seff, Connector connector, DeriverRecord record) {
         Logger.info("CreateByRecord: " + seff.getDescribedService__SEFF().getEntityName());
         Logger.infoDetailed("RecordBehaviour: " + record.getScenarioBehaviour().getEntityName());
         Logger.infoDetailed("RecordCall: " + record.getSystemCall().getEntityName());
         Logger.infoDetailed("RecordNegative: " + record.isNegative());
         Logger.infoDetailed("RecordSet: " + record.getSetToApply().getEntityName());
-        PolicySpecification policy = AssemblyFactory.eINSTANCE.createSystemPolicySpecification();
+        var policy = AssemblyFactory.eINSTANCE.createSystemPolicySpecification();
         policy.setEntityName(
                 DeriverUtil.createNewPolicySpecificationName(seff.getDescribedService__SEFF().getEntityName(),
                         record.getSystemCall().getEntityName(), record.getScenarioBehaviour().getEntityName()));
         var methodSpecification = AssemblyFactory.eINSTANCE.createMethodSpecification();
         methodSpecification.setSignature(seff.getDescribedService__SEFF());
-        var connectors = context.getParentStructure__AssemblyContext().getConnectors__ComposedStructure();
-
-        var conSwitcher = new CompositionSwitch<Connector>() {
-            @Override
-            public Connector caseAssemblyConnector(AssemblyConnector object) {
-                if (!EcoreUtil.equals(object.getProvidingAssemblyContext_AssemblyConnector(), context))
-                    return null;
-                var signature = seff.getDescribedService__SEFF();
-                if (object.getProvidedRole_AssemblyConnector().getProvidedInterface__OperationProvidedRole()
-                        .getSignatures__OperationInterface().stream()
-                        .noneMatch(own -> EcoreUtil.equals(own, signature)))
-                    return null;
-                return object;
-            }
-            @Override
-            public Connector caseProvidedDelegationConnector(ProvidedDelegationConnector object)
-            {
-                if (!EcoreUtil.equals(object.getAssemblyContext_ProvidedDelegationConnector(), context))
-                    return null;
-                var signature = seff.getDescribedService__SEFF();
-                if (object.getInnerProvidedRole_ProvidedDelegationConnector().getProvidedInterface__OperationProvidedRole()
-                        .getSignatures__OperationInterface().stream()
-                        .noneMatch(own -> EcoreUtil.equals(own, signature)))
-                    return null;
-                return object;
-            }
-            
-        };
-        for (var connector : connectors) {
-            if(conSwitcher.doSwitch(connector)!=null) {
-                methodSpecification.setConnector(connector);
-                break;
-            }
-        }
-
-        policy.setResourcedemandingbehaviour(seff);
+//        var connectors = context.getParentStructure__AssemblyContext().getConnectors__ComposedStructure();
+//
+//        var conSwitcher = new CompositionSwitch<Connector>() {
+//            @Override
+//            public Connector caseAssemblyConnector(AssemblyConnector object) {
+//                if (!EcoreUtil.equals(object.getProvidingAssemblyContext_AssemblyConnector(), context))
+//                    return null;
+//                var signature = seff.getDescribedService__SEFF();
+//                if (object.getProvidedRole_AssemblyConnector().getProvidedInterface__OperationProvidedRole()
+//                        .getSignatures__OperationInterface().stream()
+//                        .noneMatch(own -> EcoreUtil.equals(own, signature)))
+//                    return null;
+//                return object;
+//            }
+//            @Override
+//            public Connector caseProvidedDelegationConnector(ProvidedDelegationConnector object)
+//            {
+//                if (!EcoreUtil.equals(object.getAssemblyContext_ProvidedDelegationConnector(), context))
+//                    return null;
+//                var signature = seff.getDescribedService__SEFF();
+//                if (object.getInnerProvidedRole_ProvidedDelegationConnector().getProvidedInterface__OperationProvidedRole()
+//                        .getSignatures__OperationInterface().stream()
+//                        .noneMatch(own -> EcoreUtil.equals(own, signature)))
+//                    return null;
+//                return object;
+//            }
+//            
+//        };
+//        for (var connector : connectors) {
+//            if(conSwitcher.doSwitch(connector)!=null) {
+//                methodSpecification.setConnector(connector);
+//                break;
+//            }
+//        }
+        methodSpecification.setConnector(connector);
+        policy.setMethodspecification(methodSpecification);
         policy.getPolicy().add(record.getSetToApply());
         contextModelAbs.getPolicySpecifications().add(policy);
 

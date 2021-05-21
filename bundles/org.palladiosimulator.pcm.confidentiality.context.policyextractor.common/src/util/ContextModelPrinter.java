@@ -55,8 +55,8 @@ public class ContextModelPrinter {
         PCMSpecificationContainer pcmContainer = model.getPcmspecificationcontainer();
         Logger.infoDetailed("PcmContainer: " + pcmContainer.getEntityName() + "," + pcmContainer.getId());
         for (var specification : pcmContainer.getPolicyspecification()) {
-            Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
-                    + abs.getContextSet(((SystemPolicySpecification)specification).getMethodspecification()).size());
+//            Logger.infoDetailed("\tPolicy: " + specification.getEntityName() + "," + specification.getId() + " , "
+//                    + abs.getContextSet(((SystemPolicySpecification)specification).getMethodspecification()).size());
         }
         Logger.infoDetailed("\n");
     }

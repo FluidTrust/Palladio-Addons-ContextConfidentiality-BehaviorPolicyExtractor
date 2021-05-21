@@ -1,13 +1,16 @@
 package policyderiver;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.palladiosimulator.pcm.core.composition.AssemblyConnector;
 import org.palladiosimulator.pcm.core.composition.AssemblyContext;
 import org.palladiosimulator.pcm.core.composition.ComposedStructure;
+import org.palladiosimulator.pcm.core.composition.Connector;
 import org.palladiosimulator.pcm.core.composition.ProvidedDelegationConnector;
 import org.palladiosimulator.pcm.core.composition.RequiredDelegationConnector;
 import org.palladiosimulator.pcm.repository.BasicComponent;
@@ -41,7 +44,7 @@ public class PalladioAbstraction {
     private final Repository repo; // not used anymore -> remove?
     private final AssemblyAbstraction assemblyAbs;
 
-    private Map<ResourceDemandingSEFF, AssemblyContext> seffs;
+    private List<Pair<ResourceDemandingSEFF, Connector>> seffs;
 
     public PalladioAbstraction(final UsageModel usageModel, final Repository repo, final System system) {
         this.usageModelAbs = new UsageModelAbstraction(usageModel);
@@ -55,8 +58,8 @@ public class PalladioAbstraction {
      * @param entryLevelSystemCall
      * @return
      */
-    public Map<ResourceDemandingSEFF, AssemblyContext>  getAffectedSEFFs(EntryLevelSystemCall entryLevelSystemCall) {
-        seffs = new HashMap<>();
+    public List<Pair<ResourceDemandingSEFF, Connector>> getAffectedSEFFs(EntryLevelSystemCall entryLevelSystemCall) {
+        seffs = new ArrayList<>();
 
         entryPointSystemCall(entryLevelSystemCall);
 
@@ -115,7 +118,7 @@ public class PalladioAbstraction {
                     EList<AssemblyContext> copy = new BasicEList<AssemblyContext>();
                     copy.addAll(hierarchy);
                     copy.add(ac);
-                    entryPointRepositoryComponent(rc, copy, innerRole, operationSignature);
+                    entryPointRepositoryComponent(rc, copy, innerRole, operationSignature, connector);
                 } else {
                     Logger.error("Error in component(" + composedStructure.getId() + "): Recursion without end");
                 }
@@ -130,13 +133,14 @@ public class PalladioAbstraction {
      * @param hierarchy
      * @param operationProvidedRole
      * @param operationSignature
+     * @param connector 
      */
     private void entryPointRepositoryComponent(RepositoryComponent repositoryComponent,
             EList<AssemblyContext> hierarchy, OperationProvidedRole operationProvidedRole,
-            OperationSignature operationSignature) {
+            OperationSignature operationSignature, Connector connector) {
 
         if (repositoryComponent instanceof BasicComponent) {
-            entryPointBasicComponent((BasicComponent) repositoryComponent, hierarchy, operationSignature);
+            entryPointBasicComponent((BasicComponent) repositoryComponent, hierarchy, operationSignature, connector);
         } else if (repositoryComponent instanceof CompositeComponent) {
             entryPointComposedStructure((CompositeComponent) repositoryComponent, hierarchy, operationProvidedRole,
                     operationSignature);
@@ -157,7 +161,7 @@ public class PalladioAbstraction {
      * @param operationSignature
      */
     private void entryPointBasicComponent(BasicComponent basicComponent, EList<AssemblyContext> hierarchy,
-            OperationSignature operationSignature) {
+            OperationSignature operationSignature, Connector connector) {
         for (ServiceEffectSpecification seff : basicComponent.getServiceEffectSpecifications__BasicComponent()) {
             Logger.infoDetailed(seff.getDescribedService__SEFF().getEntityName());
             if (seff.getDescribedService__SEFF() == operationSignature) {
@@ -166,7 +170,7 @@ public class PalladioAbstraction {
                 if (seff instanceof ResourceDemandingSEFF) {
                     ResourceDemandingSEFF rdSeff = (ResourceDemandingSEFF) seff;
 
-                    handleResourceDemandingSEFF(rdSeff, hierarchy);
+                    handleResourceDemandingSEFF(rdSeff, hierarchy, connector);
                 } else {
                 }
             }
@@ -180,9 +184,11 @@ public class PalladioAbstraction {
      * 
      * @param rdSeff
      * @param hierarchy
+     * @param connector 
      */
-    private void handleResourceDemandingSEFF(ResourceDemandingSEFF rdSeff, EList<AssemblyContext> hierarchy) {
-        seffs.put(rdSeff,hierarchy.get(hierarchy.size()-1));
+    private void handleResourceDemandingSEFF(ResourceDemandingSEFF rdSeff, EList<AssemblyContext> hierarchy, Connector connector) {
+        seffs.add(Pair.of(rdSeff, connector));
+//        seffs.put(rdSeff,hierarchy.get(hierarchy.size()-1));
 
         // Get all external actions, and apply context as well
         for (AbstractAction action : rdSeff.getSteps_Behaviour()) {
@@ -241,7 +247,7 @@ public class PalladioAbstraction {
                     copy.addAll(hierarchy);
                     copy.remove(currentContext);
                     copy.add(targetComponent);
-                    entryPointRepositoryComponent(rc, copy, opr, externalSignature);
+                    entryPointRepositoryComponent(rc, copy, opr, externalSignature, connector);
                 }
             }
         }

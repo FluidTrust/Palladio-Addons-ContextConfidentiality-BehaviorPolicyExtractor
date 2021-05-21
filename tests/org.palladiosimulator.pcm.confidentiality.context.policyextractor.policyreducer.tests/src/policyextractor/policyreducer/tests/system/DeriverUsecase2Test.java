@@ -3,6 +3,7 @@ package policyextractor.policyreducer.tests.system;
 import java.io.File;
 import java.io.IOException;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import policyextractor.common.tests.template.TestPolicySpecification;
@@ -10,7 +11,7 @@ import policyextractor.common.tests.template.TestRecord;
 import policyextractor.common.tests.util.TestUtil;
 import rules.RulesType;
 import settings.Settings;
-
+@Disabled
 class DeriverUsecase2Test extends ReducerSystemTestTemplate {
 
     @Override

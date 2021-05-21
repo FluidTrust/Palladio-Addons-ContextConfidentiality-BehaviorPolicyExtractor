@@ -222,7 +222,7 @@ public class ContextModelAbstraction {
         return setContainer;
     }
 
-    public EList<PolicySpecification> getPolicySpecifications() {
+    public List<PolicySpecification> getPolicySpecifications() {
         return contextModel.getPcmspecificationcontainer().getPolicyspecification();
     }
 

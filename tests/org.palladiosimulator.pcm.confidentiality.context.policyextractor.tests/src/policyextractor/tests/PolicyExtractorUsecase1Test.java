@@ -3,6 +3,7 @@ package policyextractor.tests;
 import java.io.File;
 import java.io.IOException;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import policyextractor.common.tests.template.TestPolicySpecification;
@@ -17,7 +18,7 @@ class PolicyExtractorUsecase1Test extends PolicyExtractorSystemTestTemplate {
     protected void addCommonObjects() {
         // TODO create common superset from all testcases
     }
-
+    @Disabled
     @Test
     void test1() throws IOException {
         canonicalPath = TestUtil.getTestDataPath() + "policyextractor" + File.separator + "usecase1";

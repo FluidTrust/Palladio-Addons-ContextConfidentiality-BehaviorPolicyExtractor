@@ -64,10 +64,11 @@ public class MergeSEFF extends AbstractRule {
 
             var policy = AssemblyFactory.eINSTANCE.createSystemPolicySpecification();
             String name = ReducerUtil
-                    .createNewPolicySpecificationName((ServiceEffectSpecification) methodSpecification);
+                    .createNewPolicySpecificationName(methodSpecification);
 
             policy.setEntityName(name);
-            policy.setMethodspecification(methodSpecification);
+            var methodSpecificationNew = EcoreUtil.copy(methodSpecification);
+            policy.setMethodspecification(methodSpecificationNew);
             Logger.infoDetailed("\tCreated: " + policy.getEntityName());
 
             EList<PolicySpecification> list = new BasicEList<>();

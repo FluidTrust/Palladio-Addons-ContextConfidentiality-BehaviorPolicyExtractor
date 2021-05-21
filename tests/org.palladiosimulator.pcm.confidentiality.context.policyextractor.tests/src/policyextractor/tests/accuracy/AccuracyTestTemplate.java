@@ -5,19 +5,18 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.util.Tuple;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.palladiosimulator.pcm.confidentiality.context.ConfidentialAccessSpecification;
 import org.palladiosimulator.pcm.confidentiality.context.set.ContextSet;
 import org.palladiosimulator.pcm.confidentiality.context.specification.PolicySpecification;
 import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.MethodSpecification;
+import org.palladiosimulator.pcm.confidentiality.context.specification.assembly.SystemPolicySpecification;
 import org.palladiosimulator.pcm.repository.Repository;
-import org.palladiosimulator.pcm.seff.ResourceDemandingBehaviour;
-import org.palladiosimulator.pcm.seff.ServiceEffectSpecification;
 import org.palladiosimulator.pcm.system.System;
 import org.palladiosimulator.pcm.usagemodel.EntryLevelSystemCall;
 import org.palladiosimulator.pcm.usagemodel.ScenarioBehaviour;
@@ -59,10 +58,10 @@ class AccuracyTestTemplate {
     // Deriver
     protected String[] usageScenarios = null;
     protected String[][] systemCalls = null;
-    protected String[][][] seffs = null;
+    protected List<List<List<Pair<String, String>>>>  seffs = null;
 
     // Reducer
-    protected String[] reducer_seffs = null;
+    protected List<Pair<String, String>> reducer_seffs = null;
     protected String[][] reducer_policies = null;
     protected String[][][] reducer_contextsets = null;
     protected String[][][] reducer_contextsets_removed;
@@ -136,10 +135,11 @@ class AccuracyTestTemplate {
                 // AssemblyContext ac = getAssemblyContextByName("TravelPlanner <TravelPlanner>");
                 // RepositoryComponent rp = ac.getEncapsulatedComponent__AssemblyContext();
 
-                for (int seffId = 0; seffId < seffs[index][call].length; seffId++) {
-                    String seffIdName = seffs[index][call][seffId];
-                    //TODO fix
-                    var rp = getSeffById(null);
+                for (int seffId = 0; seffId < seffs.get(index).get(call).size(); seffId++) {
+                    Pair<String, String> seffIdName = seffs.get(index).get(call).get(seffId); 
+//                            seffs[index][call][seffId];
+                    // TODO fix
+                    var rp = getSeffById(seffIdName);
 
                     boolean exists = false;
 
@@ -172,12 +172,14 @@ class AccuracyTestTemplate {
     protected class ReducerResult {
         String policy;
         String set;
-        String seff;
+        String signature;
+        String connector;
 
-        public ReducerResult(String policy, String contextSet, String seff) {
+        public ReducerResult(String policy, String contextSet, String signature, String connector) {
             this.policy = policy;
             this.set = contextSet;
-            this.seff = seff;
+            this.signature = signature;
+            this.connector = connector;
         }
     }
 
@@ -199,19 +201,21 @@ class AccuracyTestTemplate {
         EList<ReducerResult> listRemoved = new BasicEList<ReducerResult>();
         EList<ReducerResult> listAfter = new BasicEList<ReducerResult>();
 
-        for (PolicySpecification policy : abs.getPolicySpecifications()) {
+        for (PolicySpecification policyAbs : abs.getPolicySpecifications()) {
+            var policy = (SystemPolicySpecification) policyAbs;
             for (ContextSet contextset : policy.getPolicy()) {
                 listBefore.add(new ReducerResult(policy.getEntityName(), contextset.getEntityName(),
-                        policy.getResourcedemandingbehaviour().getId()));
+                        policy.getMethodspecification().getSignature().getId(), policy.getMethodspecification().getConnector().getId()));
             }
         }
 
         execute_reducer();
 
-        for (PolicySpecification policy : abs.getPolicySpecifications()) {
+        for (PolicySpecification policyAbs : abs.getPolicySpecifications()) {
+            var policy = (SystemPolicySpecification) policyAbs;
             for (ContextSet contextset : policy.getPolicy()) {
                 listAfter.add(new ReducerResult(policy.getEntityName(), contextset.getEntityName(),
-                        policy.getResourcedemandingbehaviour().getId()));
+                        policy.getMethodspecification().getSignature().getId(), policy.getMethodspecification().getConnector().getId()));
             }
         }
 
@@ -221,9 +225,9 @@ class AccuracyTestTemplate {
         int FP = 0;
         int FN = 0;
 
-        for (int index = 0; index < reducer_seffs.length; index++) {
-            String seffIdName = reducer_seffs[index];
-            var rp = getSeffById(null);//TODO Fix
+        for (int index = 0; index < reducer_seffs.size(); index++) {
+            var seffIdName = reducer_seffs.get(index);
+            var rp = getSeffById(seffIdName);
             for (int call = 0; call < reducer_policies[index].length; call++) {
                 String policyName = reducer_policies[index][call];
                 // Logger.info(policyName + "---" + seffIdName);
@@ -236,7 +240,7 @@ class AccuracyTestTemplate {
                     for (ContextSet contextSet : policy.getPolicy()) {
                         if (contextSet.getEntityName().equals(contextSetName)) {
                             contained = true;
-                            listExpected.add(new ReducerResult(policyName, contextSetName, seffIdName));
+                            listExpected.add(new ReducerResult(policyName, contextSetName, seffIdName.getLeft(),seffIdName.getRight()));
                             break;
                         }
                     }
@@ -267,7 +271,7 @@ class AccuracyTestTemplate {
                         FN++;
                     } else {
                         TP++;
-                        listRemoved.add(new ReducerResult(policyName, contextSetName, seffIdName));
+                        listRemoved.add(new ReducerResult(policyName, contextSetName, seffIdName.getLeft(),seffIdName.getRight()));
                     }
                 }
             }
@@ -310,7 +314,7 @@ class AccuracyTestTemplate {
 
             boolean same = false;
             for (ReducerResult after : listAfter) {
-                if (after.seff.equals(before.seff)) {
+                if (after.signature.equals(before.signature)) {
                     if (after.set.equals(before.set)) {
                         same = true;
                     }
@@ -321,14 +325,14 @@ class AccuracyTestTemplate {
 
             boolean contained = false;
             for (ReducerResult result : listRemoved) {
-                if (result.seff.equals(before.seff)) {
+                if (result.signature.equals(before.signature)) {
                     if (result.set.equals(before.set)) {
                         contained = true;
                     }
                 }
             }
             if (!contained) {
-                Logger.info("Missing:" + before.seff + " - " + before.set);
+                Logger.info("Missing:" + before.signature + " - " + before.set);
                 FP++;
             }
         }
@@ -379,7 +383,8 @@ class AccuracyTestTemplate {
             boolean contained = false;
             for (ErrorExpected expected : errorExpected) {
                 if (error.getType().equals(expected.type)) {
-                    if (error.getRecord().getSeff().getSignature().equals(expected.seff)) { //TODO fix
+                    if (error.getRecord().getSeff().getSignature().equals(expected.seff)) { // TODO
+                                                                                            // fix
                         contained = true;
                     }
                 }
@@ -397,7 +402,8 @@ class AccuracyTestTemplate {
             boolean contained = false;
             for (ErrorRecord error : errorList) {
                 if (error.getType().equals(expected.type)) {
-                    if (error.getRecord().getSeff().getSignature().equals(expected.seff)) { //TODO fix
+                    if (error.getRecord().getSeff().getSignature().equals(expected.seff)) { // TODO
+                                                                                            // fix
                         contained = true;
                     }
                 }
@@ -457,11 +463,12 @@ class AccuracyTestTemplate {
         return ret;
     }
 
-    private PolicySpecification getPolicyByName(String name, ResourceDemandingBehaviour rp) {
+    private PolicySpecification getPolicyByName(String name, MethodSpecification rp) {
         PolicySpecification ret = null;
-        for (PolicySpecification policySpecification : abs.getPolicySpecifications()) {
+        for (var policySpecificationTmp : abs.getPolicySpecifications()) {
+            var policySpecification = (SystemPolicySpecification) policySpecificationTmp;
             if (policySpecification.getEntityName().equals(name)) {
-                if (policySpecification.getResourcedemandingbehaviour().equals(rp))
+                if (EcoreUtil.equals(policySpecification.getMethodspecification(), rp))
                     ret = policySpecification;
             }
         }
